@@ -41,7 +41,7 @@ export function Hero() {
     <section className="relative pb-20 md:pt-28 md:pb-24">
       {/* MOBILE — full-bleed editorial hero with photo as background */}
       <div className="-mx-6 -mt-px md:hidden">
-        <div className="relative h-[84svh] min-h-[580px] w-full overflow-hidden">
+        <div className="relative h-[88svh] min-h-[620px] w-full overflow-hidden">
           {/* Base gradient backdrop (visible if photo doesn't load) */}
           <div
             className="absolute inset-0"
@@ -67,12 +67,12 @@ export function Hero() {
             }}
           />
 
-          {/* Bottom scrim — strong enough for text, but tapered so it blends with the orb-tinted bg below */}
+          {/* Bottom scrim — strong, fades into page bg for text readability */}
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%]"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[78%]"
             style={{
               background:
-                'linear-gradient(180deg, rgba(5,5,7,0) 0%, rgba(5,5,7,0.35) 25%, rgba(5,5,7,0.7) 55%, rgba(5,5,7,0.88) 85%, rgba(5,5,7,0.85) 100%)',
+                'linear-gradient(180deg, rgba(5,5,7,0) 0%, rgba(5,5,7,0.45) 30%, rgba(5,5,7,0.85) 60%, rgba(5,5,7,0.97) 85%, #050507 100%)',
             }}
           />
 
