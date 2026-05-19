@@ -9,7 +9,7 @@ type Certification = {
 };
 
 const CERTIFICATIONS: Certification[] = [
-  { name: 'CCNA', issuer: 'Cisco · Networks', badge: '/cert-ccna.png' },
+  { name: 'CCNA', issuer: 'Cisco · Networks', badge: '/CCNAITN__1_.png' },
   { name: 'AI Essentials', issuer: 'Google', badge: '/cert-google-ai.png' },
   { name: 'AWS', issuer: 'Amazon Web Services', badge: '/cert-aws.png' },
 ];
