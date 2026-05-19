@@ -67,12 +67,12 @@ export function Hero() {
             }}
           />
 
-          {/* Bottom scrim — strong, fades into page bg for text readability */}
+          {/* Bottom scrim — purple→blue tinted dark, blends with orb-tinted page bg below */}
           <div
             className="pointer-events-none absolute inset-x-0 bottom-0 h-[78%]"
             style={{
               background:
-                'linear-gradient(180deg, rgba(5,5,7,0) 0%, rgba(5,5,7,0.45) 30%, rgba(5,5,7,0.85) 60%, rgba(5,5,7,0.97) 85%, #050507 100%)',
+                'linear-gradient(180deg, rgba(5,5,7,0) 0%, rgba(20,12,40,0.45) 30%, rgba(28,20,60,0.75) 55%, rgba(22,20,52,0.92) 80%, rgba(15,12,32,1) 100%)',
             }}
           />
 
