@@ -38,8 +38,146 @@ export function Hero() {
   const FacetIcon = facet.icon;
 
   return (
-    <section className="relative pt-24 pb-20 md:pt-28 md:pb-24">
-      <div className="grid items-center gap-16 md:grid-cols-[1.3fr_1fr] md:gap-14">
+    <section className="relative pt-8 pb-20 md:pt-28 md:pb-24">
+      {/* MOBILE — full-bleed editorial hero with photo as background */}
+      <div className="-mx-6 md:hidden">
+        <div className="relative h-[88svh] min-h-[620px] w-full overflow-hidden">
+          {/* Base gradient backdrop (visible if photo doesn't load) */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(135deg, #C17BE8 0%, #9080F0 45%, #6080FF 100%)',
+            }}
+          />
+
+          {/* Photo */}
+          <img
+            src={personal.photoUrl}
+            alt={personal.name}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+
+          {/* Top scrim — softer, keeps photo visible */}
+          <div
+            className="pointer-events-none absolute inset-x-0 top-0 h-40"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(5,5,7,0.65) 0%, rgba(5,5,7,0) 100%)',
+            }}
+          />
+
+          {/* Bottom scrim — strong, fades into page bg for text readability */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[78%]"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(5,5,7,0) 0%, rgba(5,5,7,0.45) 30%, rgba(5,5,7,0.85) 60%, rgba(5,5,7,0.97) 85%, #050507 100%)',
+            }}
+          />
+
+          {/* Corner ticks */}
+          <div className="pointer-events-none absolute left-3 top-3 h-4 w-4 border-l-[0.5px] border-t-[0.5px] border-white/40" />
+          <div className="pointer-events-none absolute right-3 top-3 h-4 w-4 border-r-[0.5px] border-t-[0.5px] border-white/40" />
+
+          {/* Top cluster — section label + status pill */}
+          <div className="absolute inset-x-0 top-0 z-10 flex flex-col gap-3 px-6 pt-6">
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.5, delay: 0 }}
+              className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint"
+            >
+              <span>001 — Introduction</span>
+              <span
+                className="h-px flex-1"
+                style={{
+                  background:
+                    'linear-gradient(to right, rgba(255,255,255,0.25), transparent)',
+                }}
+              />
+            </motion.div>
+
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="inline-flex w-fit items-center gap-2.5 rounded-full border-[0.5px] border-white/20 bg-black/40 py-1.5 pl-2.5 pr-3.5 text-[12px] text-text backdrop-blur-md"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
+                <span className="relative h-2 w-2 rounded-full bg-signal shadow-[0_0_10px_#5EFFAA]" />
+              </span>
+              {personal.availability}
+            </motion.div>
+          </div>
+
+          {/* Bottom cluster — headline, lede, CTAs, credentials */}
+          <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-5 px-6 pb-8">
+            <motion.h1
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="font-medium leading-[1.02] tracking-[-0.04em] text-text"
+              style={{ fontSize: 'clamp(40px, 11vw, 56px)' }}
+            >
+              {hero.line1}
+              <br />
+              <span
+                className="font-serif italic font-normal gradient-text"
+                style={{ letterSpacing: '-0.02em' }}
+              >
+                {hero.italicWord}
+              </span>{' '}
+              {hero.line2Rest}
+              <br />
+              <span className="text-text-faint">{hero.closer}</span>
+            </motion.h1>
+
+            <motion.p
+              {...fadeUp}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-[14.5px] leading-[1.55] text-text-dim"
+            >
+              {hero.lede}
+            </motion.p>
+
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="grid grid-cols-2 gap-2.5"
+            >
+              <a
+                href="#work"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-text px-4 py-3 text-[12.5px] font-medium text-bg"
+              >
+                Selected work <span className="text-[11px]">→</span>
+              </a>
+              <a
+                href="#about"
+                className="inline-flex items-center justify-center rounded-full border-[0.5px] border-white/15 bg-white/[0.06] px-4 py-3 text-[12.5px] font-medium text-text backdrop-blur-md"
+              >
+                About me
+              </a>
+            </motion.div>
+
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.15em] text-text-faint"
+            >
+              {hero.credentials.map((cred, i) => (
+                <span key={cred} className="flex items-center gap-3">
+                  {cred}
+                  {i < hero.credentials.length - 1 && (
+                    <span className="h-[3px] w-[3px] rounded-full bg-white/30" />
+                  )}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* DESKTOP — original two-column layout */}
+      <div className="hidden md:grid md:grid-cols-[1.3fr_1fr] md:items-center md:gap-14">
         {/* Left: text */}
         <div>
           <motion.div
