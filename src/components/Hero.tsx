@@ -19,6 +19,11 @@ const NOW_FACETS: { icon: IconType; label: string; value: string }[] = [
   { icon: TbCircleCheck, label: 'Status', value: 'Open to roles' },
 ];
 
+// Mobile pill uses a shorter Focus value — full phrase overflows the narrow pill
+const MOBILE_FACETS = NOW_FACETS.map((f) =>
+  f.label === 'Focus' ? { ...f, value: 'System Dev · AI/ML' } : f,
+);
+
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -121,10 +126,10 @@ export function Hero() {
                   className="flex items-center whitespace-nowrap"
                 >
                   <span className="font-mono uppercase tracking-[0.15em] text-[9px] text-text-faint">
-                    {facet.label}
+                    {MOBILE_FACETS[facetIdx].label}
                   </span>
                   <span className="mx-1.5 text-text-faint">·</span>
-                  {facet.value}
+                  {MOBILE_FACETS[facetIdx].value}
                 </motion.span>
               </AnimatePresence>
             </motion.div>
