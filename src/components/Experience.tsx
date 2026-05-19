@@ -103,14 +103,14 @@ export function Experience() {
                   <div className="mb-5 flex items-start gap-4">
                     {/* Company logo / monogram */}
                     <div
-                      className="relative flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border-[0.5px] border-white/15 text-[13px] font-semibold text-white"
+                      className="relative flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-md text-[13px] font-semibold text-white"
                       style={{
                         background: exp.logo
-                          ? 'rgba(255,255,255,0.96)'
+                          ? 'transparent'
                           : i % 2 === 0
                             ? 'linear-gradient(135deg, rgba(193,123,232,0.55), rgba(96,128,255,0.55))'
                             : 'linear-gradient(135deg, rgba(96,128,255,0.55), rgba(193,123,232,0.55))',
-                        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.18)',
+                        boxShadow: exp.logo ? 'none' : 'inset 0 1px 0 rgba(255,255,255,0.18)',
                       }}
                     >
                       {exp.logo ? (
