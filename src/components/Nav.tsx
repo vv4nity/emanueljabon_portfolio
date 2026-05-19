@@ -77,16 +77,20 @@ export function Nav() {
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-[14px] font-medium tracking-tight text-text">{personal.name}</span>
-              <span className="relative block h-[14px] overflow-hidden font-mono text-[10px] tracking-wide text-text-faint">
+              {/* Width-reserving wrapper so neither label gets clipped during the swap */}
+              <span className="relative font-mono text-[10px] tracking-wide text-text-faint">
+                <span aria-hidden className="invisible whitespace-nowrap">
+                  {personal.role}
+                </span>
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
                     key={open ? 'menu' : 'role'}
-                    initial={{ y: 10, opacity: 0 }}
+                    initial={{ y: 8, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -10, opacity: 0 }}
+                    exit={{ y: -8, opacity: 0 }}
                     transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute inset-0 whitespace-nowrap"
-                    style={open ? { letterSpacing: '0.25em', textTransform: 'uppercase' } : undefined}
+                    className="absolute left-0 top-0 whitespace-nowrap"
+                    style={open ? { letterSpacing: '0.22em', textTransform: 'uppercase' } : undefined}
                   >
                     {open ? 'Menu' : personal.role}
                   </motion.span>
@@ -188,9 +192,24 @@ export function Nav() {
             />
 
             {/* Content — pushed below the sticky nav so its real header stays visible */}
-            <div
-              className="relative flex min-h-full flex-col px-6 pb-8 pt-24"
-            >
+            <div className="relative flex min-h-full flex-col px-6 pb-8 pt-20">
+              {/* TopBar-style status row (the page's TopBar gets covered by the overlay; mirror it here for continuity) */}
+              <motion.div
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: 0.04 }}
+                className="mb-6 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint"
+              >
+                <span>Portfolio · MMXXVI</span>
+                <span className="inline-flex items-center gap-2">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
+                  </span>
+                  Online
+                </span>
+              </motion.div>
+
               {/* Section label */}
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
