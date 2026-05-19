@@ -23,7 +23,7 @@ export function TopBar() {
   }, []);
 
   return (
-    <div className="relative z-10 border-b border-white/5 bg-black/40 backdrop-blur-xl">
+    <div className="sticky top-0 z-[55] border-b border-white/5 bg-black/60 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-text-faint md:px-10">
         <span>PORTFOLIO · MMXXVI</span>
         <span className="hidden items-center sm:flex">

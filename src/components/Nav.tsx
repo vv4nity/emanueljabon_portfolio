@@ -62,7 +62,7 @@ export function Nav() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#08080f]/60 backdrop-blur-2xl">
+      <nav className="sticky top-[34px] z-50 border-b border-white/[0.08] bg-[#08080f]/60 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10 md:py-5">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3" onClick={closeMenu}>
@@ -191,25 +191,8 @@ export function Nav() {
               }}
             />
 
-            {/* Content — pushed below the sticky nav so its real header stays visible */}
-            <div className="relative flex min-h-full flex-col px-6 pb-8 pt-20">
-              {/* TopBar-style status row (the page's TopBar gets covered by the overlay; mirror it here for continuity) */}
-              <motion.div
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: 0.04 }}
-                className="mb-6 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint"
-              >
-                <span>Portfolio · MMXXVI</span>
-                <span className="inline-flex items-center gap-2">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
-                    <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
-                  </span>
-                  Online
-                </span>
-              </motion.div>
-
+            {/* Content — pushed below the sticky TopBar + Nav so both real headers stay visible */}
+            <div className="relative flex min-h-full flex-col px-6 pb-8 pt-28">
               {/* Section label */}
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
