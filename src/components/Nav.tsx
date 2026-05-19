@@ -78,7 +78,6 @@ export function Nav() {
             {/* Desktop CTAs */}
             <Link
               href={personal.cvUrl}
-              target="_blank"
               className="hidden rounded-full border-[0.5px] border-white/15 bg-white/[0.03] px-4 py-2 text-[12px] font-medium text-text-dim transition-all hover:bg-white/10 hover:text-text md:inline-block"
             >
               CV
@@ -228,11 +227,10 @@ export function Nav() {
                 </Link>
                 <Link
                   href={personal.cvUrl}
-                  target="_blank"
                   onClick={closeMenu}
                   className="inline-flex items-center justify-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-6 py-3.5 text-[13px] font-medium text-text-dim"
                 >
-                  Download CV
+                  View CV
                 </Link>
               </motion.div>
 

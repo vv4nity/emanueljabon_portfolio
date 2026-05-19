@@ -12,7 +12,9 @@ export const personal = {
   github: 'https://github.com/yourusername',
   linkedin: 'https://linkedin.com/in/yourusername',
   instagram: 'https://instagram.com/yourusername',
-  cvUrl: '/cv.pdf', // place your CV at public/cv.pdf
+  cvUrl: '/cv', // in-app viewer page
+  cvFile: '/Emanuel_Jabon_CV.pdf', // actual PDF file in public/
+  cvUpdated: 'May 2026',
   photoUrl: '/hero-photo.png', // place your photo at public/hero-photo.png
   availability: 'Open to roles · Summer 2026',
 };
