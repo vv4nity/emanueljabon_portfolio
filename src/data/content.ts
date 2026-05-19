@@ -26,7 +26,7 @@ export const hero = {
   line2Rest: 'software',
   closer: 'that ships.',
   lede:
-    'Computer engineer specializing in machine learning systems and full-stack development. Currently building production-grade ML pipelines and crafting interfaces that feel inevitable.',
+    'Computer Engineer from the Polytechnic University of the Philippines, specializing in System Development with a strong focus on AI and machine learning. Building across full-stack apps, backend services, and AI-driven systems — driven by clean architecture and shipping reliable products.',
   credentials: ['BSCpE · 2026', '12+ projects shipped', 'Open source'],
   currentlyBuilding: {
     label: 'Currently building',

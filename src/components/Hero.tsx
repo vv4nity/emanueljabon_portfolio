@@ -482,7 +482,7 @@ export function Hero() {
               {personal.initials}
             </span>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim">
-              Class of 2025
+              Class of 2026
             </span>
           </motion.div>
         </motion.div>
