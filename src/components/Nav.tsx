@@ -7,9 +7,9 @@ import { FiGithub, FiLinkedin, FiInstagram, FiMail } from 'react-icons/fi';
 import { personal } from '@/data/content';
 
 const navLinks = [
-  { label: 'Work', href: '/#work' },
   { label: 'About', href: '/#about' },
   { label: 'Stack', href: '/#stack' },
+  { label: 'Experience', href: '/#experience' },
   { label: 'Projects', href: '/projects' },
   { label: 'Contact', href: '/#contact' },
 ];
