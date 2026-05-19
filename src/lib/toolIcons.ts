@@ -1,0 +1,91 @@
+import type { IconType } from 'react-icons';
+import {
+  SiPython,
+  SiTypescript,
+  SiJavascript,
+  SiCplusplus,
+  SiPostgresql,
+  SiGnubash,
+  SiPytorch,
+  SiTensorflow,
+  SiHuggingface,
+  SiLangchain,
+  SiScikitlearn,
+  SiOpencv,
+  SiNumpy,
+  SiPandas,
+  SiNextdotjs,
+  SiReact,
+  SiNodedotjs,
+  SiFastapi,
+  SiExpress,
+  SiRedis,
+  SiMongodb,
+  SiDocker,
+  SiVercel,
+  SiGit,
+  SiLinux,
+  SiGithubactions,
+  SiFlask,
+  SiOpenai,
+  SiSocketdotio,
+} from 'react-icons/si';
+import { TbDatabase, TbTerminal2, TbCloud, TbBox, TbVectorTriangle } from 'react-icons/tb';
+
+export type Tool = { icon: IconType; color: string };
+
+export const TOOLS: Record<string, Tool> = {
+  // Languages
+  Python: { icon: SiPython, color: '#FFD43B' },
+  TypeScript: { icon: SiTypescript, color: '#3178C6' },
+  JavaScript: { icon: SiJavascript, color: '#F7DF1E' },
+  'C++': { icon: SiCplusplus, color: '#00599C' },
+  SQL: { icon: TbDatabase, color: '#E48E3F' },
+  Bash: { icon: SiGnubash, color: '#A8C0A0' },
+
+  // AI / ML
+  PyTorch: { icon: SiPytorch, color: '#EE4C2C' },
+  TensorFlow: { icon: SiTensorflow, color: '#FF6F00' },
+  'Hugging Face': { icon: SiHuggingface, color: '#FFD21E' },
+  LangChain: { icon: SiLangchain, color: '#1C3C3C' },
+  'scikit-learn': { icon: SiScikitlearn, color: '#F7931E' },
+  OpenCV: { icon: SiOpencv, color: '#5C3EE8' },
+  NumPy: { icon: SiNumpy, color: '#4D77CF' },
+  Pandas: { icon: SiPandas, color: '#150458' },
+  OpenAI: { icon: SiOpenai, color: '#FFFFFF' },
+  Pinecone: { icon: TbVectorTriangle, color: '#3CDFB0' },
+
+  // Web & Backend
+  'Next.js': { icon: SiNextdotjs, color: '#FFFFFF' },
+  React: { icon: SiReact, color: '#61DAFB' },
+  'Node.js': { icon: SiNodedotjs, color: '#5FA04E' },
+  FastAPI: { icon: SiFastapi, color: '#009688' },
+  Flask: { icon: SiFlask, color: '#FFFFFF' },
+  Express: { icon: SiExpress, color: '#FFFFFF' },
+  PostgreSQL: { icon: SiPostgresql, color: '#4169E1' },
+  Postgres: { icon: SiPostgresql, color: '#4169E1' },
+  Redis: { icon: SiRedis, color: '#FF4438' },
+  MongoDB: { icon: SiMongodb, color: '#47A248' },
+  WebSockets: { icon: SiSocketdotio, color: '#FFFFFF' },
+
+  // DevOps
+  Docker: { icon: SiDocker, color: '#2496ED' },
+  AWS: { icon: TbCloud, color: '#FF9900' },
+  Vercel: { icon: SiVercel, color: '#FFFFFF' },
+  Git: { icon: SiGit, color: '#F05032' },
+  Linux: { icon: SiLinux, color: '#FCC624' },
+  'CI/CD': { icon: SiGithubactions, color: '#2088FF' },
+};
+
+export const FALLBACK_TOOL: Tool = { icon: TbBox, color: '#C17BE8' };
+
+export function getTool(name: string): Tool {
+  return TOOLS[name] ?? FALLBACK_TOOL;
+}
+
+export const CATEGORY_ICON: Record<string, IconType> = {
+  Languages: TbTerminal2,
+  'AI / Machine Learning': SiPytorch,
+  'Web & Backend': TbDatabase,
+  'DevOps & Tools': SiDocker,
+};
