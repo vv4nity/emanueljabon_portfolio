@@ -7,7 +7,6 @@ import {
   TbBuildingArch,
   TbAward,
   TbBrain,
-  TbCertificate,
   TbLanguage,
   TbCircleCheck,
 } from 'react-icons/tb';
@@ -19,7 +18,6 @@ const FACTS = [
   { icon: TbBuildingArch, label: 'University', value: 'PUP — Sta. Mesa' },
   { icon: TbAward, label: 'Degree', value: 'BS Computer Engineering' },
   { icon: TbBrain, label: 'Focus', value: 'System Dev · AI & ML' },
-  { icon: TbCertificate, label: 'Certification', value: 'CCNA — Cisco' },
   { icon: TbLanguage, label: 'Languages', value: 'EN · FIL' },
   { icon: TbCircleCheck, label: 'Available', value: 'Open to roles' },
 ];

@@ -6,6 +6,7 @@ import { Projects } from '@/components/Projects';
 import { About } from '@/components/About';
 import { Stack } from '@/components/Stack';
 import { Experience } from '@/components/Experience';
+import { Certifications } from '@/components/Certifications';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 
@@ -22,6 +23,7 @@ export default function Home() {
         <About />
         <Stack />
         <Experience />
+        <Certifications />
         <Contact />
       </div>
 
