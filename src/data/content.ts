@@ -135,6 +135,7 @@ export type ExperienceItem = {
   period: string;
   description: string;
   highlights?: string[];
+  logo?: string;
 };
 
 export const experience: ExperienceItem[] = [
@@ -142,6 +143,7 @@ export const experience: ExperienceItem[] = [
     role: 'Software Developer Intern',
     org: 'American Express',
     period: 'Aug — Oct 2025',
+    logo: '/logo-amex.png',
     description:
       'Contributed to enterprise software projects in a global financial services environment, collaborating with senior engineers on production-grade systems.',
     highlights: [
@@ -152,6 +154,7 @@ export const experience: ExperienceItem[] = [
     role: 'IT Operations',
     org: 'Concentrix — EXXA',
     period: 'Jul — Sep 2025',
+    logo: '/logo-concentrix.png',
     description:
       'Supported day-to-day IT operations including system monitoring, troubleshooting, and incident resolution across internal infrastructure.',
     highlights: [
@@ -162,6 +165,7 @@ export const experience: ExperienceItem[] = [
     role: 'Full-Stack Web Developer Intern',
     org: 'ROC.PH',
     period: 'Jul — Sep 2024',
+    logo: '/logo-rocph.jpg',
     description:
       'Developed responsive web applications using modern front-end frameworks and back-end APIs, contributing to both UI and database-layer features.',
     highlights: [
