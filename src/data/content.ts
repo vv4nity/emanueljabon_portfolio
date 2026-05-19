@@ -139,28 +139,34 @@ export type ExperienceItem = {
 
 export const experience: ExperienceItem[] = [
   {
-    role: 'AI/ML Intern',
-    org: 'Company Name',
-    period: '2025 — Present',
-    description:
-      'Built and deployed ML pipelines for customer-facing NLP products. Reduced inference latency by 40% through model optimization.',
-    highlights: ['Shipped 3 production ML models', 'Wrote internal MLOps playbook'],
-  },
-  {
     role: 'Software Developer Intern',
-    org: 'Another Company',
-    period: '2024 — 2025',
+    org: 'American Express',
+    period: 'Aug — Oct 2025',
     description:
-      'Developed full-stack features for an internal analytics dashboard used by 200+ employees.',
-    highlights: ['Cut page load time by 60%', 'Migrated legacy API to GraphQL'],
+      'Contributed to enterprise software projects in a global financial services environment, collaborating with senior engineers on production-grade systems.',
+    highlights: [
+      'Developed backend services and internal tools, applying Agile workflows, version control, and code review best practices to ship reliable features.',
+    ],
   },
   {
-    role: 'BS Computer Engineering',
-    org: 'Your University',
-    period: '2022 — 2026',
+    role: 'IT Operations',
+    org: 'Concentrix — EXXA',
+    period: 'Jul — Sep 2025',
     description:
-      'Focus: machine learning, embedded systems, software architecture. Dean\'s lister, ML research group member.',
-    highlights: ['GPA: 3.8/4.0', 'Capstone: real-time ML deployment platform'],
+      'Supported day-to-day IT operations including system monitoring, troubleshooting, and incident resolution across internal infrastructure.',
+    highlights: [
+      'Coordinated with technical teams to ensure uptime, deploy internal tools, and document recurring incidents to drive process improvements.',
+    ],
+  },
+  {
+    role: 'Full-Stack Web Developer Intern',
+    org: 'ROC.PH',
+    period: 'Jul — Sep 2024',
+    description:
+      'Developed responsive web applications using modern front-end frameworks and back-end APIs, contributing to both UI and database-layer features.',
+    highlights: [
+      'Collaborated in an Agile environment to plan sprints, conduct code reviews, and implement secure authentication and database integrations.',
+    ],
   },
 ];
 
