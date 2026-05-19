@@ -23,20 +23,24 @@ export function About() {
       >
         <div className="space-y-5 text-[16px] leading-[1.75] text-text-dim">
           <p>
-            I&apos;m a computer engineer based in Manila with a deep curiosity for systems
-            that learn. I cut my teeth on classical software development before falling into
-            machine learning during my third year — and I haven&apos;t looked back since.
+            I&apos;m a computer engineer from the{' '}
+            <span className="text-text">Polytechnic University of the Philippines</span>,
+            majoring in System Development. Based in Manila, building across full-stack apps,
+            backend services, and AI-driven systems.
           </p>
           <p>
-            Most of my recent work sits at the intersection of <span className="text-text">applied ML</span>{' '}
-            and <span className="text-text">production engineering</span>: shipping models that actually
-            run reliably in front of real users, not just notebooks. I care about latency,
-            observability, and the unglamorous parts of MLOps as much as I care about model accuracy.
+            Most of my work sits between{' '}
+            <span className="text-text">system development</span> and{' '}
+            <span className="text-text">applied AI/ML</span> — services that need to stay up,
+            models that need to actually run in front of real users. I care about clean
+            architecture, the unglamorous parts of shipping, and writing code that the next
+            person on the project doesn&apos;t hate inheriting.
           </p>
           <p>
-            Outside of code, I read papers (mostly NLP and systems), tinker with side projects,
-            and write occasionally about what I learn. I&apos;m currently looking for full-time
-            opportunities where I can build alongside thoughtful, ambitious teams.
+            I&apos;m drawn to the intersection of the two — using ML to make systems smarter,
+            and bringing system-development discipline to the way ML actually runs in
+            production. I&apos;m looking for full-time roles where I can keep building in
+            that space alongside thoughtful, ambitious people.
           </p>
         </div>
 
@@ -47,10 +51,12 @@ export function About() {
           <dl className="space-y-3 text-[13px]">
             {[
               ['Based in', 'Manila, PH'],
+              ['University', 'PUP — Sta. Mesa'],
               ['Degree', 'BS Computer Engineering'],
-              ['Focus', 'AI/ML, Full-stack'],
-              ['Available', 'Summer 2026'],
+              ['Focus', 'System Dev · AI/ML'],
+              ['Certification', 'CCNA — Cisco'],
               ['Languages', 'EN · FIL'],
+              ['Available', 'Open to roles'],
             ].map(([k, v]) => (
               <div key={k} className="flex justify-between border-b border-white/[0.06] pb-3 last:border-0 last:pb-0">
                 <dt className="text-text-faint">{k}</dt>
