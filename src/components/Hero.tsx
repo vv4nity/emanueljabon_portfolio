@@ -174,6 +174,16 @@ export function Hero() {
             </motion.div>
           </div>
         </div>
+
+        {/* Bridge — continues the photo's bottom tint into the page bg so there's no visible cut */}
+        <div
+          aria-hidden
+          className="pointer-events-none h-32"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(15,12,32,1) 0%, rgba(12,11,26,0.7) 35%, rgba(8,8,15,0.35) 70%, rgba(5,5,7,0) 100%)',
+          }}
+        />
       </div>
 
       {/* DESKTOP — original two-column layout */}
@@ -464,7 +474,7 @@ export function Hero() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.6 }}
-        className="mt-10 grid grid-cols-2 border-y border-white/[0.08] py-8 md:mt-24 md:grid-cols-4"
+        className="-mt-12 grid grid-cols-2 border-y border-white/[0.08] py-8 md:mt-24 md:grid-cols-4"
       >
         {metrics.map((m, i) => (
           <div
