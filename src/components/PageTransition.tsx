@@ -50,10 +50,10 @@ export function PageTransition() {
     isFirst.current = false;
   }, []);
 
-  // Intercept clicks on internal links so we can transition before nav (and cover hash jumps too)
+  // Intercept clicks on internal links so we can transition before nav (and cover hash jumps too).
+  // Capture phase so we run BEFORE next/link's bundled onClick (which preventDefaults).
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (e.defaultPrevented) return;
       if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
       if (e.button !== 0) return;
 
@@ -81,18 +81,20 @@ export function PageTransition() {
       const currentHref = window.location.pathname + window.location.hash;
       if (href === currentHref) return;
 
+      // Stop next/link from also handling it
       e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
       setInfo(meta);
       setActive(true);
 
       // Navigate when the curtain fully covers the screen
       window.setTimeout(() => {
         if (href.startsWith('/#') || href.startsWith('#')) {
-          // Same-page anchor (or home-anchor while already on home)
           const hash = href.includes('#') ? href.slice(href.indexOf('#')) : '';
           const onHome = window.location.pathname === '/';
           if (!onHome) {
-            // Need to route to home with hash
             router.push(href);
           } else if (hash) {
             const id = hash.slice(1);
@@ -105,12 +107,11 @@ export function PageTransition() {
         }
       }, COVER_MS);
 
-      // Hide overlay after the full sequence
       window.setTimeout(() => setActive(false), TOTAL_MS);
     };
 
-    document.addEventListener('click', handler);
-    return () => document.removeEventListener('click', handler);
+    document.addEventListener('click', handler, { capture: true });
+    return () => document.removeEventListener('click', handler, { capture: true });
   }, [router]);
 
   // Fallback: still respond to pathname-only changes (e.g. browser back/forward)
