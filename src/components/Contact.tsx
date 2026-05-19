@@ -76,17 +76,10 @@ export function Contact() {
       >
         {/* Left: copy + socials */}
         <div>
-          <p className="mb-8 max-w-md text-[16px] leading-[1.65] text-text-dim">
+          <p className="mb-10 max-w-md text-[16px] leading-[1.65] text-text-dim">
             I&apos;m currently open to full-time roles, internships, and interesting freelance work.
-            The fastest way to reach me is by email — I usually reply within 24 hours.
+            Drop a message through the form — I usually reply within 24 hours.
           </p>
-
-          <a
-            href={`mailto:${personal.email}`}
-            className="mb-10 inline-block text-[22px] font-medium tracking-[-0.02em] text-text transition-colors hover:gradient-text-2 md:text-[26px]"
-          >
-            {personal.email}
-          </a>
 
           <div className="flex flex-wrap gap-3">
             {[
