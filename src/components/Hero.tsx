@@ -167,12 +167,17 @@ export function Hero() {
               className="absolute inset-0 h-full w-full object-cover"
             />
 
-            {/* Metadata overlays */}
-            <div className="absolute left-3.5 top-3.5 rounded border-[0.5px] border-white/15 bg-black/55 px-2.5 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.15em] text-white/95 backdrop-blur-md">
-              Portrait · MMXXVI
+            {/* Identity tag — top left */}
+            <div className="absolute left-3.5 top-3.5 inline-flex items-center gap-2 rounded border-[0.5px] border-white/15 bg-black/55 px-2.5 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.15em] text-white/95 backdrop-blur-md">
+              <span
+                className="h-1.5 w-1.5 rounded-full"
+                style={{ background: 'linear-gradient(135deg, #C17BE8, #6080FF)' }}
+              />
+              {personal.name}
             </div>
+            {/* Coordinates — bottom right */}
             <div className="absolute bottom-3.5 right-3.5 rounded border-[0.5px] border-white/15 bg-black/55 px-2.5 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.15em] text-white/95 backdrop-blur-md">
-              f/1.8 · ISO 200
+              14.60°N · 121.00°E
             </div>
           </div>
 
