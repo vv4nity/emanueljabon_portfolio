@@ -77,7 +77,21 @@ export function Nav() {
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-[14px] font-medium tracking-tight text-text">{personal.name}</span>
-              <span className="font-mono text-[10px] tracking-wide text-text-faint">{personal.role}</span>
+              <span className="relative block h-[14px] overflow-hidden font-mono text-[10px] tracking-wide text-text-faint">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={open ? 'menu' : 'role'}
+                    initial={{ y: 10, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -10, opacity: 0 }}
+                    transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute inset-0 whitespace-nowrap"
+                    style={open ? { letterSpacing: '0.25em', textTransform: 'uppercase' } : undefined}
+                  >
+                    {open ? 'Menu' : personal.role}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
             </div>
           </Link>
 
@@ -152,7 +166,7 @@ export function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[60] overflow-y-auto overflow-x-hidden md:hidden"
+            className="fixed inset-0 z-40 overflow-y-auto overflow-x-hidden md:hidden"
             style={{ background: 'rgba(5,5,7,0.92)', backdropFilter: 'blur(28px)' }}
           >
             {/* Ambient glow */}
@@ -173,51 +187,10 @@ export function Nav() {
               }}
             />
 
-            {/* Content */}
+            {/* Content — pushed below the sticky nav so its real header stays visible */}
             <div
-              className="relative flex min-h-full flex-col px-6 pb-8"
-              style={{ paddingTop: 'max(env(safe-area-inset-top), 16px)' }}
+              className="relative flex min-h-full flex-col px-6 pb-8 pt-24"
             >
-              {/* Header row inside overlay: logo left, close button right */}
-              <div className="mb-6 flex items-center justify-between">
-                <Link
-                  href="/"
-                  onClick={closeMenu}
-                  className="flex items-center gap-2.5"
-                >
-                  <div
-                    className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
-                    style={{
-                      background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
-                      boxShadow:
-                        '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
-                    }}
-                  >
-                    {personal.initials}
-                  </div>
-                  <div className="flex flex-col leading-tight">
-                    <span className="text-[13px] font-medium tracking-tight text-text">
-                      {personal.name}
-                    </span>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-text-faint">
-                      Menu
-                    </span>
-                  </div>
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={closeMenu}
-                  aria-label="Close menu"
-                  className="relative flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-white/[0.04] text-text transition-colors hover:bg-white/[0.08]"
-                >
-                  <span className="relative block h-3.5 w-3.5">
-                    <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 rotate-45 bg-text" />
-                    <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 -rotate-45 bg-text" />
-                  </span>
-                </button>
-              </div>
-
               {/* Section label */}
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
