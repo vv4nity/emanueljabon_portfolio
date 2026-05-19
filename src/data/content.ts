@@ -21,12 +21,12 @@ export const personal = {
 
 export const hero = {
   // Headline rendered as: "I engineer" + italic accent + " software" + muted closer
-  line1: 'I engineer',
-  italicWord: 'intelligent',
+  line1: 'I build',
+  italicWord: 'thoughtful',
   line2Rest: 'software',
-  closer: 'that ships.',
+  closer: 'one project at a time.',
   lede:
-    'Computer Engineer from the Polytechnic University of the Philippines, specializing in System Development with a strong focus on AI and machine learning. Building across full-stack apps, backend services, and AI-driven systems — driven by clean architecture and shipping reliable products.',
+    'Computer Engineer from PUP, focused on system development and AI/ML. Building full-stack apps, backend services, and AI-driven systems — still learning, still shipping.',
   credentials: ['BSCpE · 2026', '12+ projects shipped', 'Open source'],
   currentlyBuilding: {
     label: 'Currently building',
