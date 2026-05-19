@@ -166,30 +166,56 @@ export function Nav() {
             />
 
             {/* Content */}
-            <div className="relative flex min-h-full flex-col px-6 pb-10 pt-20">
-              {/* Top status row — mirrors the desktop TopBar so users have orientation inside the menu */}
-              <motion.div
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.04 }}
-                className="mb-6 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint"
-              >
-                <span>Portfolio · MMXXVI</span>
-                <span className="inline-flex items-center gap-2">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
-                    <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
+            <div
+              className="relative flex min-h-full flex-col px-6 pb-8"
+              style={{ paddingTop: 'max(env(safe-area-inset-top), 16px)' }}
+            >
+              {/* Header row inside overlay: logo left, close button right */}
+              <div className="mb-6 flex items-center justify-between">
+                <Link
+                  href="/"
+                  onClick={closeMenu}
+                  className="flex items-center gap-2.5"
+                >
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
+                    style={{
+                      background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
+                      boxShadow:
+                        '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
+                    }}
+                  >
+                    {personal.initials}
+                  </div>
+                  <div className="flex flex-col leading-tight">
+                    <span className="text-[13px] font-medium tracking-tight text-text">
+                      {personal.name}
+                    </span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-text-faint">
+                      Menu
+                    </span>
+                  </div>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={closeMenu}
+                  aria-label="Close menu"
+                  className="relative flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-white/[0.04] text-text transition-colors hover:bg-white/[0.08]"
+                >
+                  <span className="relative block h-3.5 w-3.5">
+                    <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 rotate-45 bg-text" />
+                    <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 -rotate-45 bg-text" />
                   </span>
-                  Online
-                </span>
-              </motion.div>
+                </button>
+              </div>
 
               {/* Section label */}
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.08 }}
-                className="mb-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint"
+                className="mb-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint"
               >
                 <span>Navigation</span>
                 <span
@@ -210,24 +236,24 @@ export function Nav() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
                       duration: 0.45,
-                      delay: 0.1 + i * 0.07,
+                      delay: 0.1 + i * 0.06,
                       ease: [0.16, 1, 0.3, 1],
                     }}
                   >
                     <Link
                       href={link.href}
                       onClick={closeMenu}
-                      className="group flex items-baseline justify-between border-b border-white/[0.06] py-5"
+                      className="group flex items-baseline justify-between border-b border-white/[0.06] py-3.5"
                     >
                       <span className="flex items-baseline gap-4">
                         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
                           {String(i + 1).padStart(2, '0')}
                         </span>
-                        <span className="text-[32px] font-medium tracking-[-0.03em] text-text transition-colors group-hover:gradient-text-2">
+                        <span className="text-[26px] font-medium tracking-[-0.03em] text-text transition-colors group-hover:gradient-text-2">
                           {link.label}
                         </span>
                       </span>
-                      <span className="text-[18px] text-text-faint transition-transform group-hover:translate-x-1">
+                      <span className="text-[16px] text-text-faint transition-transform group-hover:translate-x-1">
                         →
                       </span>
                     </Link>
@@ -239,8 +265,8 @@ export function Nav() {
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.45 }}
-                className="mt-8 grid grid-cols-2 gap-3"
+                transition={{ duration: 0.5, delay: 0.42 }}
+                className="mt-6 grid grid-cols-2 gap-3"
               >
                 <Link
                   href="/#contact"
@@ -268,8 +294,8 @@ export function Nav() {
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.55 }}
-                className="mt-5 grid grid-cols-4 gap-3"
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="mt-3 grid grid-cols-4 gap-3"
               >
                 {socials.map((s) => (
                   <a
@@ -286,11 +312,11 @@ export function Nav() {
               </motion.div>
 
               {/* Footer block */}
-              <div className="mt-auto pt-10">
+              <div className="mt-auto pt-6" style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 0px)' }}>
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.65 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
                   className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint"
                 >
                   <span className="relative flex h-1.5 w-1.5">
