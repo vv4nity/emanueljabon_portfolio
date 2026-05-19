@@ -98,28 +98,27 @@ export function Hero() {
             </motion.div>
 
             <motion.div
+              layout
               {...fadeUp}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="relative inline-flex w-fit items-center gap-2 overflow-hidden rounded-full border-[0.5px] border-white/20 bg-black/40 py-1 pl-2 pr-3 text-[10.5px] text-text backdrop-blur-md"
+              transition={{
+                opacity: { duration: 0.5, delay: 0.1 },
+                y: { duration: 0.5, delay: 0.1 },
+                layout: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+              }}
+              className="inline-flex w-fit items-center gap-2 rounded-full border-[0.5px] border-white/20 bg-black/40 py-1 pl-2 pr-3 text-[10.5px] text-text backdrop-blur-md"
             >
-              <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
+              <motion.span layout="position" className="relative flex h-1.5 w-1.5 flex-shrink-0">
                 <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
                 <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
-              </span>
-              {/* Width-reserving placeholder so the pill doesn't jitter when content swaps */}
-              <span className="invisible whitespace-nowrap">
-                <span className="font-mono uppercase tracking-[0.15em] text-[9px]">Studied at</span>
-                <span className="mx-1.5">·</span>
-                PUP — Sta. Mesa
-              </span>
-              <AnimatePresence mode="wait" initial={false}>
+              </motion.span>
+              <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
                   key={facetIdx}
-                  initial={{ y: 8, opacity: 0 }}
+                  initial={{ y: 6, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -8, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute left-[18px] top-1/2 flex -translate-y-1/2 items-center whitespace-nowrap"
+                  exit={{ y: -6, opacity: 0 }}
+                  transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-center whitespace-nowrap"
                 >
                   <span className="font-mono uppercase tracking-[0.15em] text-[9px] text-text-faint">
                     {facet.label}
