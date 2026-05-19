@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { personal } from '@/data/content';
-import { FiGithub, FiLinkedin, FiInstagram, FiCheck, FiAlertCircle } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiInstagram, FiMail, FiCheck, FiAlertCircle } from 'react-icons/fi';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -86,6 +86,7 @@ export function Contact() {
               { icon: FiGithub, href: personal.github, label: 'GitHub' },
               { icon: FiLinkedin, href: personal.linkedin, label: 'LinkedIn' },
               { icon: FiInstagram, href: personal.instagram, label: 'Instagram' },
+              { icon: FiMail, href: `mailto:${personal.email}`, label: 'Email' },
             ].map((social) => (
               <a
                 key={social.label}
