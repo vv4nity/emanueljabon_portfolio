@@ -81,7 +81,7 @@ export function Contact() {
             Drop a message through the form — I usually reply within 24 hours.
           </p>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="grid grid-cols-4 gap-2 md:flex md:flex-wrap md:gap-3">
             {[
               { icon: FiGithub, href: personal.github, label: 'GitHub' },
               { icon: FiLinkedin, href: personal.linkedin, label: 'LinkedIn' },
@@ -93,10 +93,11 @@ export function Contact() {
                 href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.03] px-4 py-2.5 text-[12px] text-text-dim transition-all hover:bg-white/[0.08] hover:text-text"
+                aria-label={social.label}
+                className="flex h-11 items-center justify-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.03] text-[12px] text-text-dim transition-all hover:bg-white/[0.08] hover:text-text md:h-auto md:px-4 md:py-2.5"
               >
                 <social.icon size={14} />
-                {social.label}
+                <span className="hidden md:inline">{social.label}</span>
               </a>
             ))}
           </div>
