@@ -117,7 +117,7 @@ export function Experience() {
                         <img
                           src={exp.logo}
                           alt={`${exp.org} logo`}
-                          className="h-7 w-7 object-contain"
+                          className="absolute inset-0 h-full w-full object-cover"
                         />
                       ) : (
                         initialsFrom(exp.org)
