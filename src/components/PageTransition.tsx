@@ -86,6 +86,9 @@ export function PageTransition() {
       e.stopPropagation();
       e.stopImmediatePropagation();
 
+      // Notify any open overlays (mobile menu, etc.) to close
+      window.dispatchEvent(new CustomEvent('app:nav-start', { detail: { href } }));
+
       setInfo(meta);
       setActive(true);
 

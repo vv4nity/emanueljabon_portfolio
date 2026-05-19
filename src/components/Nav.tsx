@@ -24,6 +24,14 @@ const socials = [
 export function Nav() {
   const [open, setOpen] = useState(false);
 
+  // Close the menu whenever a navigation begins (PageTransition emits this).
+  // Needed because PageTransition stops event propagation, so Link onClick={closeMenu} never fires.
+  useEffect(() => {
+    const handler = () => setOpen(false);
+    window.addEventListener('app:nav-start', handler);
+    return () => window.removeEventListener('app:nav-start', handler);
+  }, []);
+
   // Lock body scroll when menu is open (iOS-safe via position:fixed)
   useEffect(() => {
     if (!open) return;
