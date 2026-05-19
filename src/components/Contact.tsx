@@ -56,7 +56,7 @@ export function Contact() {
         : 'Send message →';
 
   return (
-    <section id="contact" className="relative py-24">
+    <section id="contact" className="relative py-14 md:py-24">
       <div className="mb-10">
         <div className="mb-2 font-mono text-[11px] uppercase tracking-[0.25em] text-text-faint">
           007 — Contact

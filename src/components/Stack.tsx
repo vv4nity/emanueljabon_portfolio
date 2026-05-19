@@ -15,7 +15,7 @@ function hexToRgba(hex: string, alpha: number) {
 
 export function Stack() {
   return (
-    <section id="stack" className="relative py-24">
+    <section id="stack" className="relative py-14 md:py-24">
       <div className="mb-10">
         <div className="mb-2 font-mono text-[11px] uppercase tracking-[0.25em] text-text-faint">
           004 — Tech Stack
