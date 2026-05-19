@@ -79,11 +79,11 @@ export function Certifications() {
               }`}
             >
               {/* Badge */}
-              <div className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center">
+              <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl">
                 <img
                   src={cert.badge}
                   alt={`${cert.name} badge`}
-                  className="h-full w-full object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
+                  className="h-full w-full object-cover drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
                 />
               </div>
 
