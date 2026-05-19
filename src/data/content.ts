@@ -9,9 +9,9 @@ export const personal = {
   location: 'Manila, PH',
   timezone: 'GMT+8',
   email: 'emanueljabon18@gmail.com',
-  github: 'https://github.com/yourusername',
-  linkedin: 'https://linkedin.com/in/yourusername',
-  instagram: 'https://instagram.com/yourusername',
+  github: 'https://github.com/vv4nity',
+  linkedin: 'https://linkedin.com/in/emanueljabon',
+  instagram: 'https://instagram.com/vv4nity',
   cvUrl: '/cv', // in-app viewer page
   cvFile: '/Emanuel_Jabon_CV.pdf', // actual PDF file in public/
   cvUpdated: 'May 2026',
