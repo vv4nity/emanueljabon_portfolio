@@ -38,9 +38,9 @@ export function Hero() {
   const FacetIcon = facet.icon;
 
   return (
-    <section className="relative pt-8 pb-20 md:pt-28 md:pb-24">
+    <section className="relative pb-20 md:pt-28 md:pb-24">
       {/* MOBILE — full-bleed editorial hero with photo as background */}
-      <div className="-mx-6 md:hidden">
+      <div className="-mx-6 -mt-px md:hidden">
         <div className="relative h-[88svh] min-h-[620px] w-full overflow-hidden">
           {/* Base gradient backdrop (visible if photo doesn't load) */}
           <div
@@ -51,9 +51,9 @@ export function Hero() {
             }}
           />
 
-          {/* Photo */}
+          {/* Photo — mobile-optimized crop */}
           <img
-            src={personal.photoUrl}
+            src="/hero-photo-mobile.png"
             alt={personal.name}
             className="absolute inset-0 h-full w-full object-cover"
           />
