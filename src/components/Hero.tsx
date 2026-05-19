@@ -41,7 +41,7 @@ export function Hero() {
     <section className="relative pb-20 md:pt-28 md:pb-24">
       {/* MOBILE — full-bleed editorial hero with photo as background */}
       <div className="-mx-6 -mt-px md:hidden">
-        <div className="relative h-[88svh] min-h-[620px] w-full overflow-hidden">
+        <div className="relative h-[84svh] min-h-[580px] w-full overflow-hidden">
           {/* Base gradient backdrop (visible if photo doesn't load) */}
           <div
             className="absolute inset-0"
@@ -67,12 +67,12 @@ export function Hero() {
             }}
           />
 
-          {/* Bottom scrim — strong, fades into page bg for text readability */}
+          {/* Bottom scrim — strong enough for text, but tapered so it blends with the orb-tinted bg below */}
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[78%]"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%]"
             style={{
               background:
-                'linear-gradient(180deg, rgba(5,5,7,0) 0%, rgba(5,5,7,0.45) 30%, rgba(5,5,7,0.85) 60%, rgba(5,5,7,0.97) 85%, #050507 100%)',
+                'linear-gradient(180deg, rgba(5,5,7,0) 0%, rgba(5,5,7,0.35) 25%, rgba(5,5,7,0.7) 55%, rgba(5,5,7,0.88) 85%, rgba(5,5,7,0.85) 100%)',
             }}
           />
 
@@ -100,11 +100,11 @@ export function Hero() {
             <motion.div
               {...fadeUp}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="inline-flex w-fit items-center gap-2.5 rounded-full border-[0.5px] border-white/20 bg-black/40 py-1.5 pl-2.5 pr-3.5 text-[12px] text-text backdrop-blur-md"
+              className="inline-flex w-fit items-center gap-2 rounded-full border-[0.5px] border-white/20 bg-black/40 py-1 pl-2 pr-3 text-[10.5px] text-text backdrop-blur-md"
             >
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
-                <span className="relative h-2 w-2 rounded-full bg-signal shadow-[0_0_10px_#5EFFAA]" />
+                <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
               </span>
               {personal.availability}
             </motion.div>
@@ -115,8 +115,8 @@ export function Hero() {
             <motion.h1
               {...fadeUp}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="font-medium leading-[1.02] tracking-[-0.04em] text-text"
-              style={{ fontSize: 'clamp(40px, 11vw, 56px)' }}
+              className="font-medium leading-[1.04] tracking-[-0.04em] text-text"
+              style={{ fontSize: 'clamp(30px, 8vw, 42px)' }}
             >
               {hero.line1}
               <br />
@@ -134,7 +134,7 @@ export function Hero() {
             <motion.p
               {...fadeUp}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-[14.5px] leading-[1.55] text-text-dim"
+              className="text-[12.5px] leading-[1.55] text-text-dim"
             >
               {hero.lede}
             </motion.p>
@@ -464,7 +464,7 @@ export function Hero() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.6 }}
-        className="mt-20 grid grid-cols-2 border-y border-white/[0.08] py-8 md:mt-24 md:grid-cols-4"
+        className="mt-10 grid grid-cols-2 border-y border-white/[0.08] py-8 md:mt-24 md:grid-cols-4"
       >
         {metrics.map((m, i) => (
           <div
