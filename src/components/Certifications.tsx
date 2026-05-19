@@ -2,16 +2,11 @@
 
 import { motion } from 'framer-motion';
 
-type Certification = {
-  name: string;
-  issuer: string;
-  badge: string;
-};
-
-const CERTIFICATIONS: Certification[] = [
-  { name: 'CCNA', issuer: 'Cisco · Networks', badge: '/CCNAITN__1_.png' },
-  { name: 'AI Essentials', issuer: 'Google', badge: '/googlecloud_1.png' },
-  { name: 'AWS', issuer: 'Amazon Web Services', badge: '/cert-aws.png' },
+const LOGOS = [
+  { src: '/aws.png', alt: 'Amazon Web Services' },
+  { src: '/Cisco_logo_blue_2016.svg', alt: 'Cisco' },
+  { src: '/Google-Logo.wine.svg', alt: 'Google' },
+  { src: '/udemy.png', alt: 'Udemy' },
 ];
 
 export function Certifications() {
@@ -31,7 +26,7 @@ export function Certifications() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.6 }}
-        className="group relative overflow-hidden rounded-2xl border-[0.5px] border-white/[0.08] bg-white/[0.02] backdrop-blur-2xl"
+        className="relative overflow-hidden rounded-2xl border-[0.5px] border-white/[0.08] bg-white/[0.02] backdrop-blur-2xl"
       >
         {/* Ambient glow */}
         <div
@@ -56,46 +51,28 @@ export function Certifications() {
           }}
         />
 
-        {/* Small caption */}
-        <div className="relative flex justify-center pt-6">
-          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint">
-            Earned credentials
-          </span>
-        </div>
-
-        {/* Row of certs */}
-        <div className="relative grid grid-cols-1 md:grid-cols-3">
-          {CERTIFICATIONS.map((cert, i) => (
+        {/* Logo strip */}
+        <div className="relative grid grid-cols-2 md:grid-cols-4">
+          {LOGOS.map((logo, i) => (
             <motion.div
-              key={cert.name}
-              initial={{ opacity: 0, y: 10 }}
+              key={logo.alt}
+              initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
-              className={`relative flex items-center justify-center gap-4 px-6 py-8 md:py-10 ${
-                i < CERTIFICATIONS.length - 1
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+              className={`flex h-28 items-center justify-center px-6 md:h-32 ${
+                i < LOGOS.length - 1
                   ? 'border-b border-white/[0.06] md:border-b-0 md:border-r'
                   : ''
+              } ${i % 2 === 0 ? 'border-r md:border-r' : ''} ${
+                i < LOGOS.length - 2 ? 'border-b md:border-b-0' : ''
               }`}
             >
-              {/* Badge */}
-              <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl">
-                <img
-                  src={cert.badge}
-                  alt={`${cert.name} badge`}
-                  className="h-full w-full object-cover drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
-                />
-              </div>
-
-              {/* Text */}
-              <div className="flex flex-col leading-tight">
-                <span className="text-[18px] font-medium tracking-[-0.01em] text-text md:text-[19px]">
-                  {cert.name}
-                </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-faint">
-                  {cert.issuer}
-                </span>
-              </div>
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="h-10 w-auto max-w-[140px] object-contain opacity-70 grayscale transition-all duration-500 hover:opacity-100 hover:grayscale-0 md:h-12"
+              />
             </motion.div>
           ))}
         </div>
