@@ -1,42 +1,129 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const LABELS: Record<string, { number: string; label: string; accent: string }> = {
-  '/': { number: '000', label: 'Home', accent: 'Welcome' },
-  '/projects': { number: '002', label: 'Projects', accent: 'Archive' },
-  '/cv': { number: '008', label: 'CV', accent: 'Long version' },
+type Info = { number: string; label: string; accent: string };
+
+const ROUTE_INFO: Record<string, Info> = {
+  '/': { number: '000', label: 'Home', accent: 'Welcome back' },
+  '/projects': { number: '002', label: 'Projects', accent: 'The archive' },
+  '/cv': { number: '008', label: 'CV', accent: 'The long version' },
+  '#work': { number: '002', label: 'Work', accent: 'Selected builds' },
+  '#about': { number: '003', label: 'About', accent: 'A bit about me' },
+  '#stack': { number: '004', label: 'Stack', accent: 'Tools I reach for' },
+  '#experience': { number: '005', label: 'Experience', accent: 'Where I’ve been' },
+  '#contact': { number: '007', label: 'Contact', accent: 'Let’s build' },
 };
 
-function infoFor(pathname: string) {
-  if (LABELS[pathname]) return LABELS[pathname];
-  const slug = pathname.replace(/^\//, '').split('/')[0] || 'Page';
-  return { number: '—', label: slug.replace(/-/g, ' '), accent: 'Loading' };
+function infoFor(href: string): Info | null {
+  // Direct route match
+  if (ROUTE_INFO[href]) return ROUTE_INFO[href];
+
+  // /#section style
+  const hashMatch = href.match(/#([\w-]+)/);
+  if (hashMatch) {
+    const key = `#${hashMatch[1]}`;
+    if (ROUTE_INFO[key]) return ROUTE_INFO[key];
+  }
+
+  // Pathname only
+  const pathOnly = href.split('#')[0] || '/';
+  if (ROUTE_INFO[pathOnly]) return ROUTE_INFO[pathOnly];
+
+  return null;
 }
+
+const COVER_MS = 420; // matches the time-to-fully-cover in the animation
+const TOTAL_MS = 1400;
 
 export function PageTransition() {
   const pathname = usePathname();
-  const prev = useRef(pathname);
+  const router = useRouter();
   const isFirst = useRef(true);
   const [active, setActive] = useState(false);
-  const [info, setInfo] = useState(infoFor(pathname));
+  const [info, setInfo] = useState<Info>(ROUTE_INFO['/']);
 
+  // Skip first mount (preloader covers initial render)
   useEffect(() => {
-    if (isFirst.current) {
-      isFirst.current = false;
-      prev.current = pathname;
-      return;
-    }
-    if (prev.current === pathname) return;
-    prev.current = pathname;
+    isFirst.current = false;
+  }, []);
 
-    setInfo(infoFor(pathname));
+  // Intercept clicks on internal links so we can transition before nav (and cover hash jumps too)
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (e.defaultPrevented) return;
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+      if (e.button !== 0) return;
+
+      const target = e.target as HTMLElement | null;
+      const a = target?.closest('a') as HTMLAnchorElement | null;
+      if (!a) return;
+
+      const href = a.getAttribute('href');
+      if (!href) return;
+      if (a.target === '_blank') return;
+      if (a.hasAttribute('download')) return;
+      if (
+        href.startsWith('http://') ||
+        href.startsWith('https://') ||
+        href.startsWith('mailto:') ||
+        href.startsWith('tel:')
+      ) {
+        return;
+      }
+
+      const meta = infoFor(href);
+      if (!meta) return;
+
+      // Skip identical destination
+      const currentHref = window.location.pathname + window.location.hash;
+      if (href === currentHref) return;
+
+      e.preventDefault();
+      setInfo(meta);
+      setActive(true);
+
+      // Navigate when the curtain fully covers the screen
+      window.setTimeout(() => {
+        if (href.startsWith('/#') || href.startsWith('#')) {
+          // Same-page anchor (or home-anchor while already on home)
+          const hash = href.includes('#') ? href.slice(href.indexOf('#')) : '';
+          const onHome = window.location.pathname === '/';
+          if (!onHome) {
+            // Need to route to home with hash
+            router.push(href);
+          } else if (hash) {
+            const id = hash.slice(1);
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
+            window.history.replaceState(null, '', hash);
+          }
+        } else {
+          router.push(href);
+        }
+      }, COVER_MS);
+
+      // Hide overlay after the full sequence
+      window.setTimeout(() => setActive(false), TOTAL_MS);
+    };
+
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
+  }, [router]);
+
+  // Fallback: still respond to pathname-only changes (e.g. browser back/forward)
+  useEffect(() => {
+    if (isFirst.current) return;
+    if (active) return;
+    const meta = ROUTE_INFO[pathname];
+    if (!meta) return;
+    setInfo(meta);
     setActive(true);
-
-    const id = setTimeout(() => setActive(false), 1400);
-    return () => clearTimeout(id);
+    const id = window.setTimeout(() => setActive(false), TOTAL_MS);
+    return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (
@@ -46,86 +133,45 @@ export function PageTransition() {
           key="page-transition"
           initial={{ y: '100%' }}
           animate={{ y: ['100%', '0%', '0%', '-100%'] }}
-          exit={{ y: '-100%' }}
+          exit={{ opacity: 0 }}
           transition={{
-            duration: 1.4,
-            times: [0, 0.3, 0.7, 1],
+            duration: TOTAL_MS / 1000,
+            times: [0, COVER_MS / TOTAL_MS, 0.72, 1],
             ease: [0.76, 0, 0.24, 1],
           }}
           className="fixed inset-0 z-[180] flex items-center justify-center overflow-hidden"
           style={{ background: '#050507' }}
         >
-          {/* Ambient glow */}
+          {/* Soft ambient glow behind label */}
           <div
-            className="pointer-events-none absolute -left-32 top-1/4 h-[420px] w-[420px] rounded-full"
+            className="pointer-events-none absolute h-[480px] w-[480px] rounded-full"
             style={{
               background:
-                'radial-gradient(circle, rgba(193,123,232,0.22), transparent 60%)',
-              filter: 'blur(80px)',
-            }}
-          />
-          <div
-            className="pointer-events-none absolute -right-32 bottom-1/4 h-[420px] w-[420px] rounded-full"
-            style={{
-              background:
-                'radial-gradient(circle, rgba(96,128,255,0.2), transparent 60%)',
-              filter: 'blur(80px)',
+                'radial-gradient(circle, rgba(193,123,232,0.16), transparent 65%)',
+              filter: 'blur(60px)',
             }}
           />
 
-          {/* Top hairline */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute left-6 right-6 top-10 h-px md:left-10 md:right-10"
-            style={{
-              background:
-                'linear-gradient(90deg, transparent, rgba(255,255,255,0.18) 20%, rgba(255,255,255,0.18) 80%, transparent)',
-              transformOrigin: 'left',
-            }}
-          />
-          {/* Bottom hairline */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute bottom-10 left-6 right-6 h-px md:left-10 md:right-10"
-            style={{
-              background:
-                'linear-gradient(90deg, transparent, rgba(255,255,255,0.18) 20%, rgba(255,255,255,0.18) 80%, transparent)',
-              transformOrigin: 'right',
-            }}
-          />
-
-          {/* Top-left meta */}
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.35 }}
-            className="absolute left-6 top-6 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint md:left-10 md:top-10"
-          >
-            <span className="text-text-faint">›</span> Navigating to
-          </motion.div>
-
-          {/* Top-right index */}
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-            className="absolute right-6 top-6 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint md:right-10 md:top-10"
-          >
-            {info.number} / {info.accent}
-          </motion.div>
-
-          {/* Center label */}
           <div className="relative flex flex-col items-center px-6">
+            {/* Section number — small mono caps */}
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.18 }}
+              className="mb-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-text-faint"
+            >
+              <span>{info.number}</span>
+              <span className="h-px w-12 bg-white/20" />
+              <span>Index</span>
+            </motion.div>
+
+            {/* Big page label */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.55,
-                delay: 0.25,
+                delay: 0.22,
                 ease: [0.16, 1, 0.3, 1],
               }}
               className="font-medium uppercase leading-[0.85] tracking-[-0.06em] text-text"
@@ -134,47 +180,30 @@ export function PageTransition() {
               {info.label}
             </motion.div>
 
+            {/* Gradient underline that draws across */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-5 h-[2px] w-[68%] origin-left rounded-full"
+              style={{
+                background:
+                  'linear-gradient(90deg, transparent, #C17BE8 30%, #6080FF 70%, transparent)',
+                boxShadow: '0 0 14px rgba(193,123,232,0.4)',
+              }}
+            />
+
+            {/* Italic accent line */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.45 }}
+              transition={{ duration: 0.45, delay: 0.4 }}
               className="mt-5 font-serif italic gradient-text"
-              style={{ fontSize: 'clamp(20px, 2.4vw, 32px)' }}
+              style={{ fontSize: 'clamp(18px, 2vw, 26px)' }}
             >
               {info.accent}.
             </motion.div>
           </div>
-
-          {/* Bottom-left signature */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint md:bottom-10 md:left-10"
-          >
-            EJ · Portfolio
-          </motion.div>
-
-          {/* Bottom-right loading line */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="absolute bottom-6 right-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint md:bottom-10 md:right-10"
-          >
-            <span>Loading</span>
-            <span className="relative inline-block h-[2px] w-16 overflow-hidden rounded-full bg-white/[0.06]">
-              <motion.span
-                initial={{ x: '-100%' }}
-                animate={{ x: '100%' }}
-                transition={{ duration: 1, delay: 0.3, ease: 'easeInOut' }}
-                className="absolute inset-y-0 w-1/2"
-                style={{
-                  background: 'linear-gradient(90deg, transparent, #C17BE8, #6080FF, transparent)',
-                }}
-              />
-            </span>
-          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
