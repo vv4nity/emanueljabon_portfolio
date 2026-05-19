@@ -18,7 +18,7 @@ const FACTS = [
   { icon: TbMapPin, label: 'Based in', value: 'Manila, PH' },
   { icon: TbBuildingArch, label: 'University', value: 'PUP — Sta. Mesa' },
   { icon: TbAward, label: 'Degree', value: 'BS Computer Engineering' },
-  { icon: TbBrain, label: 'Focus', value: 'System Dev · AI/ML' },
+  { icon: TbBrain, label: 'Focus', value: 'System Dev · AI & ML' },
   { icon: TbCertificate, label: 'Certification', value: 'CCNA — Cisco' },
   { icon: TbLanguage, label: 'Languages', value: 'EN · FIL' },
   { icon: TbCircleCheck, label: 'Available', value: 'Open to roles' },
@@ -53,7 +53,7 @@ export function About() {
           <p>
             Most of my work sits between{' '}
             <span className="text-text">system development</span> and{' '}
-            <span className="text-text">applied AI/ML</span> — services that need to stay up,
+            <span className="text-text">applied Artificial Intelligence and Machine Learning</span> — services that need to stay up,
             models that need to actually run in front of real users. I care about clean
             architecture, the unglamorous parts of shipping, and writing code that the next
             person on the project doesn&apos;t hate inheriting.

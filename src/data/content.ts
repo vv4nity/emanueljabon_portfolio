@@ -26,7 +26,7 @@ export const hero = {
   line2Rest: 'software',
   closer: 'with care.',
   lede:
-    'Computer Engineer from PUP, focused on system development and AI/ML. Building full-stack apps, backend services, and AI-driven systems — still learning, still shipping.',
+    'Computer Engineer from PUP, focused on system development and Artificial Intelligence & Machine Learning. Building full-stack apps, backend services, and AI-driven systems — still learning, still shipping.',
   credentials: ['BSCpE · 2026', '12+ projects shipped', 'Open source'],
   currentlyBuilding: {
     label: 'Currently building',

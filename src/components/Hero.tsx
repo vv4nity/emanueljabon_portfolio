@@ -14,7 +14,7 @@ import { CountUp } from './CountUp';
 
 const NOW_FACETS: { icon: IconType; label: string; value: string }[] = [
   { icon: TbBuildingArch, label: 'Studied at', value: 'PUP — Sta. Mesa' },
-  { icon: TbBrain, label: 'Focus', value: 'System Dev · AI/ML' },
+  { icon: TbBrain, label: 'Focus', value: 'System Dev · Artificial Intelligence & Machine Learning' },
   { icon: TbMapPin, label: 'Based in', value: 'Manila · GMT+8' },
   { icon: TbCircleCheck, label: 'Status', value: 'Open to roles' },
 ];
