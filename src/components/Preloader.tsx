@@ -48,15 +48,14 @@ export function Preloader() {
 
   return (
     <AnimatePresence>
-      {stage !== 'done' && (
-        <motion.div
-          key="preloader"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: stage === 'fading' ? 0 : 1 }}
-          transition={{ duration: FADE_MS / 1000, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[200] flex items-center justify-center"
-          style={{ background: '#050507' }}
-        >
+      <motion.div
+        key="preloader"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: stage === 'fading' ? 0 : 1 }}
+        transition={{ duration: FADE_MS / 1000, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed inset-0 z-[200] flex items-center justify-center"
+        style={{ background: '#050507' }}
+      >
           {/* Soft brand glow */}
           <div
             aria-hidden
@@ -113,8 +112,7 @@ export function Preloader() {
               />
             </div>
           </div>
-        </motion.div>
-      )}
+      </motion.div>
     </AnimatePresence>
   );
 }
