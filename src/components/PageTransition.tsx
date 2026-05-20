@@ -156,16 +156,16 @@ export function PageTransition() {
             }}
           />
 
-          <div className="relative flex flex-col items-center px-6">
+          <div className="relative flex max-w-full flex-col items-center px-6">
             {/* Section number — small mono caps */}
             <motion.div
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: 0.18 }}
-              className="mb-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-text-faint"
+              className="mb-5 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-text-faint md:mb-6"
             >
               <span>{info.number}</span>
-              <span className="h-px w-12 bg-white/20" />
+              <span className="h-px w-10 bg-white/20 md:w-12" />
               <span>Index</span>
             </motion.div>
 
@@ -178,8 +178,8 @@ export function PageTransition() {
                 delay: 0.22,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="font-medium uppercase leading-[0.85] tracking-[-0.06em] text-text"
-              style={{ fontSize: 'clamp(72px, 14vw, 200px)' }}
+              className="max-w-full break-words text-center font-medium uppercase leading-[0.9] tracking-[-0.05em] text-text"
+              style={{ fontSize: 'clamp(44px, 12vw, 200px)' }}
             >
               {info.label}
             </motion.div>
@@ -189,7 +189,7 @@ export function PageTransition() {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-5 h-[2px] w-[68%] origin-left rounded-full"
+              className="mt-4 h-[2px] w-[60%] origin-left rounded-full md:mt-5 md:w-[68%]"
               style={{
                 background:
                   'linear-gradient(90deg, transparent, #C17BE8 30%, #6080FF 70%, transparent)',
@@ -202,8 +202,8 @@ export function PageTransition() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.4 }}
-              className="mt-5 font-serif italic gradient-text"
-              style={{ fontSize: 'clamp(18px, 2vw, 26px)' }}
+              className="mt-4 text-center font-serif italic gradient-text md:mt-5"
+              style={{ fontSize: 'clamp(15px, 1.8vw, 26px)' }}
             >
               {info.accent}.
             </motion.div>
