@@ -237,15 +237,27 @@ export function Nav() {
                 }}
               />
 
+              {/* TopBar-style strip for brand consistency */}
+              <div className="relative flex items-center justify-between border-b border-white/[0.06] px-6 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
+                <span>Portfolio · MMXXVI</span>
+                <span className="inline-flex items-center gap-2">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
+                  </span>
+                  Online
+                </span>
+              </div>
+
               {/* Drawer header — logo + close */}
-              <div className="relative flex items-center justify-between px-6 py-4">
+              <div className="relative flex items-center justify-between px-6 py-5">
                 <Link
                   href="/"
                   onClick={closeMenu}
-                  className="flex items-center gap-2.5"
+                  className="flex items-center gap-3"
                 >
                   <div
-                    className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
+                    className="flex h-10 w-10 items-center justify-center rounded-[10px] text-[14px] font-semibold text-white"
                     style={{
                       background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
                       boxShadow:
@@ -255,10 +267,10 @@ export function Nav() {
                     {personal.initials}
                   </div>
                   <div className="flex flex-col leading-tight">
-                    <span className="text-[13px] font-medium tracking-tight text-text">
+                    <span className="text-[15px] font-medium tracking-tight text-text">
                       {personal.name}
                     </span>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-text-faint">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-text-faint">
                       Menu
                     </span>
                   </div>
@@ -268,9 +280,9 @@ export function Nav() {
                   type="button"
                   onClick={closeMenu}
                   aria-label="Close menu"
-                  className="relative flex h-9 w-9 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-white/[0.04] text-text transition-colors hover:bg-white/[0.08]"
+                  className="relative flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-white/[0.04] text-text transition-colors hover:bg-white/[0.08]"
                 >
-                  <span className="relative block h-3 w-3">
+                  <span className="relative block h-3.5 w-3.5">
                     <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 rotate-45 bg-text" />
                     <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 -rotate-45 bg-text" />
                   </span>
@@ -278,7 +290,7 @@ export function Nav() {
               </div>
 
               {/* Scrollable content */}
-              <div className="relative flex flex-1 flex-col overflow-y-auto px-6 pb-8 pt-2">
+              <div className="relative flex flex-1 flex-col overflow-y-auto px-6 pb-8 pt-3">
               {/* Section label */}
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
@@ -312,17 +324,17 @@ export function Nav() {
                     <Link
                       href={link.href}
                       onClick={closeMenu}
-                      className="group flex items-baseline justify-between border-b border-white/[0.06] py-3"
+                      className="group flex items-baseline justify-between border-b border-white/[0.06] py-4"
                     >
-                      <span className="flex items-baseline gap-3">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
+                      <span className="flex items-baseline gap-4">
+                        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-faint">
                           {String(i + 1).padStart(2, '0')}
                         </span>
-                        <span className="text-[22px] font-medium tracking-[-0.02em] text-text transition-colors group-hover:gradient-text-2">
+                        <span className="text-[28px] font-medium tracking-[-0.025em] text-text transition-colors group-hover:gradient-text-2">
                           {link.label}
                         </span>
                       </span>
-                      <span className="text-[15px] text-text-faint transition-transform group-hover:translate-x-1">
+                      <span className="text-[17px] text-text-faint transition-transform group-hover:translate-x-1">
                         →
                       </span>
                     </Link>
