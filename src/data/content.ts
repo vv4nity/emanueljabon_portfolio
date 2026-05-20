@@ -235,6 +235,7 @@ export const organizations: Organization[] = [
   },
   {
     name: 'Arduino Day Philippines',
+    shortName: 'Arduino Day PH',
     role: 'Creatives & Multimedia Team',
     period: 'Feb — Mar 2025',
     category: 'Community',
