@@ -196,7 +196,7 @@ export function Nav() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={closeMenu}
-              className="fixed inset-0 z-40"
+              className="fixed inset-0 z-[60]"
               style={{ background: 'rgba(5,5,7,0.55)', backdropFilter: 'blur(8px)' }}
             />
 
@@ -207,7 +207,7 @@ export function Nav() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed right-0 top-0 z-40 flex h-[100dvh] w-[85vw] max-w-[400px] flex-col overflow-hidden border-l-[0.5px] border-white/[0.1]"
+              className="fixed right-0 top-0 z-[60] flex h-[100dvh] w-[85vw] max-w-[400px] flex-col overflow-hidden border-l-[0.5px] border-white/[0.1]"
               style={{ background: 'rgba(8,8,15,0.94)', backdropFilter: 'blur(28px)' }}
             >
               {/* Ambient glow */}
@@ -413,7 +413,7 @@ export function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 overflow-y-auto overflow-x-hidden md:hidden"
+            className="fixed inset-0 z-[60] overflow-y-auto overflow-x-hidden md:hidden"
             style={{ background: 'rgba(5,5,7,0.94)', backdropFilter: 'blur(28px)' }}
           >
             {/* Ambient glow */}
@@ -434,7 +434,41 @@ export function Nav() {
               }}
             />
 
-            <div className="relative flex min-h-full flex-col px-6 pb-8 pt-28">
+            <div className="relative flex min-h-full flex-col px-6 pb-8 pt-4">
+              {/* Top status strip — mirrors TopBar so the menu always shows brand markers regardless of scroll */}
+              <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
+                <span>Portfolio · MMXXVI</span>
+                <span className="inline-flex items-center gap-2">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
+                  </span>
+                  Online
+                </span>
+              </div>
+
+              {/* Logo header */}
+              <div className="mb-6 flex items-center gap-3 border-b border-white/[0.06] pb-5">
+                <div
+                  className="flex h-10 w-10 items-center justify-center rounded-[10px] text-[14px] font-semibold text-white"
+                  style={{
+                    background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
+                    boxShadow:
+                      '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
+                  }}
+                >
+                  {personal.initials}
+                </div>
+                <div className="flex flex-col leading-tight">
+                  <span className="text-[15px] font-medium tracking-tight text-text">
+                    {personal.name}
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-text-faint">
+                    Menu
+                  </span>
+                </div>
+              </div>
+
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -577,7 +611,7 @@ export function Nav() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.7 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed right-6 top-[54px] z-[55] flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30"
+            className="fixed right-6 top-[54px] z-[65] flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30"
             style={{
               background:
                 'linear-gradient(135deg, rgba(193,123,232,0.65), rgba(96,128,255,0.55))',
