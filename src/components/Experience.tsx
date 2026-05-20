@@ -196,15 +196,12 @@ export function Experience() {
           <TbUsersGroup size={13} />
           <span>Organizations</span>
           <span
-            className="h-px max-w-[220px] flex-1"
+            className="h-px flex-1"
             style={{
               background:
                 'linear-gradient(to right, rgba(255,255,255,0.18), transparent)',
             }}
           />
-          <span className="font-mono text-[10px] tracking-[0.18em] text-text-faint/70">
-            {String(organizations.length).padStart(2, '0')} affiliations
-          </span>
         </motion.div>
 
         <div className="grid gap-3 md:grid-cols-3">
