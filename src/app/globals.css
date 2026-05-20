@@ -18,20 +18,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Subtle fixed dot-grid texture — sits behind content, gives the page a designed surface */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 28px 28px;
-  background-attachment: fixed;
-  pointer-events: none;
-  z-index: 0;
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 40%, transparent 95%);
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 40%, transparent 95%);
-}
-
 body::before {
   content: '';
   position: fixed;
