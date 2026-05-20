@@ -58,46 +58,24 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: 'sentiment-classifier',
+    id: 'mirafit-ai',
     number: '01',
-    badge: 'ML',
-    title: 'Sentiment Classifier',
+    badge: 'AI',
+    title: 'MiraFit AI',
     description:
-      'BERT-based NLP model deployed via FastAPI & Docker. Achieved 94% accuracy on production data with sub-50ms latency.',
-    tags: ['PyTorch', 'FastAPI', 'Docker', 'AWS'],
-    github: 'https://github.com/yourusername/sentiment-classifier',
+      'Real-time pose-estimation and exercise-validation pipeline using MediaPipe and YOLOv8 — accurate rep counting and live form feedback without wearables. Gemini 2.5 generates personalized workout and meal plans from body type, health conditions, and dietary inputs.',
+    tags: ['Python', 'Flask', 'MediaPipe', 'YOLOv8', 'Gemini 2.5'],
     featured: true,
   },
   {
-    id: 'realtime-dashboard',
+    id: 'mirafit-admin-dashboard',
     number: '02',
     badge: 'WEB',
-    title: 'Real-time Dashboard',
+    title: 'MiraFit Admin Dashboard',
     description:
-      'Full-stack analytics platform with live WebSocket streams. Sub-100ms updates across 50+ concurrent connections.',
-    tags: ['Next.js', 'WebSockets', 'Postgres', 'Redis'],
-    github: 'https://github.com/yourusername/realtime-dashboard',
+      'Centralized admin platform for managing user accounts, workout data, and AI-generated plan statistics across the MiraFit ecosystem. Analytics modules track engagement and integrate health monitoring for backend services and AI servers.',
+    tags: ['PHP', 'MySQL', 'JavaScript', 'Node.js', 'Apache'],
     featured: true,
-  },
-  {
-    id: 'image-segmentation',
-    number: '03',
-    badge: 'ML',
-    title: 'Image Segmentation API',
-    description:
-      'U-Net model for medical image segmentation. Trained on 10K+ samples with 89% IoU score.',
-    tags: ['TensorFlow', 'OpenCV', 'Flask'],
-    github: 'https://github.com/yourusername/image-seg',
-  },
-  {
-    id: 'rag-chatbot',
-    number: '04',
-    badge: 'AI',
-    title: 'RAG Chatbot',
-    description:
-      'Retrieval-augmented generation chatbot using LangChain & Pinecone. Indexed 100K+ documents with sub-second retrieval.',
-    tags: ['LangChain', 'Pinecone', 'OpenAI', 'Next.js'],
-    github: 'https://github.com/yourusername/rag-chatbot',
   },
 ];
 

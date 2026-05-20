@@ -29,8 +29,14 @@ import {
   SiFlask,
   SiOpenai,
   SiSocketdotio,
+  SiPhp,
+  SiMysql,
+  SiApache,
+  SiHtml5,
+  SiGooglegemini,
+  SiMediapipe,
 } from 'react-icons/si';
-import { TbDatabase, TbTerminal2, TbCloud, TbBox, TbVectorTriangle } from 'react-icons/tb';
+import { TbDatabase, TbTerminal2, TbCloud, TbBox, TbVectorTriangle, TbScan } from 'react-icons/tb';
 
 export type Tool = { icon: IconType; color: string };
 
@@ -54,6 +60,11 @@ export const TOOLS: Record<string, Tool> = {
   Pandas: { icon: SiPandas, color: '#150458' },
   OpenAI: { icon: SiOpenai, color: '#FFFFFF' },
   Pinecone: { icon: TbVectorTriangle, color: '#3CDFB0' },
+  'Gemini 2.5': { icon: SiGooglegemini, color: '#8AB4F8' },
+  Gemini: { icon: SiGooglegemini, color: '#8AB4F8' },
+  MediaPipe: { icon: SiMediapipe, color: '#0097A7' },
+  YOLOv8: { icon: TbScan, color: '#00FFFF' },
+  'TensorFlow Lite': { icon: SiTensorflow, color: '#FF6F00' },
 
   // Web & Backend
   'Next.js': { icon: SiNextdotjs, color: '#FFFFFF' },
@@ -64,6 +75,10 @@ export const TOOLS: Record<string, Tool> = {
   Express: { icon: SiExpress, color: '#FFFFFF' },
   PostgreSQL: { icon: SiPostgresql, color: '#4169E1' },
   Postgres: { icon: SiPostgresql, color: '#4169E1' },
+  PHP: { icon: SiPhp, color: '#777BB4' },
+  MySQL: { icon: SiMysql, color: '#4479A1' },
+  Apache: { icon: SiApache, color: '#D22128' },
+  'HTML/CSS': { icon: SiHtml5, color: '#E34F26' },
   Redis: { icon: SiRedis, color: '#FF4438' },
   MongoDB: { icon: SiMongodb, color: '#47A248' },
   WebSockets: { icon: SiSocketdotio, color: '#FFFFFF' },
