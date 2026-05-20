@@ -582,7 +582,7 @@ export function Nav() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.7, y: 8 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="group fixed right-6 top-16 z-[45] flex h-11 w-11 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30 md:right-8 md:top-20 md:h-12 md:w-12"
+            className="group fixed right-6 top-[54px] z-[45] flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30"
             style={{
               background:
                 'linear-gradient(135deg, rgba(193,123,232,0.65), rgba(96,128,255,0.55))',
