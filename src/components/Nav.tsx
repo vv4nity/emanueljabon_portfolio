@@ -557,7 +557,14 @@ export function Nav() {
           <motion.button
             key="menu-fab"
             type="button"
-            onClick={openDrawer}
+            onClick={() => {
+              // Mobile uses the original fullscreen menu; desktop uses the side drawer
+              if (typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches) {
+                openDrawer();
+              } else {
+                openFullscreen();
+              }
+            }}
             aria-label="Open menu"
             initial={{ opacity: 0, scale: 0.6, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
