@@ -275,7 +275,14 @@ export function Experience() {
                   <div className="min-w-0 flex-1">
                     <div className="mb-1 flex items-center justify-between gap-2">
                       <h3 className="truncate text-[15px] font-medium tracking-[-0.01em] text-text">
-                        {org.name}
+                        {org.shortName ? (
+                          <>
+                            <span className="md:hidden">{org.shortName}</span>
+                            <span className="hidden md:inline">{org.name}</span>
+                          </>
+                        ) : (
+                          org.name
+                        )}
                       </h3>
                       {org.category && (
                         <span className="rounded-full border-[0.5px] border-white/10 bg-white/[0.03] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-text-faint">

@@ -199,6 +199,7 @@ export const experience: ExperienceItem[] = [
 // ─────────────────────────────────────────────
 export type Organization = {
   name: string;
+  shortName?: string; // used on mobile when name overflows
   role: string;
   period: string;
   category?: 'Tech' | 'Student' | 'Community';
@@ -210,6 +211,7 @@ export type Organization = {
 export const organizations: Organization[] = [
   {
     name: 'ICPEP Student Edition - PUP',
+    shortName: 'ICPEP SE - PUP',
     role: 'Vice President for Graphics',
     period: 'Sep 2025 — Jul 2026',
     category: 'Tech',
@@ -218,6 +220,7 @@ export const organizations: Organization[] = [
   },
   {
     name: 'Google Developer Groups - PUP',
+    shortName: 'GDG - PUP',
     role: 'Audio-Visual & Animations Co-Lead',
     period: 'Sep 2025 — Jul 2026',
     category: 'Tech',
