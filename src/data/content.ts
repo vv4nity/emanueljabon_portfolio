@@ -212,24 +212,28 @@ export const organizations: Organization[] = [
     role: 'Vice President for Graphics',
     period: 'Sep 2025 — Jul 2026',
     category: 'Tech',
+    logo: '/icpep.png',
   },
   {
     name: 'Google Developer Groups - PUP',
     role: 'Audio-Visual & Animations Co-Lead',
     period: 'Sep 2025 — Jul 2026',
     category: 'Tech',
+    logo: '/gdgpup_logo.jpeg',
   },
   {
     name: 'PUP ACCESS',
     role: 'Junior Officer · Creatives Committee',
     period: 'Dec 2024 — Jul 2025',
     category: 'Student',
+    logo: '/access.jpeg',
   },
   {
     name: 'Arduino Day Philippines',
     role: 'Creatives & Multimedia Team',
     period: 'Feb — Mar 2025',
     category: 'Community',
+    logo: '/arduinodayph_logo.jpeg',
   },
 ];
 
