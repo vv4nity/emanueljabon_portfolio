@@ -4,11 +4,12 @@ import { personal } from '@/data/content';
 import { FiGithub, FiLinkedin, FiInstagram, FiMail, FiArrowUp } from 'react-icons/fi';
 
 const sitemap = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Stack', href: '#stack' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Work', href: '/#work' },
+  { label: 'About', href: '/#about' },
+  { label: 'Stack', href: '/#stack' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export function Footer() {
