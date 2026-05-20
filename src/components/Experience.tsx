@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { experience } from '@/data/content';
+import { TbUsersGroup } from 'react-icons/tb';
+import { experience, organizations } from '@/data/content';
 
 function initialsFrom(org: string) {
   return org
@@ -180,6 +181,120 @@ export function Experience() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </div>
+
+      {/* Organizations sub-section */}
+      <div className="mt-20 md:mt-24">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-text-faint"
+        >
+          <TbUsersGroup size={13} />
+          <span>Organizations</span>
+          <span
+            className="h-px max-w-[220px] flex-1"
+            style={{
+              background:
+                'linear-gradient(to right, rgba(255,255,255,0.18), transparent)',
+            }}
+          />
+          <span className="font-mono text-[10px] tracking-[0.18em] text-text-faint/70">
+            {String(organizations.length).padStart(2, '0')} affiliations
+          </span>
+        </motion.div>
+
+        <div className="grid gap-3 md:grid-cols-3">
+          {organizations.map((org, i) => {
+            const initials = org.name
+              .split(/\s+/)
+              .filter(Boolean)
+              .slice(0, 2)
+              .map((w) => w[0]?.toUpperCase())
+              .join('');
+            const even = i % 2 === 0;
+            return (
+              <motion.a
+                key={org.name + i}
+                href={org.link ?? '#'}
+                target={org.link ? '_blank' : undefined}
+                rel={org.link ? 'noreferrer' : undefined}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="group relative overflow-hidden rounded-2xl border-[0.5px] border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-2xl transition-all hover:-translate-y-0.5 hover:border-white/15"
+              >
+                {/* Accent glow */}
+                <div
+                  className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 opacity-25 blur-3xl transition-opacity duration-500 group-hover:opacity-60"
+                  style={{
+                    background: even
+                      ? 'radial-gradient(circle, rgba(193,123,232,0.5), transparent 70%)'
+                      : 'radial-gradient(circle, rgba(96,128,255,0.5), transparent 70%)',
+                  }}
+                />
+
+                {/* Top hairline */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px overflow-hidden">
+                  <div
+                    className="h-full w-full origin-left scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
+                    style={{
+                      background:
+                        'linear-gradient(90deg, transparent, rgba(193,123,232,0.6) 30%, rgba(96,128,255,0.6) 70%, transparent)',
+                    }}
+                  />
+                </div>
+
+                <div className="relative flex items-start gap-3">
+                  {/* Logo / monogram */}
+                  <div
+                    className="relative flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border-[0.5px] border-white/15 text-[12px] font-semibold text-white"
+                    style={{
+                      background: org.logo
+                        ? 'transparent'
+                        : even
+                          ? 'linear-gradient(135deg, rgba(193,123,232,0.55), rgba(96,128,255,0.55))'
+                          : 'linear-gradient(135deg, rgba(96,128,255,0.55), rgba(193,123,232,0.55))',
+                      boxShadow: org.logo ? 'none' : 'inset 0 1px 0 rgba(255,255,255,0.18)',
+                    }}
+                  >
+                    {org.logo ? (
+                      <img
+                        src={org.logo}
+                        alt={`${org.name} logo`}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    ) : (
+                      initials
+                    )}
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-1 flex items-center justify-between gap-2">
+                      <h3 className="truncate text-[15px] font-medium tracking-[-0.01em] text-text">
+                        {org.name}
+                      </h3>
+                      {org.category && (
+                        <span className="rounded-full border-[0.5px] border-white/10 bg-white/[0.03] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-text-faint">
+                          {org.category}
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-[12px] font-medium text-text-dim">
+                      {org.role}
+                    </div>
+                    <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-text-faint">
+                      {org.period}
+                    </div>
+                  </div>
+                </div>
+              </motion.a>
+            );
+          })}
         </div>
       </div>
     </section>

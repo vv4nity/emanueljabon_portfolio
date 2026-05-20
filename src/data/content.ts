@@ -195,6 +195,39 @@ export const experience: ExperienceItem[] = [
 ];
 
 // ─────────────────────────────────────────────
+// ORGANIZATIONS
+// ─────────────────────────────────────────────
+export type Organization = {
+  name: string;
+  role: string;
+  period: string;
+  category?: 'Tech' | 'Student' | 'Community';
+  logo?: string; // optional path under /public, e.g. '/org-something.png'
+  link?: string;
+};
+
+export const organizations: Organization[] = [
+  {
+    name: 'Organization One',
+    role: 'Member',
+    period: '2023 — 2024',
+    category: 'Tech',
+  },
+  {
+    name: 'Organization Two',
+    role: 'Officer',
+    period: '2023 — 2024',
+    category: 'Student',
+  },
+  {
+    name: 'Organization Three',
+    role: 'Member',
+    period: '2022 — 2023',
+    category: 'Community',
+  },
+];
+
+// ─────────────────────────────────────────────
 // BLOG / WRITING
 // ─────────────────────────────────────────────
 export type BlogPost = {
