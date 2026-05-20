@@ -23,6 +23,7 @@ const socials = [
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [showFab, setShowFab] = useState(false);
 
   // Close the menu whenever a navigation begins (PageTransition emits this).
   // Needed because PageTransition stops event propagation, so Link onClick={closeMenu} never fires.
@@ -30,6 +31,16 @@ export function Nav() {
     const handler = () => setOpen(false);
     window.addEventListener('app:nav-start', handler);
     return () => window.removeEventListener('app:nav-start', handler);
+  }, []);
+
+  // Reveal the floating menu button after the user scrolls past the hero area
+  useEffect(() => {
+    const onScroll = () => {
+      setShowFab(window.scrollY > 500);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Lock body scroll when menu is open (iOS-safe via position:fixed)
@@ -170,7 +181,7 @@ export function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 overflow-y-auto overflow-x-hidden md:hidden"
+            className="fixed inset-0 z-40 overflow-y-auto overflow-x-hidden"
             style={{ background: 'rgba(5,5,7,0.92)', backdropFilter: 'blur(28px)' }}
           >
             {/* Ambient glow */}
@@ -311,6 +322,45 @@ export function Nav() {
               </div>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating menu FAB — appears after scrolling past the hero */}
+      <AnimatePresence>
+        {showFab && !open && (
+          <motion.button
+            key="menu-fab"
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            initial={{ opacity: 0, scale: 0.6, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.7, y: 8 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="group fixed bottom-6 right-6 z-[45] flex h-12 w-12 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30 md:bottom-8 md:right-8"
+            style={{
+              background:
+                'radial-gradient(120% 120% at 20% 20%, rgba(193,123,232,0.55), rgba(96,128,255,0.45) 70%, rgba(15,15,28,0.85))',
+              boxShadow:
+                '0 14px 40px rgba(127,80,220,0.35), 0 0 0 0.5px rgba(255,255,255,0.1) inset',
+            }}
+          >
+            {/* Soft outer pulse ring */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-full opacity-50"
+              style={{
+                background:
+                  'radial-gradient(circle, rgba(193,123,232,0.3), transparent 70%)',
+                filter: 'blur(8px)',
+              }}
+            />
+            <span className="relative block h-3 w-4">
+              <span className="absolute left-0 top-0 h-[1.5px] w-full rounded-full bg-text transition-transform duration-300 group-hover:w-3/4" />
+              <span className="absolute left-0 top-[5px] h-[1.5px] w-full rounded-full bg-text" />
+              <span className="absolute bottom-0 left-0 h-[1.5px] w-full rounded-full bg-text transition-transform duration-300 group-hover:w-1/2" />
+            </span>
+          </motion.button>
         )}
       </AnimatePresence>
     </>
