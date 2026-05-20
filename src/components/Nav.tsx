@@ -172,38 +172,101 @@ export function Nav() {
         </div>
       </nav>
 
-      {/* Mobile fullscreen menu */}
+      {/* Slide-in side drawer menu */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            key="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 overflow-y-auto overflow-x-hidden"
-            style={{ background: 'rgba(5,5,7,0.92)', backdropFilter: 'blur(28px)' }}
-          >
-            {/* Ambient glow */}
-            <div
-              className="pointer-events-none absolute -left-24 top-1/4 h-[420px] w-[420px] rounded-full"
-              style={{
-                background:
-                  'radial-gradient(circle, rgba(193,123,232,0.25), transparent 60%)',
-                filter: 'blur(80px)',
-              }}
-            />
-            <div
-              className="pointer-events-none absolute -right-24 bottom-1/4 h-[420px] w-[420px] rounded-full"
-              style={{
-                background:
-                  'radial-gradient(circle, rgba(96,128,255,0.22), transparent 60%)',
-                filter: 'blur(80px)',
-              }}
+          <>
+            {/* Backdrop — click to close */}
+            <motion.div
+              key="menu-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={closeMenu}
+              className="fixed inset-0 z-40"
+              style={{ background: 'rgba(5,5,7,0.55)', backdropFilter: 'blur(8px)' }}
             />
 
-            {/* Content — pushed below the sticky TopBar + Nav so both real headers stay visible */}
-            <div className="relative flex min-h-full flex-col px-6 pb-8 pt-28">
+            {/* Drawer */}
+            <motion.div
+              key="menu-drawer"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed right-0 top-0 z-40 flex h-[100dvh] w-[85vw] max-w-[400px] flex-col overflow-hidden border-l-[0.5px] border-white/[0.1]"
+              style={{ background: 'rgba(8,8,15,0.94)', backdropFilter: 'blur(28px)' }}
+            >
+              {/* Ambient glow */}
+              <div
+                className="pointer-events-none absolute -right-24 top-1/4 h-[360px] w-[360px] rounded-full"
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(193,123,232,0.22), transparent 60%)',
+                  filter: 'blur(80px)',
+                }}
+              />
+              <div
+                className="pointer-events-none absolute -left-24 bottom-1/4 h-[360px] w-[360px] rounded-full"
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(96,128,255,0.18), transparent 60%)',
+                  filter: 'blur(80px)',
+                }}
+              />
+
+              {/* Top gradient hairline */}
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-px"
+                style={{
+                  background:
+                    'linear-gradient(90deg, transparent, rgba(193,123,232,0.5) 30%, rgba(96,128,255,0.5) 70%, transparent)',
+                }}
+              />
+
+              {/* Drawer header — logo + close */}
+              <div className="relative flex items-center justify-between px-6 py-4">
+                <Link
+                  href="/"
+                  onClick={closeMenu}
+                  className="flex items-center gap-2.5"
+                >
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
+                    style={{
+                      background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
+                      boxShadow:
+                        '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
+                    }}
+                  >
+                    {personal.initials}
+                  </div>
+                  <div className="flex flex-col leading-tight">
+                    <span className="text-[13px] font-medium tracking-tight text-text">
+                      {personal.name}
+                    </span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-text-faint">
+                      Menu
+                    </span>
+                  </div>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={closeMenu}
+                  aria-label="Close menu"
+                  className="relative flex h-9 w-9 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-white/[0.04] text-text transition-colors hover:bg-white/[0.08]"
+                >
+                  <span className="relative block h-3 w-3">
+                    <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 rotate-45 bg-text" />
+                    <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 -rotate-45 bg-text" />
+                  </span>
+                </button>
+              </div>
+
+              {/* Scrollable content */}
+              <div className="relative flex flex-1 flex-col overflow-y-auto px-6 pb-8 pt-2">
               {/* Section label */}
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
@@ -226,28 +289,28 @@ export function Nav() {
                 {navLinks.map((link, i) => (
                   <motion.div
                     key={link.href}
-                    initial={{ opacity: 0, x: -16 }}
+                    initial={{ opacity: 0, x: 16 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
                       duration: 0.45,
-                      delay: 0.1 + i * 0.06,
+                      delay: 0.1 + i * 0.05,
                       ease: [0.16, 1, 0.3, 1],
                     }}
                   >
                     <Link
                       href={link.href}
                       onClick={closeMenu}
-                      className="group flex items-baseline justify-between border-b border-white/[0.06] py-3.5"
+                      className="group flex items-baseline justify-between border-b border-white/[0.06] py-3"
                     >
-                      <span className="flex items-baseline gap-4">
+                      <span className="flex items-baseline gap-3">
                         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
                           {String(i + 1).padStart(2, '0')}
                         </span>
-                        <span className="text-[26px] font-medium tracking-[-0.03em] text-text transition-colors group-hover:gradient-text-2">
+                        <span className="text-[22px] font-medium tracking-[-0.02em] text-text transition-colors group-hover:gradient-text-2">
                           {link.label}
                         </span>
                       </span>
-                      <span className="text-[16px] text-text-faint transition-transform group-hover:translate-x-1">
+                      <span className="text-[15px] text-text-faint transition-transform group-hover:translate-x-1">
                         →
                       </span>
                     </Link>
@@ -320,8 +383,9 @@ export function Nav() {
                   {personal.availability}
                 </motion.div>
               </div>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
@@ -337,7 +401,7 @@ export function Nav() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.7, y: 8 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="group fixed bottom-6 right-6 z-[45] flex h-12 w-12 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30 md:bottom-8 md:right-8"
+            className="group fixed right-6 top-24 z-[45] flex h-11 w-11 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30 md:right-8 md:top-28 md:h-12 md:w-12"
             style={{
               background:
                 'radial-gradient(120% 120% at 20% 20%, rgba(193,123,232,0.55), rgba(96,128,255,0.45) 70%, rgba(15,15,28,0.85))',
