@@ -276,17 +276,8 @@ export function Nav() {
                   </div>
                 </Link>
 
-                <button
-                  type="button"
-                  onClick={closeMenu}
-                  aria-label="Close menu"
-                  className="relative flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-white/[0.04] text-text transition-colors hover:bg-white/[0.08]"
-                >
-                  <span className="relative block h-3.5 w-3.5">
-                    <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 rotate-45 bg-text" />
-                    <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 -rotate-45 bg-text" />
-                  </span>
-                </button>
+                {/* Spacer matches the FAB so the floating button visually sits in this slot */}
+                <div className="h-10 w-10" aria-hidden />
               </div>
 
               {/* Scrollable content */}
@@ -563,26 +554,30 @@ export function Nav() {
         )}
       </AnimatePresence>
 
-      {/* Floating menu FAB — appears after scrolling past the hero */}
+      {/* Floating menu FAB — appears after scrolling past the hero. Morphs between hamburger and X. */}
       <AnimatePresence>
-        {showFab && !open && (
+        {showFab && (
           <motion.button
             key="menu-fab"
             type="button"
             onClick={() => {
-              // Mobile uses the original fullscreen menu; desktop uses the side drawer
+              if (open) {
+                closeMenu();
+                return;
+              }
               if (typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches) {
                 openDrawer();
               } else {
                 openFullscreen();
               }
             }}
-            aria-label="Open menu"
-            initial={{ opacity: 0, scale: 0.6, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.7, y: 8 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="group fixed right-6 top-[54px] z-[45] flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.7 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed right-6 top-[54px] z-[55] flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30"
             style={{
               background:
                 'linear-gradient(135deg, rgba(193,123,232,0.65), rgba(96,128,255,0.55))',
@@ -590,10 +585,23 @@ export function Nav() {
                 '0 12px 30px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(255,255,255,0.1) inset',
             }}
           >
+            {/* Morphing icon — 3 lines ↔ X */}
             <span className="relative block h-3 w-4">
-              <span className="absolute left-0 top-0 h-[1.5px] w-full rounded-full bg-text transition-transform duration-300 group-hover:w-3/4" />
-              <span className="absolute left-0 top-[5px] h-[1.5px] w-full rounded-full bg-text" />
-              <span className="absolute bottom-0 left-0 h-[1.5px] w-full rounded-full bg-text transition-transform duration-300 group-hover:w-1/2" />
+              <motion.span
+                animate={open ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute left-0 top-0 h-[1.5px] w-full rounded-full bg-text"
+              />
+              <motion.span
+                animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="absolute left-0 top-[5px] h-[1.5px] w-full origin-center rounded-full bg-text"
+              />
+              <motion.span
+                animate={open ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute bottom-0 left-0 h-[1.5px] w-full rounded-full bg-text"
+              />
             </span>
           </motion.button>
         )}
