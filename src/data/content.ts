@@ -203,6 +203,7 @@ export type Organization = {
   period: string;
   category?: 'Tech' | 'Student' | 'Community';
   logo?: string; // optional path under /public, e.g. '/org-something.png'
+  logoBg?: string; // optional CSS background for the logo tile (use for transparent PNGs)
   link?: string;
 };
 
@@ -213,6 +214,7 @@ export const organizations: Organization[] = [
     period: 'Sep 2025 — Jul 2026',
     category: 'Tech',
     logo: '/icpep.png',
+    logoBg: '#ffffff',
   },
   {
     name: 'Google Developer Groups - PUP',

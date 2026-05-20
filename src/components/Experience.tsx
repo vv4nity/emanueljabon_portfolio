@@ -254,7 +254,7 @@ export function Experience() {
                     className="relative flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border-[0.5px] border-white/15 text-[12px] font-semibold text-white"
                     style={{
                       background: org.logo
-                        ? 'transparent'
+                        ? org.logoBg ?? 'transparent'
                         : even
                           ? 'linear-gradient(135deg, rgba(193,123,232,0.55), rgba(96,128,255,0.55))'
                           : 'linear-gradient(135deg, rgba(96,128,255,0.55), rgba(193,123,232,0.55))',
@@ -265,7 +265,7 @@ export function Experience() {
                       <img
                         src={org.logo}
                         alt={`${org.name} logo`}
-                        className="absolute inset-0 h-full w-full object-cover"
+                        className={`absolute inset-0 h-full w-full ${org.logoBg ? 'object-contain p-1' : 'object-cover'}`}
                       />
                     ) : (
                       initials
