@@ -35,8 +35,9 @@ import {
   SiHtml5,
   SiGooglegemini,
   SiMediapipe,
+  SiCloudflare,
 } from 'react-icons/si';
-import { TbDatabase, TbTerminal2, TbCloud, TbBox, TbVectorTriangle, TbScan } from 'react-icons/tb';
+import { TbDatabase, TbTerminal2, TbCloud, TbBox, TbVectorTriangle, TbScan, TbApi, TbUsersGroup } from 'react-icons/tb';
 
 export type Tool = { icon: IconType; color: string };
 
@@ -90,6 +91,9 @@ export const TOOLS: Record<string, Tool> = {
   Git: { icon: SiGit, color: '#F05032' },
   Linux: { icon: SiLinux, color: '#FCC624' },
   'CI/CD': { icon: SiGithubactions, color: '#2088FF' },
+  'Cloudflare Tunnel': { icon: SiCloudflare, color: '#F38020' },
+  'Agile/Scrum': { icon: TbUsersGroup, color: '#9EE493' },
+  'REST APIs': { icon: TbApi, color: '#8AA0FF' },
 };
 
 export const FALLBACK_TOOL: Tool = { icon: TbBox, color: '#C17BE8' };
@@ -102,5 +106,5 @@ export const CATEGORY_ICON: Record<string, IconType> = {
   Languages: TbTerminal2,
   'AI / Machine Learning': SiPytorch,
   'Web & Backend': TbDatabase,
-  'DevOps & Tools': SiDocker,
+  'Tools & DevOps': SiDocker,
 };

@@ -90,19 +90,19 @@ export type StackCategory = {
 export const stack: StackCategory[] = [
   {
     name: 'Languages',
-    items: ['Python', 'TypeScript', 'JavaScript', 'C++', 'SQL', 'Bash'],
+    items: ['Python', 'JavaScript', 'TypeScript', 'PHP', 'C++', 'SQL', 'HTML/CSS', 'Bash'],
   },
   {
     name: 'AI / Machine Learning',
-    items: ['PyTorch', 'TensorFlow', 'Hugging Face', 'LangChain', 'scikit-learn', 'OpenCV', 'NumPy', 'Pandas'],
+    items: ['PyTorch', 'TensorFlow', 'TensorFlow Lite', 'MediaPipe', 'YOLOv8', 'Gemini', 'scikit-learn', 'OpenCV', 'NumPy', 'Pandas'],
   },
   {
     name: 'Web & Backend',
-    items: ['Next.js', 'React', 'Node.js', 'FastAPI', 'Express', 'PostgreSQL', 'Redis', 'MongoDB'],
+    items: ['Next.js', 'React', 'Node.js', 'Flask', 'FastAPI', 'Express', 'PHP', 'MySQL', 'PostgreSQL', 'MongoDB', 'REST APIs'],
   },
   {
-    name: 'DevOps & Tools',
-    items: ['Docker', 'AWS', 'Vercel', 'Git', 'Linux', 'CI/CD'],
+    name: 'Tools & DevOps',
+    items: ['Docker', 'Git', 'Apache', 'Cloudflare Tunnel', 'Linux', 'Vercel', 'CI/CD', 'Agile/Scrum'],
   },
 ];
 
