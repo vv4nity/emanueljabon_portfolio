@@ -130,25 +130,6 @@ export function PageTransition() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  // Manual trigger — used by the preloader to play an intro curtain after it fades
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const detail = (e as CustomEvent<{ href?: string }>).detail;
-      const href = detail?.href ?? '/';
-      const meta = infoFor(href);
-      if (!meta) return;
-      setInfo(meta);
-      setActive(true);
-      window.setTimeout(() => {
-        setActive(false);
-        (window as unknown as { __bootReady?: boolean }).__bootReady = true;
-        window.dispatchEvent(new CustomEvent('app:boot-ready'));
-      }, TOTAL_MS);
-    };
-    window.addEventListener('app:run-transition', handler);
-    return () => window.removeEventListener('app:run-transition', handler);
-  }, []);
-
   return (
     <AnimatePresence>
       {active && (
