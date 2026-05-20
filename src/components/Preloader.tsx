@@ -38,9 +38,10 @@ export function Preloader() {
     const fadeTimer = window.setTimeout(() => setStage('fading'), LOAD_MS);
     const doneTimer = window.setTimeout(() => {
       setStage('done');
-      // Signal to the rest of the app that the entrance animations can start
-      (window as unknown as { __bootReady?: boolean }).__bootReady = true;
-      window.dispatchEvent(new CustomEvent('app:boot-ready'));
+      // Hand off to the page transition for a final cinematic intro curtain
+      window.dispatchEvent(
+        new CustomEvent('app:run-transition', { detail: { href: '/' } }),
+      );
     }, LOAD_MS + FADE_MS);
     return () => {
       window.clearTimeout(fadeTimer);

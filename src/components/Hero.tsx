@@ -24,12 +24,35 @@ const MOBILE_FACETS = NOW_FACETS.map((f) =>
   f.label === 'Focus' ? { ...f, value: 'System Dev · AI/ML' } : f,
 );
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-};
+const INITIAL = { opacity: 0, y: 20 };
+const SHOWN = { opacity: 1, y: 0 };
+
+function useBootReady() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if ((window as unknown as { __bootReady?: boolean }).__bootReady) {
+      setReady(true);
+      return;
+    }
+    const handler = () => setReady(true);
+    window.addEventListener('app:boot-ready', handler);
+    // Safety fallback so the hero never stays hidden if the preloader/transition fail to fire
+    const fallback = window.setTimeout(() => setReady(true), 4500);
+    return () => {
+      window.removeEventListener('app:boot-ready', handler);
+      window.clearTimeout(fallback);
+    };
+  }, []);
+  return ready;
+}
 
 export function Hero() {
+  const ready = useBootReady();
+  const fadeUp = {
+    initial: INITIAL,
+    animate: ready ? SHOWN : INITIAL,
+  };
   const [facetIdx, setFacetIdx] = useState(0);
 
   useEffect(() => {
