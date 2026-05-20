@@ -21,9 +21,21 @@ const socials = [
   { icon: FiMail, href: `mailto:${personal.email}`, label: 'Email' },
 ];
 
+type MenuVariant = 'fullscreen' | 'drawer';
+
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [variant, setVariant] = useState<MenuVariant>('fullscreen');
   const [showFab, setShowFab] = useState(false);
+
+  const openFullscreen = () => {
+    setVariant('fullscreen');
+    setOpen(true);
+  };
+  const openDrawer = () => {
+    setVariant('drawer');
+    setOpen(true);
+  };
 
   // Close the menu whenever a navigation begins (PageTransition emits this).
   // Needed because PageTransition stops event propagation, so Link onClick={closeMenu} never fires.
@@ -145,7 +157,7 @@ export function Nav() {
             {/* Mobile hamburger */}
             <button
               type="button"
-              onClick={() => setOpen((v) => !v)}
+              onClick={() => (open ? closeMenu() : openFullscreen())}
               aria-label={open ? 'Close menu' : 'Open menu'}
               aria-expanded={open}
               className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-white/[0.04] backdrop-blur-md transition-colors hover:bg-white/[0.08] md:hidden"
@@ -172,9 +184,9 @@ export function Nav() {
         </div>
       </nav>
 
-      {/* Slide-in side drawer menu */}
+      {/* Slide-in side drawer menu (used by FAB) */}
       <AnimatePresence>
-        {open && (
+        {open && variant === 'drawer' && (
           <>
             {/* Backdrop — click to close */}
             <motion.div
@@ -389,13 +401,163 @@ export function Nav() {
         )}
       </AnimatePresence>
 
+      {/* Fullscreen menu (used by the mobile top hamburger) */}
+      <AnimatePresence>
+        {open && variant === 'fullscreen' && (
+          <motion.div
+            key="fullscreen-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 overflow-y-auto overflow-x-hidden md:hidden"
+            style={{ background: 'rgba(5,5,7,0.94)', backdropFilter: 'blur(28px)' }}
+          >
+            {/* Ambient glow */}
+            <div
+              className="pointer-events-none absolute -left-24 top-1/4 h-[420px] w-[420px] rounded-full"
+              style={{
+                background:
+                  'radial-gradient(circle, rgba(193,123,232,0.25), transparent 60%)',
+                filter: 'blur(80px)',
+              }}
+            />
+            <div
+              className="pointer-events-none absolute -right-24 bottom-1/4 h-[420px] w-[420px] rounded-full"
+              style={{
+                background:
+                  'radial-gradient(circle, rgba(96,128,255,0.22), transparent 60%)',
+                filter: 'blur(80px)',
+              }}
+            />
+
+            <div className="relative flex min-h-full flex-col px-6 pb-8 pt-28">
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.08 }}
+                className="mb-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint"
+              >
+                <span>Navigation</span>
+                <span
+                  className="h-px flex-1"
+                  style={{
+                    background:
+                      'linear-gradient(to right, rgba(255,255,255,0.15), transparent)',
+                  }}
+                />
+              </motion.div>
+
+              <nav className="flex flex-col">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: 0.45,
+                      delay: 0.1 + i * 0.06,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={closeMenu}
+                      className="group flex items-baseline justify-between border-b border-white/[0.06] py-3.5"
+                    >
+                      <span className="flex items-baseline gap-4">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span className="text-[26px] font-medium tracking-[-0.03em] text-text transition-colors group-hover:gradient-text-2">
+                          {link.label}
+                        </span>
+                      </span>
+                      <span className="text-[16px] text-text-faint transition-transform group-hover:translate-x-1">
+                        →
+                      </span>
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.42 }}
+                className="mt-6 grid grid-cols-2 gap-3"
+              >
+                <Link
+                  href="/#contact"
+                  onClick={closeMenu}
+                  className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[13px] font-medium text-text"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(193,123,232,0.45), rgba(96,128,255,0.45))',
+                    border: '0.5px solid rgba(255,255,255,0.18)',
+                    boxShadow: '0 10px 30px rgba(127,80,220,0.25)',
+                  }}
+                >
+                  Hire me ↗
+                </Link>
+                <Link
+                  href={personal.cvUrl}
+                  onClick={closeMenu}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-5 py-3.5 text-[13px] font-medium text-text-dim"
+                >
+                  View CV
+                </Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="mt-3 grid grid-cols-4 gap-3"
+              >
+                {socials.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={s.label}
+                    className="flex h-12 items-center justify-center rounded-xl border-[0.5px] border-white/10 bg-white/[0.03] text-text-dim transition-all hover:border-white/20 hover:text-text"
+                  >
+                    <s.icon size={16} />
+                  </a>
+                ))}
+              </motion.div>
+
+              <div
+                className="mt-auto pt-6"
+                style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 0px)' }}
+              >
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                  className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint"
+                >
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
+                  </span>
+                  {personal.availability}
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Floating menu FAB — appears after scrolling past the hero */}
       <AnimatePresence>
         {showFab && !open && (
           <motion.button
             key="menu-fab"
             type="button"
-            onClick={() => setOpen(true)}
+            onClick={openDrawer}
             aria-label="Open menu"
             initial={{ opacity: 0, scale: 0.6, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
