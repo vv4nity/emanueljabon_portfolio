@@ -216,14 +216,16 @@ export function Experience() {
             return (
               <motion.a
                 key={org.name + i}
-                href={org.link ?? '#'}
-                target={org.link ? '_blank' : undefined}
-                rel={org.link ? 'noreferrer' : undefined}
+                {...(org.link
+                  ? { href: org.link, target: '_blank', rel: 'noreferrer' }
+                  : {})}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="group relative overflow-hidden rounded-2xl border-[0.5px] border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-2xl transition-all hover:-translate-y-0.5 hover:border-white/15"
+                className={`group relative overflow-hidden rounded-2xl border-[0.5px] border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-2xl transition-all hover:border-white/15 ${
+                  org.link ? 'hover:-translate-y-0.5' : ''
+                }`}
               >
                 {/* Accent glow */}
                 <div
