@@ -10,24 +10,28 @@ const FADE_MS = 600;
 export function Preloader() {
   const [stage, setStage] = useState<'loading' | 'fading' | 'done'>('loading');
 
-  // Pin to top + lock scroll while visible
+  // Pin to top on first mount
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
+  }, []);
+
+  // Lock scroll while the preloader is visible — cleared once stage flips to "done"
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
     const html = document.documentElement;
     const body = document.body;
-    const prevHtml = html.style.overflow;
-    const prevBody = body.style.overflow;
+    if (stage === 'done') {
+      html.style.overflow = '';
+      body.style.overflow = '';
+      return;
+    }
     html.style.overflow = 'hidden';
     body.style.overflow = 'hidden';
-    return () => {
-      html.style.overflow = prevHtml;
-      body.style.overflow = prevBody;
-    };
-  }, []);
+  }, [stage]);
 
   // Drive the stage timeline
   useEffect(() => {
