@@ -611,12 +611,15 @@ export function Nav() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.7 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed right-6 top-[54px] z-[65] flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30"
+            className="fixed right-6 top-[54px] z-[65] flex h-10 w-10 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text transition-colors hover:border-white/30"
             style={{
               background:
-                'linear-gradient(135deg, rgba(193,123,232,0.65), rgba(96,128,255,0.55))',
+                'linear-gradient(135deg, rgba(193,123,232,0.95), rgba(96,128,255,0.85))',
               boxShadow:
-                '0 12px 30px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(255,255,255,0.1) inset',
+                '0 8px 20px rgba(0,0,0,0.4), 0 0 0 0.5px rgba(255,255,255,0.1) inset',
+              transform: 'translateZ(0)',
+              willChange: 'transform, opacity',
+              isolation: 'isolate',
             }}
           >
             {/* Morphing icon — 3 lines ↔ X */}
