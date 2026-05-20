@@ -556,7 +556,7 @@ export function Nav() {
 
       {/* Floating menu FAB — appears after scrolling past the hero. Morphs between hamburger and X. */}
       <AnimatePresence>
-        {showFab && (
+        {(showFab || open) && (
           <motion.button
             key="menu-fab"
             type="button"
