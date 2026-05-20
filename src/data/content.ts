@@ -208,21 +208,27 @@ export type Organization = {
 
 export const organizations: Organization[] = [
   {
-    name: 'Organization One',
-    role: 'Member',
-    period: '2023 — 2024',
+    name: 'ICPEP Student Edition — PUP Manila',
+    role: 'Vice President for Graphics',
+    period: 'Sep 2025 — Present',
     category: 'Tech',
   },
   {
-    name: 'Organization Two',
-    role: 'Officer',
-    period: '2023 — 2024',
+    name: 'Google Developer Groups on Campus — PUP',
+    role: 'Audio-Visual & Animations Co-Lead',
+    period: 'Sep 2025 — Present',
+    category: 'Tech',
+  },
+  {
+    name: 'PUP ACCESS',
+    role: 'Junior Officer · Creatives Committee',
+    period: 'Dec 2024 — Jul 2025',
     category: 'Student',
   },
   {
-    name: 'Organization Three',
-    role: 'Member',
-    period: '2022 — 2023',
+    name: 'Arduino Day Philippines',
+    role: 'Creatives & Multimedia Team',
+    period: 'Feb — Mar 2025',
     category: 'Community',
   },
 ];
