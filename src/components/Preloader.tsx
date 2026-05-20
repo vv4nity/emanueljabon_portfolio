@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { personal } from '@/data/content';
 
-const LOAD_MS = 1300;
-const FADE_MS = 600;
+const LOAD_MS = 800;
+const FADE_MS = 400;
 
 export function Preloader() {
   const [stage, setStage] = useState<'loading' | 'fading' | 'done'>('loading');
@@ -33,15 +33,17 @@ export function Preloader() {
     body.style.overflow = 'hidden';
   }, [stage]);
 
-  // Drive the stage timeline
+  // Drive the stage timeline. Fire the intro transition the moment we start fading
+  // so the curtain slides up underneath the preloader for a seamless handoff.
   useEffect(() => {
-    const fadeTimer = window.setTimeout(() => setStage('fading'), LOAD_MS);
-    const doneTimer = window.setTimeout(() => {
-      setStage('done');
-      // Hand off to the page transition for a final cinematic intro curtain
+    const fadeTimer = window.setTimeout(() => {
+      setStage('fading');
       window.dispatchEvent(
         new CustomEvent('app:run-transition', { detail: { href: '/' } }),
       );
+    }, LOAD_MS);
+    const doneTimer = window.setTimeout(() => {
+      setStage('done');
     }, LOAD_MS + FADE_MS);
     return () => {
       window.clearTimeout(fadeTimer);
