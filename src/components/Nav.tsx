@@ -582,24 +582,8 @@ export function Nav() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.7, y: 8 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="group fixed right-6 top-24 z-[45] flex h-11 w-11 items-center justify-center rounded-full border-[0.5px] border-white/15 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30 md:right-8 md:top-28 md:h-12 md:w-12"
-            style={{
-              background:
-                'radial-gradient(120% 120% at 20% 20%, rgba(193,123,232,0.55), rgba(96,128,255,0.45) 70%, rgba(15,15,28,0.85))',
-              boxShadow:
-                '0 14px 40px rgba(127,80,220,0.35), 0 0 0 0.5px rgba(255,255,255,0.1) inset',
-            }}
+            className="group fixed right-6 top-20 z-[45] flex h-11 w-11 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-[#0c0c14]/85 text-text shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-colors hover:border-white/30 hover:bg-[#0c0c14]/95 md:right-8 md:top-24 md:h-12 md:w-12"
           >
-            {/* Soft outer pulse ring */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 rounded-full opacity-50"
-              style={{
-                background:
-                  'radial-gradient(circle, rgba(193,123,232,0.3), transparent 70%)',
-                filter: 'blur(8px)',
-              }}
-            />
             <span className="relative block h-3 w-4">
               <span className="absolute left-0 top-0 h-[1.5px] w-full rounded-full bg-text transition-transform duration-300 group-hover:w-3/4" />
               <span className="absolute left-0 top-[5px] h-[1.5px] w-full rounded-full bg-text" />
