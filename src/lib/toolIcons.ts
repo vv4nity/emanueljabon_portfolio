@@ -36,6 +36,9 @@ import {
   SiGooglegemini,
   SiMediapipe,
   SiCloudflare,
+  SiNetlify,
+  SiVite,
+  SiTailwindcss,
 } from 'react-icons/si';
 import { TbDatabase, TbTerminal2, TbCloud, TbBox, TbVectorTriangle, TbScan, TbApi, TbUsersGroup } from 'react-icons/tb';
 
@@ -88,6 +91,9 @@ export const TOOLS: Record<string, Tool> = {
   Docker: { icon: SiDocker, color: '#2496ED' },
   AWS: { icon: TbCloud, color: '#FF9900' },
   Vercel: { icon: SiVercel, color: '#FFFFFF' },
+  Netlify: { icon: SiNetlify, color: '#00C7B7' },
+  Vite: { icon: SiVite, color: '#646CFF' },
+  Tailwind: { icon: SiTailwindcss, color: '#38BDF8' },
   Git: { icon: SiGit, color: '#F05032' },
   Linux: { icon: SiLinux, color: '#FCC624' },
   'CI/CD': { icon: SiGithubactions, color: '#2088FF' },
