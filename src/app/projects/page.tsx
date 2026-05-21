@@ -28,10 +28,10 @@ export default function AllProjectsPage() {
       <Nav />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
-        <section className="pt-20 pb-16 md:pt-24">
+        <section className="pt-8 pb-16 md:pt-24">
           <Link
             href="/"
-            className="mb-10 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-text-faint transition-colors hover:text-text"
+            className="mb-6 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-text-faint transition-colors hover:text-text md:mb-10"
           >
             <FiArrowLeft size={12} />
             Back to home

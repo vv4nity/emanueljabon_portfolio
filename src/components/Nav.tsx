@@ -4,14 +4,24 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FiGithub, FiLinkedin, FiInstagram, FiMail } from 'react-icons/fi';
+import {
+  TbHome,
+  TbUser,
+  TbStack2,
+  TbBriefcase,
+  TbBox,
+  TbMail,
+} from 'react-icons/tb';
+import type { IconType } from 'react-icons';
 import { personal } from '@/data/content';
 
-const navLinks = [
-  { label: 'About', href: '/#about' },
-  { label: 'Stack', href: '/#stack' },
-  { label: 'Experience', href: '/#experience' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Contact', href: '/#contact' },
+const navLinks: { label: string; href: string; icon: IconType }[] = [
+  { label: 'Home', href: '/', icon: TbHome },
+  { label: 'About', href: '/#about', icon: TbUser },
+  { label: 'Stack', href: '/#stack', icon: TbStack2 },
+  { label: 'Experience', href: '/#experience', icon: TbBriefcase },
+  { label: 'Projects', href: '/projects', icon: TbBox },
+  { label: 'Contact', href: '/#contact', icon: TbMail },
 ];
 
 const socials = [
@@ -282,36 +292,41 @@ export function Nav() {
 
               {/* Links */}
               <nav className="flex flex-col">
-                {navLinks.map((link, i) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      duration: 0.45,
-                      delay: 0.1 + i * 0.05,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={closeMenu}
-                      className="group flex items-baseline justify-between border-b border-white/[0.06] py-4"
+                {navLinks.map((link, i) => {
+                  const Icon = link.icon;
+                  return (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, x: 16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.45,
+                        delay: 0.1 + i * 0.05,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
                     >
-                      <span className="flex items-baseline gap-4">
-                        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-faint">
-                          {String(i + 1).padStart(2, '0')}
+                      <Link
+                        href={link.href}
+                        onClick={closeMenu}
+                        className="group flex items-center justify-between border-b border-white/[0.06] py-4"
+                      >
+                        <span className="flex items-center gap-4">
+                          <span
+                            className="flex h-8 w-8 items-center justify-center rounded-lg border-[0.5px] border-white/10 bg-white/[0.03] text-text-dim transition-all group-hover:border-white/25 group-hover:bg-white/[0.06] group-hover:text-text"
+                          >
+                            <Icon size={15} />
+                          </span>
+                          <span className="text-[26px] font-medium tracking-[-0.025em] text-text transition-colors group-hover:gradient-text-2">
+                            {link.label}
+                          </span>
                         </span>
-                        <span className="text-[28px] font-medium tracking-[-0.025em] text-text transition-colors group-hover:gradient-text-2">
-                          {link.label}
+                        <span className="text-[17px] text-text-faint transition-transform group-hover:translate-x-1">
+                          →
                         </span>
-                      </span>
-                      <span className="text-[17px] text-text-faint transition-transform group-hover:translate-x-1">
-                        →
-                      </span>
-                    </Link>
-                  </motion.div>
-                ))}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
               </nav>
 
               {/* CTAs — side by side */}
@@ -471,36 +486,41 @@ export function Nav() {
               </motion.div>
 
               <nav className="flex flex-col">
-                {navLinks.map((link, i) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      duration: 0.45,
-                      delay: 0.1 + i * 0.06,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={closeMenu}
-                      className="group flex items-baseline justify-between border-b border-white/[0.06] py-3.5"
+                {navLinks.map((link, i) => {
+                  const Icon = link.icon;
+                  return (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.45,
+                        delay: 0.1 + i * 0.06,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
                     >
-                      <span className="flex items-baseline gap-4">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
-                          {String(i + 1).padStart(2, '0')}
+                      <Link
+                        href={link.href}
+                        onClick={closeMenu}
+                        className="group flex items-center justify-between border-b border-white/[0.06] py-3.5"
+                      >
+                        <span className="flex items-center gap-4">
+                          <span
+                            className="flex h-8 w-8 items-center justify-center rounded-lg border-[0.5px] border-white/10 bg-white/[0.03] text-text-dim transition-all group-hover:border-white/25 group-hover:bg-white/[0.06] group-hover:text-text"
+                          >
+                            <Icon size={15} />
+                          </span>
+                          <span className="text-[24px] font-medium tracking-[-0.03em] text-text transition-colors group-hover:gradient-text-2">
+                            {link.label}
+                          </span>
                         </span>
-                        <span className="text-[26px] font-medium tracking-[-0.03em] text-text transition-colors group-hover:gradient-text-2">
-                          {link.label}
+                        <span className="text-[16px] text-text-faint transition-transform group-hover:translate-x-1">
+                          →
                         </span>
-                      </span>
-                      <span className="text-[16px] text-text-faint transition-transform group-hover:translate-x-1">
-                        →
-                      </span>
-                    </Link>
-                  </motion.div>
-                ))}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
               </nav>
 
               <motion.div
