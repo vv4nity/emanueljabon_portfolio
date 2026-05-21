@@ -475,19 +475,15 @@ export function Hero() {
                 delay: 1,
               },
             }}
-            className="absolute -right-5 -top-5 z-10 flex items-center gap-2 rounded-full border-[0.5px] border-white/15 px-3 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
+            className="absolute -right-5 -top-5 z-10 flex items-center gap-2.5 rounded-full border-[0.5px] border-white/15 px-3.5 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
             style={{ background: 'rgba(15,15,28,0.85)' }}
           >
-            <span className="inline-flex h-5 w-5 items-center justify-center rounded-md text-[10px] font-semibold text-white"
-              style={{
-                background:
-                  'linear-gradient(135deg, #C17BE8, #6080FF)',
-              }}
-            >
-              {personal.initials}
+            <span className="relative flex h-2 w-2">
+              <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
+              <span className="relative h-2 w-2 rounded-full bg-signal shadow-[0_0_10px_#5EFFAA]" />
             </span>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim">
-              Class of 2026
+              Available · 2026
             </span>
           </motion.div>
         </motion.div>
