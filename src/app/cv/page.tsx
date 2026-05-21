@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiArrowLeft, FiDownload, FiExternalLink, FiMail } from 'react-icons/fi';
 import { AmbientOrbs } from '@/components/AmbientOrbs';
@@ -12,6 +13,19 @@ import { personal } from '@/data/content';
 export default function CVPage() {
   const file = personal.cvFile;
   const fileName = file.split('/').pop() ?? 'CV.pdf';
+
+  // Mobile browsers (especially iOS Safari) don't render PDFs inline, so we route
+  // mobile viewers through Google's PDF viewer instead. Desktop keeps native rendering.
+  const [pdfSrc, setPdfSrc] = useState(`${file}#view=FitH&toolbar=0&navpanes=0`);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    if (!isMobile) return;
+    const absoluteUrl = `${window.location.origin}${file}`;
+    setPdfSrc(
+      `https://docs.google.com/gview?url=${encodeURIComponent(absoluteUrl)}&embedded=true`,
+    );
+  }, [file]);
 
   return (
     <main id="top" className="relative overflow-hidden">
@@ -165,34 +179,15 @@ export default function CVPage() {
               </div>
             </div>
 
-            {/* PDF iframe */}
+            {/* PDF iframe — uses Google's PDF viewer on mobile so the file actually renders */}
             <div className="relative" style={{ background: '#0a0a12' }}>
               <iframe
-                src={`${file}#view=FitH&toolbar=0&navpanes=0`}
+                key={pdfSrc}
+                src={pdfSrc}
                 title="Emanuel Jabon — CV"
                 className="block h-[80vh] w-full md:h-[88vh]"
                 style={{ border: 0, background: 'transparent' }}
               />
-
-              {/* Mobile fallback overlay — many mobile browsers don't render PDFs inline */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden flex-col items-center gap-3 bg-gradient-to-t from-bg via-bg/90 to-transparent px-6 pb-8 pt-16 text-center max-md:flex">
-                <p className="text-[13px] text-text-dim">
-                  Inline preview is limited on mobile.
-                </p>
-                <a
-                  href={file}
-                  download={fileName}
-                  className="pointer-events-auto inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[12px] font-medium text-text"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, rgba(193,123,232,0.45), rgba(96,128,255,0.45))',
-                    border: '0.5px solid rgba(255,255,255,0.18)',
-                  }}
-                >
-                  <FiDownload size={12} />
-                  Download to view
-                </a>
-              </div>
             </div>
           </div>
 
