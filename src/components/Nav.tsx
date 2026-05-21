@@ -434,41 +434,41 @@ export function Nav() {
               }}
             />
 
-            <div className="relative flex min-h-full flex-col px-6 pb-8 pt-4">
-              {/* Top status strip — mirrors TopBar so the menu always shows brand markers regardless of scroll */}
-              <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
-                <span>Portfolio · MMXXVI</span>
-                <span className="inline-flex items-center gap-2">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
-                    <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
-                  </span>
-                  Online
-                </span>
-              </div>
-
-              {/* Logo header */}
-              <div className="mb-6 flex items-center gap-3 border-b border-white/[0.06] pb-5">
-                <div
-                  className="flex h-10 w-10 items-center justify-center rounded-[10px] text-[14px] font-semibold text-white"
-                  style={{
-                    background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
-                    boxShadow:
-                      '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
-                  }}
-                >
-                  {personal.initials}
-                </div>
-                <div className="flex flex-col leading-tight">
-                  <span className="text-[15px] font-medium tracking-tight text-text">
-                    {personal.name}
-                  </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-text-faint">
-                    Menu
-                  </span>
+            <div className="relative flex min-h-full flex-col pb-8">
+              {/* TopBar replica — mirrors the page's real TopBar */}
+              <div className="border-b border-white/5 bg-black/40 px-6 py-2.5 backdrop-blur-xl">
+                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-text-faint">
+                  <span>PORTFOLIO · MMXXVI</span>
+                  <span>v1.0.2 ↗</span>
                 </div>
               </div>
 
+              {/* Nav header replica — logo + name + role, identical to the page's top nav */}
+              <div className="border-b border-white/[0.08] bg-[#08080f]/60 px-6 py-4 backdrop-blur-2xl">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
+                    style={{
+                      background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
+                      boxShadow:
+                        '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
+                    }}
+                  >
+                    {personal.initials}
+                  </div>
+                  <div className="flex flex-col leading-tight">
+                    <span className="text-[14px] font-medium tracking-tight text-text">
+                      {personal.name}
+                    </span>
+                    <span className="font-mono text-[10px] tracking-wide text-text-faint">
+                      {personal.role}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section label */}
+              <div className="flex flex-1 flex-col px-6 pt-6">
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -582,6 +582,7 @@ export function Nav() {
                   </span>
                   {personal.availability}
                 </motion.div>
+              </div>
               </div>
             </div>
           </motion.div>
