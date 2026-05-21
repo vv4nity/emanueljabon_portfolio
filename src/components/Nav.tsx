@@ -100,24 +100,8 @@ export function Nav() {
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-[14px] font-medium tracking-tight text-text">{personal.name}</span>
-              {/* Width-reserving wrapper so neither label gets clipped during the swap */}
-              <span className="relative font-mono text-[10px] tracking-wide text-text-faint">
-                <span aria-hidden className="invisible whitespace-nowrap">
-                  {personal.role}
-                </span>
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
-                    key={open ? 'menu' : 'role'}
-                    initial={{ y: 8, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -8, opacity: 0 }}
-                    transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute left-0 top-0 whitespace-nowrap"
-                    style={open ? { letterSpacing: '0.22em', textTransform: 'uppercase' } : undefined}
-                  >
-                    {open ? 'Menu' : personal.role}
-                  </motion.span>
-                </AnimatePresence>
+              <span className="font-mono text-[10px] tracking-wide text-text-faint">
+                {personal.role}
               </span>
             </div>
           </Link>
@@ -247,30 +231,34 @@ export function Nav() {
 
               {/* Nav header replica — logo + name + role, identical to the page's top nav */}
               <div className="relative border-b border-white/[0.08] bg-[#08080f]/60 px-6 py-4 backdrop-blur-2xl">
-                <Link
-                  href="/"
-                  onClick={closeMenu}
-                  className="flex items-center gap-3"
-                >
-                  <div
-                    className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
-                    style={{
-                      background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
-                      boxShadow:
-                        '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
-                    }}
+                <div className="flex items-center justify-between gap-3">
+                  <Link
+                    href="/"
+                    onClick={closeMenu}
+                    className="flex items-center gap-3"
                   >
-                    {personal.initials}
-                  </div>
-                  <div className="flex flex-col leading-tight">
-                    <span className="text-[14px] font-medium tracking-tight text-text">
-                      {personal.name}
-                    </span>
-                    <span className="font-mono text-[10px] tracking-wide text-text-faint">
-                      {personal.role}
-                    </span>
-                  </div>
-                </Link>
+                    <div
+                      className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
+                      style={{
+                        background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
+                        boxShadow:
+                          '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
+                      }}
+                    >
+                      {personal.initials}
+                    </div>
+                    <div className="flex flex-col leading-tight">
+                      <span className="text-[14px] font-medium tracking-tight text-text">
+                        {personal.name}
+                      </span>
+                      <span className="font-mono text-[10px] tracking-wide text-text-faint">
+                        {personal.role}
+                      </span>
+                    </div>
+                  </Link>
+                  {/* Spacer matches the FAB so the row keeps the same height as the real nav */}
+                  <div className="h-10 w-10 flex-shrink-0" aria-hidden />
+                </div>
               </div>
 
               {/* Scrollable content */}
@@ -438,25 +426,29 @@ export function Nav() {
 
               {/* Nav header replica — logo + name + role, identical to the page's top nav */}
               <div className="border-b border-white/[0.08] bg-[#08080f]/60 px-6 py-4 backdrop-blur-2xl">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
-                    style={{
-                      background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
-                      boxShadow:
-                        '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
-                    }}
-                  >
-                    {personal.initials}
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
+                      style={{
+                        background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
+                        boxShadow:
+                          '0 6px 20px rgba(127,80,220,0.4), inset 0 1px 0 rgba(255,255,255,0.25)',
+                      }}
+                    >
+                      {personal.initials}
+                    </div>
+                    <div className="flex flex-col leading-tight">
+                      <span className="text-[14px] font-medium tracking-tight text-text">
+                        {personal.name}
+                      </span>
+                      <span className="font-mono text-[10px] tracking-wide text-text-faint">
+                        {personal.role}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col leading-tight">
-                    <span className="text-[14px] font-medium tracking-tight text-text">
-                      {personal.name}
-                    </span>
-                    <span className="font-mono text-[10px] tracking-wide text-text-faint">
-                      {personal.role}
-                    </span>
-                  </div>
+                  {/* Invisible spacer matches the page nav's hamburger button so the row keeps the same height */}
+                  <div className="h-10 w-10 flex-shrink-0" aria-hidden />
                 </div>
               </div>
 
