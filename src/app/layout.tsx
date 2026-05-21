@@ -25,13 +25,13 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: 'Emanuel Jabon — Computer Engineer & Artificial Intelligence &amp; Machine Learning Developer',
+  title: 'Emanuel Jabon',
   description:
     'Computer engineer specializing in machine learning systems and full-stack development. Building production-grade ML pipelines and interfaces that ship.',
   keywords: ['Computer Engineer', 'Artificial Intelligence Engineer', 'Machine Learning Engineer', 'Full-stack Developer', 'Portfolio'],
   authors: [{ name: 'Emanuel Jabon' }],
   openGraph: {
-    title: 'Emanuel Jabon — Computer Engineer & Artificial Intelligence &amp; Machine Learning Developer',
+    title: 'Emanuel Jabon',
     description: 'Building intelligent systems at the intersection of AI & software.',
     type: 'website',
   },
