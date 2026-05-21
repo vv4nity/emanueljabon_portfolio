@@ -237,27 +237,23 @@ export function Nav() {
                 }}
               />
 
-              {/* TopBar-style strip for brand consistency */}
-              <div className="relative flex items-center justify-between border-b border-white/[0.06] px-6 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
-                <span>Portfolio · MMXXVI</span>
-                <span className="inline-flex items-center gap-2">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-30" />
-                    <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
-                  </span>
-                  Online
-                </span>
+              {/* TopBar replica — mirrors the page's real TopBar */}
+              <div className="border-b border-white/5 bg-black/40 px-6 py-2.5 backdrop-blur-xl">
+                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-text-faint">
+                  <span>PORTFOLIO · MMXXVI</span>
+                  <span>v1.0.2 ↗</span>
+                </div>
               </div>
 
-              {/* Drawer header — logo + close */}
-              <div className="relative flex items-center justify-between px-6 py-5">
+              {/* Nav header replica — logo + name + role, identical to the page's top nav */}
+              <div className="relative border-b border-white/[0.08] bg-[#08080f]/60 px-6 py-4 backdrop-blur-2xl">
                 <Link
                   href="/"
                   onClick={closeMenu}
                   className="flex items-center gap-3"
                 >
                   <div
-                    className="flex h-10 w-10 items-center justify-center rounded-[10px] text-[14px] font-semibold text-white"
+                    className="flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-semibold text-white"
                     style={{
                       background: 'linear-gradient(135deg, #C17BE8, #6080FF)',
                       boxShadow:
@@ -267,17 +263,14 @@ export function Nav() {
                     {personal.initials}
                   </div>
                   <div className="flex flex-col leading-tight">
-                    <span className="text-[15px] font-medium tracking-tight text-text">
+                    <span className="text-[14px] font-medium tracking-tight text-text">
                       {personal.name}
                     </span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-text-faint">
-                      Menu
+                    <span className="font-mono text-[10px] tracking-wide text-text-faint">
+                      {personal.role}
                     </span>
                   </div>
                 </Link>
-
-                {/* Spacer matches the FAB so the floating button visually sits in this slot */}
-                <div className="h-10 w-10" aria-hidden />
               </div>
 
               {/* Scrollable content */}
