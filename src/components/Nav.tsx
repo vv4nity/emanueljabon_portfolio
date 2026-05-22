@@ -272,7 +272,7 @@ export function Nav() {
               </div>
 
               {/* Scrollable content */}
-              <div className="relative flex flex-1 flex-col overflow-hidden px-6 pb-8 pt-3">
+              <div className="relative flex flex-1 flex-col overflow-y-auto px-6 pb-8 pt-3">
               {/* Section label */}
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
@@ -409,7 +409,7 @@ export function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[60] overflow-hidden overflow-x-hidden md:hidden"
+            className="fixed inset-0 z-[60] overflow-y-auto overflow-x-hidden md:hidden"
             style={{ background: 'rgba(5,5,7,0.94)', backdropFilter: 'blur(28px)' }}
           >
             {/* Ambient glow */}
