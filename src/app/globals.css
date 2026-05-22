@@ -78,3 +78,12 @@ body::before {
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
 }
+
+/* CV preview iframe — hide native scrollbars for a cleaner viewer surface */
+.cv-viewer iframe {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cv-viewer iframe::-webkit-scrollbar {
+  display: none;
+}

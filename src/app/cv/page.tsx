@@ -148,29 +148,29 @@ export default function CVPage() {
           className="pb-24"
         >
           <div
-            className="relative overflow-hidden rounded-xl border-[0.5px] border-white/[0.08] backdrop-blur-2xl md:rounded-3xl"
+            className="relative overflow-hidden rounded-2xl border-[0.5px] border-white/[0.08] backdrop-blur-2xl md:rounded-3xl"
             style={{
               background:
                 'linear-gradient(135deg, rgba(193,123,232,0.06), rgba(96,128,255,0.04))',
             }}
           >
-            {/* Corner ticks — desktop only, distracting on mobile */}
-            <div className="pointer-events-none absolute left-3 top-3 hidden h-4 w-4 border-l-[0.5px] border-t-[0.5px] border-white/35 md:block" />
-            <div className="pointer-events-none absolute right-3 top-3 hidden h-4 w-4 border-r-[0.5px] border-t-[0.5px] border-white/35 md:block" />
-            <div className="pointer-events-none absolute bottom-3 left-3 hidden h-4 w-4 border-b-[0.5px] border-l-[0.5px] border-white/35 md:block" />
-            <div className="pointer-events-none absolute bottom-3 right-3 hidden h-4 w-4 border-b-[0.5px] border-r-[0.5px] border-white/35 md:block" />
+            {/* Corner ticks */}
+            <div className="pointer-events-none absolute left-3 top-3 h-4 w-4 border-l-[0.5px] border-t-[0.5px] border-white/35" />
+            <div className="pointer-events-none absolute right-3 top-3 h-4 w-4 border-r-[0.5px] border-t-[0.5px] border-white/35" />
+            <div className="pointer-events-none absolute bottom-3 left-3 h-4 w-4 border-b-[0.5px] border-l-[0.5px] border-white/35" />
+            <div className="pointer-events-none absolute bottom-3 right-3 h-4 w-4 border-b-[0.5px] border-r-[0.5px] border-white/35" />
 
-            {/* Viewer header bar — desktop only; mobile relies on Google viewer's own toolbar */}
-            <div className="relative hidden items-center justify-between border-b border-white/[0.06] px-5 py-3.5 md:flex">
+            {/* Viewer header bar */}
+            <div className="relative flex items-center justify-between border-b border-white/[0.06] px-4 py-3 md:px-5 md:py-3.5">
               <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+                <span className="h-2 w-2 rounded-full bg-white/15 md:h-2.5 md:w-2.5" />
+                <span className="h-2 w-2 rounded-full bg-white/15 md:h-2.5 md:w-2.5" />
+                <span className="h-2 w-2 rounded-full bg-white/15 md:h-2.5 md:w-2.5" />
               </div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
+              <div className="truncate font-mono text-[9px] uppercase tracking-[0.18em] text-text-faint md:text-[10px] md:tracking-[0.2em]">
                 {fileName}
               </div>
-              <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
+              <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-text-faint md:text-[10px] md:tracking-[0.2em]">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute -inset-[3px] animate-pulse-ring rounded-full bg-signal opacity-25" />
                   <span className="relative h-1.5 w-1.5 rounded-full bg-signal shadow-[0_0_8px_#5EFFAA]" />
@@ -179,13 +179,14 @@ export default function CVPage() {
               </div>
             </div>
 
-            {/* PDF iframe — uses Google's PDF viewer on mobile so the file actually renders */}
-            <div className="relative bg-white md:bg-[#0a0a12]">
+            {/* PDF iframe — mobile uses Google's viewer; the wrapper masks scrollbars + bottom chrome */}
+            <div className="cv-viewer relative overflow-hidden" style={{ background: '#0a0a12' }}>
               <iframe
                 key={pdfSrc}
                 src={pdfSrc}
                 title="Emanuel Jabon — CV"
-                className="block h-[100svh] w-full md:h-[88vh]"
+                scrolling="no"
+                className="block h-[78svh] w-full md:h-[88vh]"
                 style={{ border: 0, background: 'transparent' }}
               />
             </div>
