@@ -468,12 +468,12 @@ export function Nav() {
               </div>
 
               {/* Section label */}
-              <div className="flex flex-1 flex-col px-6 pt-6">
+              <div className="flex flex-1 flex-col px-6 pt-4">
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.08 }}
-                className="mb-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint"
+                className="mb-2 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-text-faint"
               >
                 <span>Navigation</span>
                 <span
@@ -502,19 +502,19 @@ export function Nav() {
                       <Link
                         href={link.href}
                         onClick={closeMenu}
-                        className="group flex items-center justify-between border-b border-white/[0.06] py-3.5"
+                        className="group flex items-center justify-between border-b border-white/[0.06] py-2.5"
                       >
-                        <span className="flex items-center gap-4">
+                        <span className="flex items-center gap-3.5">
                           <span
-                            className="flex h-8 w-8 items-center justify-center rounded-lg border-[0.5px] border-white/10 bg-white/[0.03] text-text-dim transition-all group-hover:border-white/25 group-hover:bg-white/[0.06] group-hover:text-text"
+                            className="flex h-7 w-7 items-center justify-center rounded-lg border-[0.5px] border-white/10 bg-white/[0.03] text-text-dim transition-all group-hover:border-white/25 group-hover:bg-white/[0.06] group-hover:text-text"
                           >
-                            <Icon size={15} />
+                            <Icon size={13} />
                           </span>
-                          <span className="text-[24px] font-medium tracking-[-0.03em] text-text transition-colors group-hover:gradient-text-2">
+                          <span className="text-[20px] font-medium tracking-[-0.03em] text-text transition-colors group-hover:gradient-text-2">
                             {link.label}
                           </span>
                         </span>
-                        <span className="text-[16px] text-text-faint transition-transform group-hover:translate-x-1">
+                        <span className="text-[15px] text-text-faint transition-transform group-hover:translate-x-1">
                           →
                         </span>
                       </Link>
@@ -527,12 +527,12 @@ export function Nav() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.42 }}
-                className="mt-6 grid grid-cols-2 gap-3"
+                className="mt-5 grid grid-cols-2 gap-2.5"
               >
                 <Link
                   href="/#contact"
                   onClick={closeMenu}
-                  className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[13px] font-medium text-text"
+                  className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-3 text-[13px] font-medium text-text"
                   style={{
                     background:
                       'linear-gradient(135deg, rgba(193,123,232,0.45), rgba(96,128,255,0.45))',
@@ -545,7 +545,7 @@ export function Nav() {
                 <Link
                   href={personal.cvUrl}
                   onClick={closeMenu}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-5 py-3.5 text-[13px] font-medium text-text-dim"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-4 py-3 text-[13px] font-medium text-text-dim"
                 >
                   View CV
                 </Link>
@@ -555,7 +555,7 @@ export function Nav() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
-                className="mt-3 grid grid-cols-4 gap-3"
+                className="mt-2.5 grid grid-cols-4 gap-2.5"
               >
                 {socials.map((s) => (
                   <a
@@ -564,7 +564,7 @@ export function Nav() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={s.label}
-                    className="flex h-12 items-center justify-center rounded-xl border-[0.5px] border-white/10 bg-white/[0.03] text-text-dim transition-all hover:border-white/20 hover:text-text"
+                    className="flex h-10 items-center justify-center rounded-xl border-[0.5px] border-white/10 bg-white/[0.03] text-text-dim transition-all hover:border-white/20 hover:text-text"
                   >
                     <s.icon size={16} />
                   </a>
@@ -572,7 +572,7 @@ export function Nav() {
               </motion.div>
 
               <div
-                className="mt-auto pt-6"
+                className="mt-auto pt-4"
                 style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 0px)' }}
               >
                 <motion.div
