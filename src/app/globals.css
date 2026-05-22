@@ -87,3 +87,12 @@ body::before {
 .cv-viewer iframe::-webkit-scrollbar {
   display: none;
 }
+
+/* Mobile: oversize the iframe so Google viewer's top + bottom chrome
+   (filename bar, page selector, zoom controls) gets clipped by the wrapper. */
+@media (max-width: 767px) {
+  .cv-viewer iframe {
+    top: -48px !important;
+    height: calc(100% + 108px) !important;
+  }
+}

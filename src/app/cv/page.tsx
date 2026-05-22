@@ -180,14 +180,17 @@ export default function CVPage() {
             </div>
 
             {/* PDF iframe — mobile uses Google's viewer; the wrapper masks scrollbars + bottom chrome */}
-            <div className="cv-viewer relative overflow-hidden" style={{ background: '#0a0a12' }}>
+            <div
+              className="cv-viewer relative aspect-[0.72/1] w-full overflow-hidden md:aspect-auto md:h-[88vh]"
+              style={{ background: '#0a0a12' }}
+            >
               <iframe
                 key={pdfSrc}
                 src={pdfSrc}
                 title="Emanuel Jabon — CV"
                 scrolling="no"
-                className="block h-[78svh] w-full md:h-[88vh]"
-                style={{ border: 0, background: 'transparent' }}
+                className="absolute left-0 top-0 w-full"
+                style={{ border: 0, background: 'transparent', height: '100%' }}
               />
             </div>
           </div>
