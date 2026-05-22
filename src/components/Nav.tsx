@@ -409,7 +409,7 @@ export function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[60] flex flex-col overflow-hidden md:hidden"
+            className="fixed inset-0 z-[60] overflow-hidden overflow-x-hidden md:hidden"
             style={{ background: 'rgba(5,5,7,0.94)', backdropFilter: 'blur(28px)' }}
           >
             {/* Ambient glow */}
@@ -430,7 +430,7 @@ export function Nav() {
               }}
             />
 
-            <div className="relative flex flex-1 flex-col overflow-hidden">
+            <div className="relative flex min-h-full flex-col pb-8">
               {/* TopBar replica — mirrors the page's real TopBar */}
               <div className="border-b border-white/5 bg-black/40 px-6 py-2.5 backdrop-blur-xl">
                 <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-text-faint">
