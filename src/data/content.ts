@@ -117,6 +117,27 @@ export const projects: Project[] = [
     tags: ['HTML/CSS', 'JavaScript', 'Netlify'],
     link: 'https://calculator-by-emanuel.netlify.app',
   },
+  {
+    id: 'solar-watering-system',
+    number: '07',
+    badge: 'IOT',
+    title: 'Solar-Powered Automated Watering System',
+    description:
+      'IoT watering system powered by solar energy with a live monitoring dashboard — tracks soil moisture and automates irrigation, keeping plants watered off-grid without manual intervention.',
+    tags: ['IoT', 'Arduino', 'React', 'Vercel'],
+    link: 'https://solar-watering-dashboard.vercel.app',
+  },
+  {
+    id: 'dorm-bill-splitter',
+    number: '08',
+    badge: 'WEB',
+    title: 'Dorm Bill Splitter',
+    description:
+      'Web app for dormmates to split shared bills fairly — track expenses, divide costs across roommates, and see who owes what at a glance.',
+    tags: ['React', 'Vite', 'Tailwind', 'Vercel'],
+    link: 'https://dorm-bill-splitter.vercel.app',
+    github: 'https://github.com/vv4nity/dorm-bill-splitter.git',
+  },
 ];
 
 // ─────────────────────────────────────────────
