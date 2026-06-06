@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono, Instrument_Serif } from 'next/font/google';
 import './globals.css';
-import { Preloader } from '@/components/Preloader';
 import { PageTransition } from '@/components/PageTransition';
 
 const geistSans = Inter({
@@ -41,7 +40,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}>
       <body className="font-sans">
-        <Preloader />
         <PageTransition />
         {children}
       </body>
