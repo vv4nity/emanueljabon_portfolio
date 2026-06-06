@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiArrowLeft, FiArrowDown, FiDownload, FiExternalLink, FiMail } from 'react-icons/fi';
 import { AmbientOrbs } from '@/components/AmbientOrbs';
@@ -13,19 +12,7 @@ import { personal } from '@/data/content';
 export default function CVPage() {
   const file = personal.cvFile;
   const fileName = file.split('/').pop() ?? 'CV.pdf';
-
-  // Mobile browsers (especially iOS Safari) don't render PDFs inline, so we route
-  // mobile viewers through Google's PDF viewer instead. Desktop keeps native rendering.
-  const [pdfSrc, setPdfSrc] = useState(`${file}#view=FitH&toolbar=0&navpanes=0`);
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const isMobile = window.matchMedia('(max-width: 767px)').matches;
-    if (!isMobile) return;
-    const absoluteUrl = `${window.location.origin}${file}`;
-    setPdfSrc(
-      `https://docs.google.com/gview?url=${encodeURIComponent(absoluteUrl)}&embedded=true`,
-    );
-  }, [file]);
+  const pdfSrc = `${file}#view=FitH&toolbar=0&navpanes=0`;
 
   return (
     <main id="top" className="relative overflow-hidden">
@@ -208,18 +195,26 @@ export default function CVPage() {
               </div>
             </div>
 
-            {/* PDF iframe — mobile uses Google's viewer; the wrapper masks scrollbars + bottom chrome */}
+            {/* Viewer — mobile renders a crisp page image (reliable on every device),
+                desktop uses the native inline PDF. */}
             <div
-              className="cv-viewer relative aspect-[0.72/1] w-full overflow-hidden md:aspect-auto md:h-[88vh]"
+              className="cv-viewer relative w-full overflow-hidden md:h-[88vh]"
               style={{ background: '#0a0a12' }}
             >
+              {/* Mobile: rasterized page image */}
+              <img
+                src="/cv-preview.png"
+                alt="Emanuel Jabon — CV preview"
+                className="block w-full md:hidden"
+                loading="lazy"
+              />
+              {/* Desktop: native inline PDF */}
               <iframe
-                key={pdfSrc}
                 src={pdfSrc}
                 title="Emanuel Jabon — CV"
                 scrolling="no"
-                className="absolute left-0 top-0 w-full"
-                style={{ border: 0, background: 'transparent', height: '100%' }}
+                className="hidden h-full w-full md:block"
+                style={{ border: 0, background: 'transparent' }}
               />
             </div>
           </div>
