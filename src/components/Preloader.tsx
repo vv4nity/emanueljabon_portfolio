@@ -69,7 +69,7 @@ export function Preloader() {
   // Drive progress
   useEffect(() => {
     if (stage !== 'loading') return;
-    const duration = 4200;
+    const duration = 2300;
     const start = performance.now();
     let raf = 0;
     const tick = (t: number) => {
@@ -83,7 +83,7 @@ export function Preloader() {
       if (ratio < 1) {
         raf = requestAnimationFrame(tick);
       } else {
-        setTimeout(() => setStage('reveal'), 420);
+        setTimeout(() => setStage('reveal'), 250);
       }
     };
     raf = requestAnimationFrame(tick);
@@ -93,7 +93,7 @@ export function Preloader() {
   // After reveal animation completes, unmount
   useEffect(() => {
     if (stage !== 'reveal') return;
-    const id = setTimeout(() => setStage('done'), 1300);
+    const id = setTimeout(() => setStage('done'), 950);
     return () => clearTimeout(id);
   }, [stage]);
 
@@ -107,8 +107,8 @@ export function Preloader() {
       <motion.div
         initial={{ y: 0 }}
         animate={{ y: stage === 'reveal' ? '-100%' : 0 }}
-        transition={{ duration: 1.1, ease: EASE_CURTAIN }}
-        className="absolute inset-x-0 top-0 h-[50vh] pointer-events-auto"
+        transition={{ duration: 0.9, ease: EASE_CURTAIN }}
+        className="absolute inset-x-0 top-0 h-[calc(50vh+1px)] pointer-events-auto"
         style={{ background: '#050507' }}
       >
         {/* Top hairline that draws in */}
@@ -194,8 +194,8 @@ export function Preloader() {
       <motion.div
         initial={{ y: 0 }}
         animate={{ y: stage === 'reveal' ? '100%' : 0 }}
-        transition={{ duration: 1.1, ease: EASE_CURTAIN }}
-        className="absolute inset-x-0 bottom-0 h-[50vh] pointer-events-auto"
+        transition={{ duration: 0.9, ease: EASE_CURTAIN }}
+        className="absolute inset-x-0 bottom-0 h-[calc(50vh+1px)] pointer-events-auto"
         style={{ background: '#050507' }}
       >
         {/* Bottom hairline */}

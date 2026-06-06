@@ -34,6 +34,13 @@ export function Projects() {
           <ProjectCard key={p.id} project={p} index={i} />
         ))}
       </div>
+
+      <Link
+        href="/projects"
+        className="mt-8 flex items-center justify-center gap-1.5 rounded-full border-[0.5px] border-white/[0.12] bg-white/[0.03] py-3.5 text-[13px] text-text-dim transition-colors hover:text-text md:hidden"
+      >
+        All projects <FiArrowUpRight />
+      </Link>
     </section>
   );
 }
