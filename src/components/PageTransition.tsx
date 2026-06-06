@@ -28,9 +28,10 @@ function infoFor(href: string): Info | null {
     if (ROUTE_INFO[key]) return ROUTE_INFO[key];
   }
 
-  // Pathname only
-  const pathOnly = href.split('#')[0] || '/';
-  if (ROUTE_INFO[pathOnly]) return ROUTE_INFO[pathOnly];
+  // Pathname only — but not for pure-hash hrefs (e.g. "#top"), which stay on
+  // the current page and must not fall back to the Home route.
+  const pathOnly = href.split('#')[0];
+  if (pathOnly && ROUTE_INFO[pathOnly]) return ROUTE_INFO[pathOnly];
 
   return null;
 }
@@ -44,11 +45,6 @@ export function PageTransition() {
   const isFirst = useRef(true);
   const [active, setActive] = useState(false);
   const [info, setInfo] = useState<Info>(ROUTE_INFO['/']);
-
-  // Skip first mount (preloader covers initial render)
-  useEffect(() => {
-    isFirst.current = false;
-  }, []);
 
   // Intercept clicks on internal links so we can transition before nav (and cover hash jumps too).
   // Capture phase so we run BEFORE next/link's bundled onClick (which preventDefaults).
@@ -119,7 +115,10 @@ export function PageTransition() {
 
   // Fallback: still respond to pathname-only changes (e.g. browser back/forward)
   useEffect(() => {
-    if (isFirst.current) return;
+    if (isFirst.current) {
+      isFirst.current = false;
+      return;
+    }
     if (active) return;
     const meta = ROUTE_INFO[pathname];
     if (!meta) return;

@@ -495,7 +495,7 @@ export function Hero() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.6 }}
-        className="-mt-12 grid grid-cols-2 border-y border-white/[0.08] py-8 md:mt-24 md:grid-cols-4"
+        className="-mt-12 grid grid-cols-2 gap-y-10 border-y border-white/[0.08] py-8 md:mt-24 md:grid-cols-4 md:gap-y-0"
       >
         {metrics.map((m, i) => (
           <div
@@ -503,7 +503,7 @@ export function Hero() {
             className={`px-6 ${i < metrics.length - 1 ? 'md:border-r md:border-white/[0.08]' : ''}`}
           >
             <div
-              className="text-[36px] font-medium leading-none tracking-[-0.03em] tabular-nums text-text"
+              className="flex min-h-[44px] items-end text-[36px] font-medium leading-none tracking-[-0.03em] tabular-nums text-text"
             >
               {m.italic ? (
                 <span

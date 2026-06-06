@@ -78,48 +78,8 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: 'balai-ni-juan',
-    number: '03',
-    badge: 'WEB',
-    title: 'Balai ni Juan',
-    description:
-      'Client project — a booking website for a private event venue. Showcase pages, appointment booking flow, authentication, and a dark mode toggle, designed for weddings, birthdays, and celebrations.',
-    tags: ['React', 'Vite', 'Tailwind', 'Vercel'],
-    link: 'https://balai-ni-juan.vercel.app',
-  },
-  {
-    id: 'emans-grind',
-    number: '04',
-    badge: 'WEB',
-    title: "Eman's Grind Coffee Shop",
-    description:
-      'Landing page for a specialty coffee shop — menu showcase, pricing, ordering interface, and contact integration with Google Maps and email.',
-    tags: ['HTML/CSS', 'JavaScript', 'Netlify'],
-    link: 'https://emans-grind-coffeeshop.netlify.app',
-  },
-  {
-    id: 'pup-interactive-map',
-    number: '05',
-    badge: 'WEB',
-    title: 'PUP Interactive Map',
-    description:
-      'Interactive vicinity map for the Polytechnic University of the Philippines with numbered location markers and points of interest for visitors and students.',
-    tags: ['HTML/CSS', 'JavaScript', 'Netlify'],
-    link: 'https://pup-interactive-map.netlify.app',
-  },
-  {
-    id: 'calculator',
-    number: '06',
-    badge: 'WEB',
-    title: 'Calculator Website',
-    description:
-      'Scientific calculator with trigonometric, logarithmic, and factorial functions, plus binary, octal, and hexadecimal number-system conversions.',
-    tags: ['HTML/CSS', 'JavaScript', 'Netlify'],
-    link: 'https://calculator-by-emanuel.netlify.app',
-  },
-  {
     id: 'solar-watering-system',
-    number: '07',
+    number: '03',
     badge: 'IOT',
     title: 'Solar-Powered Automated Watering System',
     description:
@@ -129,7 +89,7 @@ export const projects: Project[] = [
   },
   {
     id: 'dorm-bill-splitter',
-    number: '08',
+    number: '04',
     badge: 'WEB',
     title: 'Dorm Bill Splitter',
     description:
@@ -137,6 +97,46 @@ export const projects: Project[] = [
     tags: ['React', 'Vite', 'Tailwind', 'Vercel'],
     link: 'https://dorm-bill-splitter.vercel.app',
     github: 'https://github.com/vv4nity/dorm-bill-splitter.git',
+  },
+  {
+    id: 'balai-ni-juan',
+    number: '05',
+    badge: 'WEB',
+    title: 'Balai ni Juan',
+    description:
+      'Client project — a booking website for a private event venue. Showcase pages, appointment booking flow, authentication, and a dark mode toggle, designed for weddings, birthdays, and celebrations.',
+    tags: ['React', 'Vite', 'Tailwind', 'Vercel'],
+    link: 'https://balai-ni-juan.vercel.app',
+  },
+  {
+    id: 'emans-grind',
+    number: '06',
+    badge: 'WEB',
+    title: "Eman's Grind Coffee Shop",
+    description:
+      'Landing page for a specialty coffee shop — menu showcase, pricing, ordering interface, and contact integration with Google Maps and email.',
+    tags: ['HTML/CSS', 'JavaScript', 'Netlify'],
+    link: 'https://emans-grind-coffeeshop.netlify.app',
+  },
+  {
+    id: 'pup-interactive-map',
+    number: '07',
+    badge: 'WEB',
+    title: 'PUP Interactive Map',
+    description:
+      'Interactive vicinity map for the Polytechnic University of the Philippines with numbered location markers and points of interest for visitors and students.',
+    tags: ['HTML/CSS', 'JavaScript', 'Netlify'],
+    link: 'https://pup-interactive-map.netlify.app',
+  },
+  {
+    id: 'calculator',
+    number: '08',
+    badge: 'WEB',
+    title: 'Calculator Website',
+    description:
+      'Scientific calculator with trigonometric, logarithmic, and factorial functions, plus binary, octal, and hexadecimal number-system conversions.',
+    tags: ['HTML/CSS', 'JavaScript', 'Netlify'],
+    link: 'https://calculator-by-emanuel.netlify.app',
   },
 ];
 

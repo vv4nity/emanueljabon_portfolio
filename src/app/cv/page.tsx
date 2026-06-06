@@ -77,7 +77,7 @@ export default function CVPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.12 }}
-            className="mt-10 flex flex-wrap items-center gap-3"
+            className="mt-8 flex flex-wrap items-center gap-2 md:mt-10 md:gap-3"
           >
             {[
               { label: 'File', value: fileName },
@@ -86,7 +86,7 @@ export default function CVPage() {
             ].map((m) => (
               <div
                 key={m.label}
-                className="inline-flex items-center gap-2.5 rounded-full border-[0.5px] border-white/10 bg-white/[0.03] px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-text-dim"
+                className="inline-flex items-center gap-2 rounded-full border-[0.5px] border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[9px] uppercase tracking-[0.15em] text-text-dim md:gap-2.5 md:px-3.5 md:py-1.5 md:text-[10px] md:tracking-[0.18em]"
               >
                 <span className="text-text-faint">{m.label}</span>
                 <span
@@ -103,12 +103,12 @@ export default function CVPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-6 flex flex-wrap items-center gap-3"
+            className="mt-6 flex items-center gap-2.5 md:flex-wrap md:gap-3"
           >
             <a
               href={file}
               download={fileName}
-              className="group inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-[13px] font-medium text-text transition-all hover:-translate-y-0.5"
+              className="group inline-flex flex-1 items-center justify-center gap-2.5 rounded-full px-5 py-3 text-[13px] font-medium text-text transition-all hover:-translate-y-0.5 md:flex-initial md:px-6"
               style={{
                 background: 'linear-gradient(135deg, rgba(193,123,232,0.45), rgba(96,128,255,0.45))',
                 border: '0.5px solid rgba(255,255,255,0.18)',
@@ -125,17 +125,19 @@ export default function CVPage() {
               href={file}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-5 py-3 text-[13px] font-medium text-text-dim transition-all hover:bg-white/[0.08] hover:text-text"
+              aria-label="Open in new tab"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-3.5 py-3 text-[13px] font-medium text-text-dim transition-all hover:bg-white/[0.08] hover:text-text md:px-5"
             >
               <FiExternalLink size={14} />
-              Open in new tab
+              <span className="hidden md:inline">Open in new tab</span>
             </a>
             <a
               href={`mailto:${personal.email}?subject=${encodeURIComponent('Re: your CV')}`}
-              className="inline-flex items-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-5 py-3 text-[13px] font-medium text-text-dim transition-all hover:bg-white/[0.08] hover:text-text"
+              aria-label="Reach out"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-3.5 py-3 text-[13px] font-medium text-text-dim transition-all hover:bg-white/[0.08] hover:text-text md:px-5"
             >
               <FiMail size={14} />
-              Reach out
+              <span className="hidden md:inline">Reach out</span>
             </a>
           </motion.div>
         </section>
