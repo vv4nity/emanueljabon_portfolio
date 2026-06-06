@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiArrowLeft, FiDownload, FiExternalLink, FiMail } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowDown, FiDownload, FiExternalLink, FiMail } from 'react-icons/fi';
 import { AmbientOrbs } from '@/components/AmbientOrbs';
 import { TopBar } from '@/components/TopBar';
 import { Nav } from '@/components/Nav';
@@ -103,42 +103,69 @@ export default function CVPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-6 flex items-center gap-2.5 md:flex-wrap md:gap-3"
+            className="mt-6 flex w-full max-w-md flex-col gap-2.5"
           >
+            {/* Primary — download */}
             <a
               href={file}
               download={fileName}
-              className="group inline-flex flex-1 items-center justify-center gap-2.5 rounded-full px-5 py-3 text-[13px] font-medium text-text transition-all hover:-translate-y-0.5 md:flex-initial md:px-6"
+              className="group relative flex items-center justify-between gap-3 overflow-hidden rounded-2xl px-4 py-3.5 transition-all hover:-translate-y-0.5"
               style={{
                 background: 'linear-gradient(135deg, rgba(193,123,232,0.45), rgba(96,128,255,0.45))',
                 border: '0.5px solid rgba(255,255,255,0.18)',
-                boxShadow: '0 10px 30px rgba(127,80,220,0.25)',
+                boxShadow: '0 12px 34px rgba(127,80,220,0.28)',
               }}
             >
-              <FiDownload size={14} />
-              Download PDF
-              <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-dim">
-                · 93 KB
+              {/* Sheen sweep on hover */}
+              <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+                <span
+                  className="absolute inset-y-0 -left-1/3 w-1/3 -translate-x-full transition-transform duration-700 ease-out group-hover:translate-x-[400%]"
+                  style={{
+                    background:
+                      'linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)',
+                  }}
+                />
               </span>
+
+              <span className="relative flex items-center gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[0.5px] border-white/25 bg-white/15">
+                  <FiDownload size={17} className="text-text" />
+                </span>
+                <span className="flex flex-col">
+                  <span className="text-[14px] font-semibold leading-tight text-text">
+                    Download PDF
+                  </span>
+                  <span className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.15em] text-text-dim">
+                    {fileName} · 93 KB
+                  </span>
+                </span>
+              </span>
+
+              <FiArrowDown
+                size={18}
+                className="relative shrink-0 text-text/70 transition-transform duration-300 group-hover:translate-y-0.5 group-hover:text-text"
+              />
             </a>
-            <a
-              href={file}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open in new tab"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-3.5 py-3 text-[13px] font-medium text-text-dim transition-all hover:bg-white/[0.08] hover:text-text md:px-5"
-            >
-              <FiExternalLink size={14} />
-              <span className="hidden md:inline">Open in new tab</span>
-            </a>
-            <a
-              href={`mailto:${personal.email}?subject=${encodeURIComponent('Re: your CV')}`}
-              aria-label="Reach out"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-[0.5px] border-white/15 bg-white/[0.04] px-3.5 py-3 text-[13px] font-medium text-text-dim transition-all hover:bg-white/[0.08] hover:text-text md:px-5"
-            >
-              <FiMail size={14} />
-              <span className="hidden md:inline">Reach out</span>
-            </a>
+
+            {/* Secondary — open + reach out */}
+            <div className="grid grid-cols-2 gap-2.5">
+              <a
+                href={file}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border-[0.5px] border-white/15 bg-white/[0.04] px-4 py-3 text-[12px] font-medium text-text-dim transition-all hover:-translate-y-0.5 hover:bg-white/[0.08] hover:text-text sm:text-[13px]"
+              >
+                <FiExternalLink size={14} className="shrink-0" />
+                Open in new tab
+              </a>
+              <a
+                href={`mailto:${personal.email}?subject=${encodeURIComponent('Re: your CV')}`}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border-[0.5px] border-white/15 bg-white/[0.04] px-4 py-3 text-[12px] font-medium text-text-dim transition-all hover:-translate-y-0.5 hover:bg-white/[0.08] hover:text-text sm:text-[13px]"
+              >
+                <FiMail size={14} className="shrink-0" />
+                Reach out
+              </a>
+            </div>
           </motion.div>
         </section>
 
