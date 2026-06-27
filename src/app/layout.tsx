@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono, Instrument_Serif } from 'next/font/google';
 import './globals.css';
 import { PageTransition } from '@/components/PageTransition';
+import { Chatbot } from '@/components/Chatbot';
 
 const geistSans = Inter({
   subsets: ['latin'],
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans">
         <PageTransition />
         {children}
+        <Chatbot />
       </body>
     </html>
   );
