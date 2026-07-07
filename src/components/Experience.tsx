@@ -4,6 +4,19 @@ import { motion } from 'framer-motion';
 import { TbUsersGroup } from 'react-icons/tb';
 import { experience, organizations } from '@/data/content';
 
+// Renders **text** segments as emphasized (bold) spans, leaving the rest plain.
+function renderEmphasis(text: string) {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+    part.startsWith('**') && part.endsWith('**') ? (
+      <strong key={i} className="font-semibold text-text">
+        {part.slice(2, -2)}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
+
 function initialsFrom(org: string) {
   return org
     .replace(/[—–-]/g, ' ')
@@ -156,13 +169,15 @@ export function Experience() {
                   />
 
                   {/* Description */}
-                  <p className="mb-4 text-[14px] leading-[1.65] text-text-dim">
-                    {exp.description}
-                  </p>
+                  {exp.description && (
+                    <p className="mb-4 text-[14px] leading-[1.65] text-text-dim">
+                      {renderEmphasis(exp.description)}
+                    </p>
+                  )}
 
                   {/* Highlights */}
                   {exp.highlights && exp.highlights.length > 0 && (
-                    <ul className="space-y-2">
+                    <ul className="space-y-2.5">
                       {exp.highlights.map((h) => (
                         <li key={h} className="flex items-start gap-3 text-[13px] leading-[1.6] text-text-dim">
                           <span
@@ -172,7 +187,7 @@ export function Experience() {
                               boxShadow: '0 0 8px rgba(193,123,232,0.6)',
                             }}
                           />
-                          <span>{h}</span>
+                          <span>{renderEmphasis(h)}</span>
                         </li>
                       ))}
                     </ul>

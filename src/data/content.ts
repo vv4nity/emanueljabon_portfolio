@@ -184,7 +184,8 @@ export type ExperienceItem = {
   role: string;
   org: string;
   period: string;
-  description: string;
+  description?: string;
+  // Highlights support **bold** markers to emphasize quantified metrics.
   highlights?: string[];
   logo?: string;
 };
@@ -195,10 +196,9 @@ export const experience: ExperienceItem[] = [
     org: 'American Express',
     period: 'Aug — Oct 2025',
     logo: '/logo-amex.png',
-    description:
-      'Developed and maintained backend services and internal tools for production-grade systems in a global financial-services environment, working within a 10-person software engineering team through code reviews and Agile sprints.',
     highlights: [
-      'Shipped 50+ features across 6 sprints through Git-based CI/CD pipelines, writing code that cleared peer review and integrated into enterprise applications.',
+      'Developed and maintained backend services and internal tools for production-grade systems in a global financial-services environment, working within a **10-person software engineering team** through code reviews and Agile sprints.',
+      'Shipped **50+ features** across **6 sprints** through Git-based CI/CD pipelines, writing code that cleared peer review and integrated into enterprise applications.',
     ],
   },
   {
@@ -206,10 +206,9 @@ export const experience: ExperienceItem[] = [
     org: 'Concentrix — EXXA',
     period: 'Jul — Sep 2025',
     logo: '/logo-concentrix.png',
-    description:
-      'Monitored, diagnosed, and resolved 200+ tickets per week across internal infrastructure, helping sustain 98% uptime.',
     highlights: [
-      'Rolled out internal tools alongside technical teams and documented recurring issues, reducing repeat incidents by 30%.',
+      'Monitored, diagnosed, and resolved **200+ tickets per week** across internal infrastructure, helping sustain **98% uptime**.',
+      'Rolled out internal tools alongside technical teams and documented recurring issues, reducing repeat incidents by **30%**.',
     ],
   },
   {
@@ -217,10 +216,9 @@ export const experience: ExperienceItem[] = [
     org: 'ROC.PH',
     period: 'Jul — Sep 2024',
     logo: '/logo-rocph.jpg',
-    description:
-      'Delivered 15+ responsive web pages backed by REST APIs, spanning front-end UI and database-layer features.',
     highlights: [
-      'Implemented secure authentication, database integrations, and 10+ REST endpoints for an app serving 400+ users, built across Agile sprints with peer code reviews.',
+      'Delivered **15+ responsive web pages** backed by REST APIs, spanning front-end UI and database-layer features.',
+      'Implemented secure authentication, database integrations, and **10+ REST endpoints** for an app serving **400+ users**, built across Agile sprints with peer code reviews.',
     ],
   },
 ];
