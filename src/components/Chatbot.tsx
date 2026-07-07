@@ -255,7 +255,7 @@ export function Chatbot() {
   return (
     <>
       {/* ─────────── Floating launcher ─────────── */}
-      <div className="fixed bottom-5 right-5 z-[60] flex items-center gap-3 md:bottom-7 md:right-7">
+      <div className="fixed bottom-5 right-5 z-[60] flex flex-col items-end gap-2.5 sm:flex-row sm:items-center sm:gap-3 md:bottom-7 md:right-7">
         {/* Discovery hint */}
         <AnimatePresence>
           {showHint && !open && hintIndex >= 0 && (
