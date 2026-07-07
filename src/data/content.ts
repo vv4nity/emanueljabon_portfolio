@@ -14,7 +14,7 @@ export const personal = {
   instagram: 'https://instagram.com/vv4nity',
   cvUrl: '/cv', // in-app viewer page
   cvFile: '/Emanuel_Jabon_CV.pdf', // actual PDF file in public/
-  cvUpdated: 'May 2026',
+  cvUpdated: 'Jul 2026',
   photoUrl: '/hero-photo.png', // place your photo at public/hero-photo.png
   availability: 'Open to roles · Summer 2026',
 };
@@ -26,7 +26,7 @@ export const hero = {
   line2Rest: 'software',
   closer: 'with care.',
   lede:
-    'Computer Engineer from PUP, focused on system development and Artificial Intelligence & Machine Learning. Building full-stack apps, backend services, and AI-driven systems — still learning, still shipping.',
+    'Computer Engineering graduate from PUP, focused on system development and applied AI/ML. I build and ship production-grade software — from responsive front ends and REST APIs to machine-learning pipelines and their deployment.',
   credentials: ['BSCpE · 2026', '12+ projects shipped', 'Open source'],
   currentlyBuilding: {
     label: 'Currently building',
@@ -63,23 +63,33 @@ export const projects: Project[] = [
     badge: 'AI',
     title: 'MiraFit AI',
     description:
-      'Real-time pose-estimation and exercise-validation pipeline using MediaPipe and YOLOv8 — accurate rep counting and live form feedback without wearables. Gemini 2.5 generates personalized workout and meal plans from body type, health conditions, and dietary inputs.',
-    tags: ['Python', 'Flask', 'MediaPipe', 'YOLOv8', 'Gemini 2.5'],
+      'Real-time pose-estimation and exercise-validation pipeline (MediaPipe + YOLOv8) reaching 95% rep-counting accuracy with live form feedback and no wearables. Deployed on-device to a Raspberry Pi at 60 FPS, with Gemini 2.5 generating personalized workout and meal plans from body type, health conditions, and dietary inputs.',
+    tags: ['Python', 'Flask', 'MediaPipe', 'YOLOv8', 'TensorFlow Lite', 'Gemini 2.5'],
+    featured: true,
+  },
+  {
+    id: 'cpe-hardhatting-2026',
+    number: '02',
+    badge: 'WEB',
+    title: 'CpE Hardhatting Ceremony 2026',
+    description:
+      'The official QR-pass, check-in, and reserved-seating platform for the PUP Computer Engineering Hardhatting Ceremony — solo-developed for 382 attendees across 8 class blocks. Invite-based onboarding, JWT-signed QR passes with a live seat map, a full-screen camera check-in scanner, and a real-time admin dashboard with role-based access enforced via Supabase Row-Level Security.',
+    tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Vercel'],
     featured: true,
   },
   {
     id: 'mirafit-admin-dashboard',
-    number: '02',
+    number: '03',
     badge: 'WEB',
     title: 'MiraFit Admin Dashboard',
     description:
-      'Centralized admin platform for managing user accounts, workout data, and AI-generated plan statistics across the MiraFit ecosystem. Analytics modules track engagement and integrate health monitoring for backend services and AI servers.',
+      'Centralized admin platform managing 100+ user accounts, workout data, and AI-generated plan statistics — deployed and maintained in production. Analytics modules track engagement and system-health metrics including active users, plan-completion rates, and backend/AI-server health.',
     tags: ['PHP', 'MySQL', 'JavaScript', 'Node.js', 'Apache'],
     featured: true,
   },
   {
     id: 'solar-watering-system',
-    number: '03',
+    number: '04',
     badge: 'IOT',
     title: 'Solar-Powered Automated Watering System',
     description:
@@ -89,7 +99,7 @@ export const projects: Project[] = [
   },
   {
     id: 'dorm-bill-splitter',
-    number: '04',
+    number: '05',
     badge: 'WEB',
     title: 'Dorm Bill Splitter',
     description:
@@ -100,7 +110,7 @@ export const projects: Project[] = [
   },
   {
     id: 'balai-ni-juan',
-    number: '05',
+    number: '06',
     badge: 'WEB',
     title: 'Balai ni Juan',
     description:
@@ -110,7 +120,7 @@ export const projects: Project[] = [
   },
   {
     id: 'emans-grind',
-    number: '06',
+    number: '07',
     badge: 'WEB',
     title: "Eman's Grind Coffee Shop",
     description:
@@ -120,7 +130,7 @@ export const projects: Project[] = [
   },
   {
     id: 'pup-interactive-map',
-    number: '07',
+    number: '08',
     badge: 'WEB',
     title: 'PUP Interactive Map',
     description:
@@ -130,7 +140,7 @@ export const projects: Project[] = [
   },
   {
     id: 'calculator',
-    number: '08',
+    number: '09',
     badge: 'WEB',
     title: 'Calculator Website',
     description:
@@ -155,15 +165,15 @@ export const stack: StackCategory[] = [
   },
   {
     name: 'AI / Machine Learning',
-    items: ['PyTorch', 'TensorFlow', 'TensorFlow Lite', 'MediaPipe', 'YOLOv8', 'Gemini', 'scikit-learn', 'OpenCV', 'NumPy', 'Pandas'],
+    items: ['PyTorch', 'TensorFlow', 'TensorFlow Lite', 'MediaPipe', 'YOLOv8', 'OpenCV', 'scikit-learn', 'Gemini', 'Prompt Engineering', 'MLOps', 'MLflow', 'Weights & Biases', 'NumPy', 'Pandas'],
   },
   {
     name: 'Web & Backend',
-    items: ['Next.js', 'React', 'Node.js', 'Flask', 'FastAPI', 'Express', 'PHP', 'MySQL', 'PostgreSQL', 'MongoDB', 'REST APIs'],
+    items: ['Next.js', 'React', 'Redux', 'Context API', 'Tailwind CSS', 'Node.js', 'Flask', 'FastAPI', 'Express', 'PHP', 'Supabase', 'MySQL', 'PostgreSQL', 'MongoDB', 'REST APIs'],
   },
   {
     name: 'Tools & DevOps',
-    items: ['Docker', 'Git', 'Apache', 'Cloudflare Tunnel', 'Linux', 'Vercel', 'CI/CD', 'Agile/Scrum'],
+    items: ['Docker', 'Git', 'Google Cloud / GCP', 'Apache', 'Cloudflare Tunnel', 'Linux', 'Vercel', 'CI/CD', 'Agile/Scrum', 'pytest', 'Jest', 'React Testing Library'],
   },
 ];
 
@@ -181,14 +191,14 @@ export type ExperienceItem = {
 
 export const experience: ExperienceItem[] = [
   {
-    role: 'Software Developer Intern',
+    role: 'Software Engineering Intern',
     org: 'American Express',
     period: 'Aug — Oct 2025',
     logo: '/logo-amex.png',
     description:
-      'Contributed to enterprise software projects in a global financial services environment, collaborating with senior engineers on production-grade systems.',
+      'Developed and maintained backend services and internal tools for production-grade systems in a global financial-services environment, working within a 10-person software engineering team through code reviews and Agile sprints.',
     highlights: [
-      'Developed backend services and internal tools, applying Agile workflows, version control, and code review best practices to ship reliable features.',
+      'Shipped 50+ features across 6 sprints through Git-based CI/CD pipelines, writing code that cleared peer review and integrated into enterprise applications.',
     ],
   },
   {
@@ -197,9 +207,9 @@ export const experience: ExperienceItem[] = [
     period: 'Jul — Sep 2025',
     logo: '/logo-concentrix.png',
     description:
-      'Supported day-to-day IT operations including system monitoring, troubleshooting, and incident resolution across internal infrastructure.',
+      'Monitored, diagnosed, and resolved 200+ tickets per week across internal infrastructure, helping sustain 98% uptime.',
     highlights: [
-      'Coordinated with technical teams to ensure uptime, deploy internal tools, and document recurring incidents to drive process improvements.',
+      'Rolled out internal tools alongside technical teams and documented recurring issues, reducing repeat incidents by 30%.',
     ],
   },
   {
@@ -208,9 +218,9 @@ export const experience: ExperienceItem[] = [
     period: 'Jul — Sep 2024',
     logo: '/logo-rocph.jpg',
     description:
-      'Developed responsive web applications using modern front-end frameworks and back-end APIs, contributing to both UI and database-layer features.',
+      'Delivered 15+ responsive web pages backed by REST APIs, spanning front-end UI and database-layer features.',
     highlights: [
-      'Collaborated in an Agile environment to plan sprints, conduct code reviews, and implement secure authentication and database integrations.',
+      'Implemented secure authentication, database integrations, and 10+ REST endpoints for an app serving 400+ users, built across Agile sprints with peer code reviews.',
     ],
   },
 ];

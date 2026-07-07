@@ -123,7 +123,7 @@ export default function CVPage() {
                     Download PDF
                   </span>
                   <span className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.15em] text-text-dim">
-                    {fileName} · 93 KB
+                    {fileName} · 35 KB
                   </span>
                 </span>
               </span>
