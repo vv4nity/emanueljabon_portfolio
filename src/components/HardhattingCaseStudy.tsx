@@ -1,88 +1,248 @@
-"use client";
+'use client';
 
-/**
- * CPE Hardhatting 2026 — portfolio case study.
- * Self-contained: no external UI deps, brings its own styles.
- * Drop this file anywhere in your Next.js app (App Router or Pages),
- * copy /public/showcase/*.webp, and render <HardhattingCaseStudy />.
- */
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiGithub, FiChevronLeft, FiChevronRight, FiUser, FiCalendar } from 'react-icons/fi';
+import {
+  TbQrcode,
+  TbWifiOff,
+  TbActivity,
+  TbUserCheck,
+  TbMail,
+  TbShieldLock,
+  TbWorld,
+} from 'react-icons/tb';
+import type { IconType } from 'react-icons';
+import { getTool } from '@/lib/toolIcons';
 
-import { useCallback, useEffect, useRef, useState } from "react";
+const GITHUB_URL = 'https://github.com/vv4nity/cpe-hardhatting-2026';
 
 const SLIDES = [
-  { src: "/showcase/slide-01.webp", cap: "Coded for the future — the cover" },
-  { src: "/showcase/slide-02.webp", cap: "Four roles, one system — each locked down with Row-Level Security" },
-  { src: "/showcase/slide-03.webp", cap: "The attendee experience — dashboard, digital QR pass, seat map & profile" },
-  { src: "/showcase/slide-04.webp", cap: "Block-president oversight — a live view of the section they supervise" },
-  { src: "/showcase/slide-05.webp", cap: "An offline-resilient door scanner — recognises passes with zero signal" },
-  { src: "/showcase/slide-06.webp", cap: "The organizer command center — turnout, live chart & activity feed" },
-  { src: "/showcase/slide-07.webp", cap: "Full event administration — seating, invitations, briefings & export" },
-  { src: "/showcase/slide-08.webp", cap: "Branded, end-to-end — invitation & check-in emails" },
-  { src: "/showcase/slide-09.webp", cap: "Invite-only onboarding with rate-limited self-service recovery" },
-  { src: "/showcase/slide-10.webp", cap: "Engineered to hold up — the tech under the hood" },
+  { src: '/showcase/slide-01.webp', cap: 'Coded for the future — the cover' },
+  { src: '/showcase/slide-02.webp', cap: 'Four roles, one system — each locked down with Row-Level Security' },
+  { src: '/showcase/slide-03.webp', cap: 'The attendee experience — dashboard, digital QR pass, seat map & profile' },
+  { src: '/showcase/slide-04.webp', cap: 'Block-president oversight — a live view of the section they supervise' },
+  { src: '/showcase/slide-05.webp', cap: 'An offline-resilient door scanner — recognises passes with zero signal' },
+  { src: '/showcase/slide-06.webp', cap: 'The organizer command center — turnout, live chart & activity feed' },
+  { src: '/showcase/slide-07.webp', cap: 'Full event administration — seating, invitations, briefings & export' },
+  { src: '/showcase/slide-08.webp', cap: 'Branded, end-to-end — invitation & check-in emails' },
+  { src: '/showcase/slide-09.webp', cap: 'Invite-only onboarding with rate-limited self-service recovery' },
+  { src: '/showcase/slide-10.webp', cap: 'Engineered to hold up — the tech under the hood' },
 ];
 
-const TECH = ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Supabase", "Vercel"];
+const TECH = ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Supabase', 'Vercel'];
 
-const FEATURES = [
-  { t: "Personal digital QR pass", d: "Every attendee gets a QR ticket rendered client-side to a high-res PNG they can save — works offline once on the phone." },
-  { t: "Offline-first door scanner", d: "The roster loads into memory at sign-in, so check-ins work with no signal and sync automatically (on reconnect, every 20s, and after each successful scan)." },
-  { t: "Realtime command center", d: "Organizers watch turnout, a live check-in chart, an activity feed and per-block stats update the instant a pass is scanned — via Supabase Realtime." },
-  { t: "Invite-only onboarding", d: "Attendees never self-register; activation verifies identity against the official class directory, with admin-approved, rate-limited recovery flows." },
-  { t: "Branded transactional email", d: "Premium invitation and instant check-in emails — event cover, details and dress code — sent over Gmail SMTP." },
-  { t: "Locked-down access", d: "Four roles (Attendee, Block President, Scanner, Admin), each seeing only what they should, enforced with Postgres Row-Level Security." },
+const STATS = [
+  { value: '382', label: 'Attendees' },
+  { value: '8', label: 'Class blocks' },
+  { value: '4', label: 'Roles' },
+  { value: '0', label: 'Lines at the door', italic: true },
 ];
+
+const FEATURES: { icon: IconType; t: string; d: string }[] = [
+  {
+    icon: TbQrcode,
+    t: 'Personal digital QR pass',
+    d: 'Every attendee gets a QR ticket rendered client-side to a high-res PNG they can save — works offline once on the phone.',
+  },
+  {
+    icon: TbWifiOff,
+    t: 'Offline-first door scanner',
+    d: 'The roster loads into memory at sign-in, so check-ins work with no signal and sync automatically (on reconnect, every 20s, and after each successful scan).',
+  },
+  {
+    icon: TbActivity,
+    t: 'Realtime command center',
+    d: 'Organizers watch turnout, a live check-in chart, an activity feed and per-block stats update the instant a pass is scanned — via Supabase Realtime.',
+  },
+  {
+    icon: TbUserCheck,
+    t: 'Invite-only onboarding',
+    d: 'Attendees never self-register; activation verifies identity against the official class directory, with admin-approved, rate-limited recovery flows.',
+  },
+  {
+    icon: TbMail,
+    t: 'Branded transactional email',
+    d: 'Premium invitation and instant check-in emails — event cover, details and dress code — sent over Gmail SMTP.',
+  },
+  {
+    icon: TbShieldLock,
+    t: 'Locked-down access',
+    d: 'Four roles (Attendee, Block President, Scanner, Admin), each seeing only what they should, enforced with Postgres Row-Level Security.',
+  },
+];
+
+const META: { icon: IconType; label: string; value: string }[] = [
+  { icon: FiUser, label: 'Role', value: 'Solo — Design & Engineering' },
+  { icon: TbWorld, label: 'Type', value: 'Full-stack web app' },
+  { icon: FiCalendar, label: 'Event', value: 'PUP CpE · July 2026' },
+];
+
+function SectionHeader({ number, children }: { number: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <div className="mb-2 flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.25em] text-text-faint">
+        <span>{number}</span>
+        <span
+          className="h-px max-w-[180px] flex-1"
+          style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.2), transparent)' }}
+        />
+      </div>
+      <h2
+        className="font-medium tracking-[-0.02em] text-text"
+        style={{ fontSize: 'clamp(24px, 4vw, 34px)' }}
+      >
+        {children}
+      </h2>
+    </div>
+  );
+}
 
 export default function HardhattingCaseStudy() {
   const [i, setI] = useState(0);
+  const [dir, setDir] = useState(1);
   const touchX = useRef<number | null>(null);
   const n = SLIDES.length;
 
-  const go = useCallback((d: number) => setI((p) => (p + d + n) % n), [n]);
+  const go = useCallback(
+    (d: number) => {
+      setDir(d);
+      setI((p) => (p + d + n) % n);
+    },
+    [n]
+  );
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") go(-1);
-      if (e.key === "ArrowRight") go(1);
+      if (e.key === 'ArrowLeft') go(-1);
+      if (e.key === 'ArrowRight') go(1);
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [go]);
 
   return (
-    <div className="hhc-root">
-      <style>{CSS}</style>
-
+    <div className="mx-auto max-w-5xl">
       {/* HERO */}
-      <header className="hhc-hero">
-        <div className="hhc-eyebrow">Case study · Full-stack web app · 2026</div>
-        <h1 className="hhc-title">
-          CPE Hardhatting <span className="hhc-grad">2026</span>
+      <motion.header
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="mb-2 flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.25em] text-text-faint">
+          <span>Case study — Full-stack web app</span>
+          <span
+            className="h-px max-w-[180px] flex-1"
+            style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.2), transparent)' }}
+          />
+        </div>
+
+        <h1
+          className="font-medium leading-[1.05] tracking-[-0.04em] text-text"
+          style={{ fontSize: 'clamp(40px, 7vw, 72px)' }}
+        >
+          CPE Hardhatting{' '}
+          <span className="font-serif italic font-normal gradient-text">2026</span>
         </h1>
-        <p className="hhc-tagline">
+
+        <p className="mt-5 max-w-2xl text-[16px] leading-[1.65] text-text-dim md:text-[17px]">
           The attendance &amp; QR-seating platform I designed and built for the PUP Computer
-          Engineering Hardhatting Ceremony — reserved seats, personal QR passes,
-          offline door-scanning, and a live organizer command center.
+          Engineering Hardhatting Ceremony — reserved seats, personal QR passes, offline
+          door-scanning, and a live organizer command center.
         </p>
 
-        <div className="hhc-meta">
-          <div><span>Role</span>Solo — Design &amp; Engineering</div>
-          <div><span>Type</span>Full-stack web app</div>
-          <div><span>Event</span>PUP CpE · July 2026</div>
+        {/* Meta */}
+        <div className="mt-8 flex flex-wrap gap-3">
+          {META.map((m) => (
+            <div
+              key={m.label}
+              className="glass flex items-center gap-3 rounded-2xl px-4 py-3"
+            >
+              <span
+                className="flex h-8 w-8 items-center justify-center rounded-lg"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(193,123,232,0.2), rgba(96,128,255,0.2))',
+                }}
+              >
+                <m.icon size={15} className="text-accent-soft" />
+              </span>
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
+                  {m.label}
+                </div>
+                <div className="text-[13px] font-medium text-text">{m.value}</div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="hhc-links">
-          <a className="hhc-btn hhc-btn-primary" href="https://github.com/vv4nity/cpe-hardhatting-2026" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+        {/* Links */}
+        <div className="mt-7 flex flex-wrap gap-3">
+          <motion.a
+            whileHover={{ y: -1 }}
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl border-[0.5px] border-white/25 px-5 py-3 text-[14px] font-medium text-text transition-shadow hover:shadow-[0_8px_24px_-12px_rgba(193,123,232,0.6)]"
+            style={{
+              background: 'linear-gradient(135deg, rgba(193,123,232,0.25), rgba(96,128,255,0.25))',
+            }}
+          >
+            <FiGithub size={15} />
+            View on GitHub
+          </motion.a>
         </div>
 
-        <div className="hhc-tech">
-          {TECH.map((t) => <span key={t} className="hhc-pill">{t}</span>)}
+        {/* Tech pills */}
+        <div className="mt-8 flex flex-wrap gap-1.5">
+          {TECH.map((t) => {
+            const tool = getTool(t);
+            const TagIcon = tool.icon;
+            return (
+              <span
+                key={t}
+                className="inline-flex items-center gap-1.5 rounded border-[0.5px] border-white/[0.08] bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] tracking-wide text-text-dim"
+              >
+                <TagIcon size={11} style={{ color: tool.color }} />
+                {t}
+              </span>
+            );
+          })}
         </div>
-      </header>
+
+        {/* Stats */}
+        <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {STATS.map((s, idx) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              className="glass rounded-2xl p-4 text-center"
+            >
+              <div
+                className={`gradient-text-2 text-[28px] tracking-[-0.02em] ${
+                  s.italic ? 'font-serif italic' : 'font-medium'
+                }`}
+              >
+                {s.value}
+              </div>
+              <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
+                {s.label}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.header>
 
       {/* CAROUSEL */}
-      <section
-        className="hhc-carousel"
+      <motion.section
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6 }}
+        className="mt-20"
         onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
         onTouchEnd={(e) => {
           if (touchX.current == null) return;
@@ -91,132 +251,165 @@ export default function HardhattingCaseStudy() {
           touchX.current = null;
         }}
       >
-        <div className="hhc-stage">
-          <button className="hhc-nav hhc-prev" onClick={() => go(-1)} aria-label="Previous slide">‹</button>
-          <div className="hhc-frame">
-            {SLIDES.map((s, idx) => (
-              <img
-                key={s.src}
-                src={s.src}
-                alt={s.cap}
-                loading={idx === 0 ? "eager" : "lazy"}
-                className={"hhc-slide" + (idx === i ? " is-active" : "")}
+        <div className="flex items-center gap-3 md:gap-4">
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => go(-1)}
+            aria-label="Previous slide"
+            className="glass flex h-11 w-11 flex-none items-center justify-center rounded-full text-text transition-colors hover:border-white/25 md:h-12 md:w-12"
+          >
+            <FiChevronLeft size={20} />
+          </motion.button>
+
+          <div
+            className="relative flex-1 overflow-hidden rounded-2xl border-[0.5px] border-white/[0.08] bg-bg-2"
+            style={{ aspectRatio: '4/5', boxShadow: '0 30px 80px -30px rgba(193,123,232,0.3)' }}
+          >
+            <AnimatePresence initial={false} custom={dir}>
+              <motion.img
+                key={SLIDES[i].src}
+                src={SLIDES[i].src}
+                alt={SLIDES[i].cap}
+                custom={dir}
+                initial={{ opacity: 0, x: dir * 40, scale: 0.98 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: dir * -40, scale: 0.98 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="absolute inset-0 h-full w-full object-cover"
               />
-            ))}
+            </AnimatePresence>
+
+            <div className="absolute right-3 top-3 z-10 rounded border-[0.5px] border-white/15 bg-black/50 px-2.5 py-1 font-mono text-[10px] tracking-[0.15em] text-white backdrop-blur-md">
+              {String(i + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
+            </div>
           </div>
-          <button className="hhc-nav hhc-next" onClick={() => go(1)} aria-label="Next slide">›</button>
+
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => go(1)}
+            aria-label="Next slide"
+            className="glass flex h-11 w-11 flex-none items-center justify-center rounded-full text-text transition-colors hover:border-white/25 md:h-12 md:w-12"
+          >
+            <FiChevronRight size={20} />
+          </motion.button>
         </div>
 
-        <p className="hhc-cap"><b>{String(i + 1).padStart(2, "0")}</b> · {SLIDES[i].cap}</p>
+        <p className="mx-auto mt-5 max-w-xl text-center text-[14px] text-text-dim">
+          <span className="font-mono text-accent-soft">{String(i + 1).padStart(2, '0')}</span> ·{' '}
+          {SLIDES[i].cap}
+        </p>
 
-        <div className="hhc-dots">
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
           {SLIDES.map((_, idx) => (
             <button
               key={idx}
-              className={"hhc-dot" + (idx === i ? " is-active" : "")}
-              onClick={() => setI(idx)}
+              onClick={() => {
+                setDir(idx > i ? 1 : -1);
+                setI(idx);
+              }}
               aria-label={`Go to slide ${idx + 1}`}
+              className="h-[9px] rounded-full transition-all duration-200"
+              style={{
+                width: idx === i ? 24 : 9,
+                background:
+                  idx === i
+                    ? 'linear-gradient(90deg, #C17BE8, #6080FF)'
+                    : 'rgba(255,255,255,0.15)',
+              }}
             />
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* BRIEF */}
-      <section className="hhc-block">
-        <h2 className="hhc-h2">The brief</h2>
-        <p className="hhc-body">
+      <motion.section
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6 }}
+        className="mt-24"
+      >
+        <SectionHeader number="01 — Context">The brief</SectionHeader>
+        <p className="mt-4 max-w-3xl text-[15px] leading-[1.65] text-text-dim md:text-[16px]">
           A graduation-style ceremony with hundreds of attendees, assigned seating, and a venue
           with unreliable signal. Attendance had to be fast at the door, seats had to be findable,
           and organizers needed to see turnout live — all without anyone standing in a line or
           ticking names off a printed list.
         </p>
-      </section>
+      </motion.section>
 
       {/* FEATURES */}
-      <section className="hhc-block">
-        <h2 className="hhc-h2">What I built</h2>
-        <div className="hhc-grid">
-          {FEATURES.map((f) => (
-            <div key={f.t} className="hhc-card">
-              <h3>{f.t}</h3>
-              <p>{f.d}</p>
-            </div>
+      <section className="mt-24">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6 }}
+        >
+          <SectionHeader number="02 — Features">
+            What I <span className="font-serif italic font-normal gradient-text">built</span>
+          </SectionHeader>
+        </motion.div>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map((f, idx) => (
+            <motion.div
+              key={f.t}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
+              className="group glass rounded-3xl p-6 transition-all hover:-translate-y-1 hover:border-white/15"
+            >
+              <span
+                className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
+                style={{
+                  background:
+                    'linear-gradient(135deg, rgba(193,123,232,0.2), rgba(96,128,255,0.2))',
+                }}
+              >
+                <f.icon size={20} className="text-accent-soft" />
+              </span>
+              <h3 className="text-[16px] font-medium tracking-[-0.01em] text-text">{f.t}</h3>
+              <p className="mt-2 text-[13px] leading-[1.6] text-text-dim">{f.d}</p>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* OUTRO */}
-      <footer className="hhc-outro">
-        <h2 className="hhc-h2">Under the hood</h2>
-        <p className="hhc-body">
+      {/* UNDER THE HOOD */}
+      <motion.section
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6 }}
+        className="mt-24 border-t-[0.5px] border-white/[0.08] pt-12"
+      >
+        <SectionHeader number="03 — Stack">Under the hood</SectionHeader>
+        <p className="mt-4 max-w-3xl text-[15px] leading-[1.65] text-text-dim md:text-[16px]">
           Built with Next.js 16 (App Router, Turbopack), React 19 and TypeScript, styled with
-          Tailwind CSS v4, and backed by Supabase (Postgres · Auth · Realtime · Row-Level Security).
-          Offline resilience is handled with an in-memory roster and a localStorage sync queue;
-          the QR pass is rendered entirely client-side via canvas. Deployed on Vercel.
+          Tailwind CSS v4, and backed by Supabase (Postgres · Auth · Realtime · Row-Level
+          Security). Offline resilience is handled with an in-memory roster and a localStorage
+          sync queue; the QR pass is rendered entirely client-side via canvas. Deployed on Vercel.
         </p>
-        <div className="hhc-links">
-          <a className="hhc-btn hhc-btn-primary" href="https://github.com/vv4nity/cpe-hardhatting-2026" target="_blank" rel="noreferrer">GitHub ↗</a>
-          <a className="hhc-btn" href="https://emanueljabonportfolio.vercel.app" target="_blank" rel="noreferrer">Portfolio ↗</a>
+        <div className="mt-7">
+          <motion.a
+            whileHover={{ y: -1 }}
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl border-[0.5px] border-white/25 px-5 py-3 text-[14px] font-medium text-text transition-shadow hover:shadow-[0_8px_24px_-12px_rgba(193,123,232,0.6)]"
+            style={{
+              background: 'linear-gradient(135deg, rgba(193,123,232,0.25), rgba(96,128,255,0.25))',
+            }}
+          >
+            <FiGithub size={15} />
+            Explore the code
+          </motion.a>
         </div>
-      </footer>
+      </motion.section>
     </div>
   );
 }
-
-const CSS = `
-.hhc-root{--card:rgba(255,255,255,0.04);--ink:#f5f5f7;--muted:rgba(245,245,247,0.35);--body:rgba(245,245,247,0.55);
-  --accent-1:#C17BE8;--accent-2:#6080FF;--accent-soft:#E5B8FF;--border:rgba(255,255,255,0.08);
-  color:var(--ink);font-family:var(--font-geist-sans),ui-sans-serif,system-ui,sans-serif;
-  max-width:1080px;margin:0 auto;-webkit-font-smoothing:antialiased;}
-.hhc-root *{box-sizing:border-box}
-.hhc-eyebrow{font-family:var(--font-geist-mono),monospace;font-size:11px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
-.hhc-title{font-size:clamp(38px,7vw,68px);line-height:1.05;font-weight:500;letter-spacing:-.04em;margin:14px 0 0}
-.hhc-grad{font-family:var(--font-instrument-serif),serif;font-style:italic;font-weight:400;
-  background:linear-gradient(120deg,#E5B8FF 0%,#C17BE8 35%,#8AA0FF 70%,#6080FF 100%);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.hhc-tagline{font-size:clamp(16px,2.2vw,18px);line-height:1.65;color:var(--body);max-width:680px;margin:18px 0 0}
-.hhc-meta{display:flex;flex-wrap:wrap;gap:14px 40px;margin:30px 0 0}
-.hhc-meta div{font-size:15px;font-weight:500}
-.hhc-meta span{display:block;font-family:var(--font-geist-mono),monospace;font-size:10px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.hhc-links{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 0}
-.hhc-btn{display:inline-flex;align-items:center;font-size:14px;font-weight:500;text-decoration:none;color:var(--ink);
-  background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:12px 20px;
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:transform .15s,border-color .15s,box-shadow .15s}
-.hhc-btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,0.2);box-shadow:0 8px 24px -12px rgba(193,123,232,.5)}
-.hhc-btn-primary{background:linear-gradient(135deg,rgba(193,123,232,0.25),rgba(96,128,255,0.25));border-color:rgba(255,255,255,0.25)}
-.hhc-tech{display:flex;flex-wrap:wrap;gap:9px;margin:30px 0 0}
-.hhc-pill{font-family:var(--font-geist-mono),monospace;font-size:11px;font-weight:400;letter-spacing:.05em;color:var(--body);
-  background:var(--card);border:0.5px solid var(--border);border-radius:999px;padding:7px 14px}
-
-.hhc-carousel{margin:64px 0 0}
-.hhc-stage{display:flex;align-items:center;gap:14px}
-.hhc-frame{position:relative;flex:1;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:#0a0a12;
-  border:0.5px solid var(--border);box-shadow:0 30px 80px -30px rgba(193,123,232,.3)}
-.hhc-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease;pointer-events:none}
-.hhc-slide.is-active{opacity:1;pointer-events:auto}
-.hhc-nav{flex:none;width:52px;height:52px;border-radius:50%;border:0.5px solid var(--border);background:var(--card);
-  color:var(--ink);font-size:26px;line-height:1;cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  transition:transform .15s,background .15s,border-color .15s}
-.hhc-nav:hover{background:linear-gradient(135deg,rgba(193,123,232,0.3),rgba(96,128,255,0.3));border-color:rgba(255,255,255,0.25);transform:scale(1.06)}
-.hhc-cap{text-align:center;font-size:14px;color:var(--body);margin:20px auto 0;max-width:640px}
-.hhc-cap b{font-family:var(--font-geist-mono),monospace;font-weight:400;color:var(--accent-soft)}
-.hhc-dots{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:16px 0 0}
-.hhc-dot{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,0.15);cursor:pointer;padding:0;transition:width .2s,background .2s}
-.hhc-dot.is-active{width:24px;border-radius:5px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2))}
-
-.hhc-block{margin:72px 0 0}
-.hhc-h2{font-size:clamp(24px,4vw,34px);font-weight:500;letter-spacing:-.02em;margin:0}
-.hhc-body{font-size:16px;line-height:1.65;color:var(--body);max-width:780px;margin:16px 0 0}
-.hhc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:26px 0 0}
-.hhc-card{background:var(--card);border:0.5px solid var(--border);border-radius:20px;padding:26px;
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:border-color .2s,transform .2s}
-.hhc-card:hover{border-color:rgba(255,255,255,0.15);transform:translateY(-2px)}
-.hhc-card h3{font-size:17px;font-weight:500;letter-spacing:-.01em;margin:0;color:var(--ink)}
-.hhc-card p{font-size:13.5px;line-height:1.6;color:var(--body);margin:9px 0 0}
-.hhc-outro{margin:72px 0 0;border-top:0.5px solid var(--border);padding-top:44px}
-
-@media (max-width:640px){
-  .hhc-nav{width:42px;height:42px;font-size:22px}
-  .hhc-stage{gap:8px}
-}
-`;
