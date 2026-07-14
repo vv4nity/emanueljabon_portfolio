@@ -53,6 +53,7 @@ export type Project = {
   tags: string[];
   link?: string;
   github?: string;
+  caseStudy?: string; // internal route to a full case-study page
   featured?: boolean;
 };
 
@@ -75,6 +76,8 @@ export const projects: Project[] = [
     description:
       'The official QR-pass, check-in, and reserved-seating platform for the PUP Computer Engineering Hardhatting Ceremony — solo-developed for 382 attendees across 8 class blocks. Invite-based onboarding, JWT-signed QR passes with a live seat map, a full-screen camera check-in scanner, and a real-time admin dashboard with role-based access enforced via Supabase Row-Level Security.',
     tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Vercel'],
+    github: 'https://github.com/vv4nity/cpe-hardhatting-2026',
+    caseStudy: '/projects/hardhatting',
     featured: true,
   },
   {

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FiGithub, FiArrowUpRight } from 'react-icons/fi';
 import type { IconType } from 'react-icons';
@@ -110,6 +111,15 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
           </div>
         </div>
         <p className="mb-4 text-[13px] leading-[1.6] text-text-dim">{project.description}</p>
+        {project.caseStudy && (
+          <Link
+            href={project.caseStudy}
+            className="mb-4 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-text-dim transition-colors hover:text-text"
+          >
+            Read case study
+            <FiArrowUpRight size={12} />
+          </Link>
+        )}
         <div className="flex flex-wrap gap-1.5">
           {project.tags.map((tag) => {
             const tool = getTool(tag);
