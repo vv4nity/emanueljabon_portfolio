@@ -14,6 +14,7 @@ import {
 } from 'react-icons/tb';
 import type { IconType } from 'react-icons';
 import { getTool } from '@/lib/toolIcons';
+import { CountUp } from '@/components/CountUp';
 
 const GITHUB_URL = 'https://github.com/vv4nity/cpe-hardhatting-2026';
 
@@ -226,7 +227,7 @@ export default function HardhattingCaseStudy() {
                   s.italic ? 'font-serif italic' : 'font-medium'
                 }`}
               >
-                {s.value}
+                <CountUp value={s.value} />
               </div>
               <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
                 {s.label}
@@ -251,19 +252,19 @@ export default function HardhattingCaseStudy() {
           touchX.current = null;
         }}
       >
-        <div className="flex items-center gap-3 md:gap-4">
+        <div className="relative mx-auto max-w-md md:flex md:max-w-none md:items-center md:gap-4">
           <motion.button
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => go(-1)}
             aria-label="Previous slide"
-            className="glass flex h-11 w-11 flex-none items-center justify-center rounded-full text-text transition-colors hover:border-white/25 md:h-12 md:w-12"
+            className="absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-black/50 text-text backdrop-blur-md transition-colors hover:border-white/30 md:static md:h-12 md:w-12 md:flex-none md:translate-y-0 md:border-white/[0.08] md:bg-white/[0.04]"
           >
             <FiChevronLeft size={20} />
           </motion.button>
 
           <div
-            className="relative flex-1 overflow-hidden rounded-2xl border-[0.5px] border-white/[0.08] bg-bg-2"
+            className="relative overflow-hidden rounded-2xl border-[0.5px] border-white/[0.08] bg-bg-2 md:flex-1"
             style={{ aspectRatio: '4/5', boxShadow: '0 30px 80px -30px rgba(193,123,232,0.3)' }}
           >
             <AnimatePresence initial={false} custom={dir}>
@@ -290,7 +291,7 @@ export default function HardhattingCaseStudy() {
             whileTap={{ scale: 0.95 }}
             onClick={() => go(1)}
             aria-label="Next slide"
-            className="glass flex h-11 w-11 flex-none items-center justify-center rounded-full text-text transition-colors hover:border-white/25 md:h-12 md:w-12"
+            className="absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-black/50 text-text backdrop-blur-md transition-colors hover:border-white/30 md:static md:h-12 md:w-12 md:flex-none md:translate-y-0 md:border-white/[0.08] md:bg-white/[0.04]"
           >
             <FiChevronRight size={20} />
           </motion.button>
