@@ -19,7 +19,7 @@ import {
 import type { IconType } from 'react-icons';
 import { getTool } from '@/lib/toolIcons';
 import { CountUp } from '@/components/CountUp';
-import { SectionHeader, BrowserFrame, LaptopFrame, PhoneFrame } from '@/components/CaseStudyUI';
+import { SectionHeader, LaptopFrame, PhoneFrame } from '@/components/CaseStudyUI';
 
 const GITHUB_URL = 'https://github.com/vv4nity/solar-watering-dashboard';
 const LIVE_URL = 'https://solar-watering-dashboard.vercel.app';
@@ -299,7 +299,7 @@ export default function SolarWateringCaseStudy() {
           transition={{ duration: 0.6 }}
           className="mt-12"
         >
-          <BrowserFrame url="solar-watering-dashboard.vercel.app">
+          <LaptopFrame>
             <Image
               src="/solar-study/dashboard-pumping.png"
               alt="Dashboard mid-watering: pump ON, soil moisture ring climbing, live 60-second chart with pump periods shaded"
@@ -309,8 +309,8 @@ export default function SolarWateringCaseStudy() {
               priority
               className="h-auto w-full"
             />
-          </BrowserFrame>
-          <figcaption className="mx-auto mt-4 max-w-xl text-center text-[14px] text-text-dim">
+          </LaptopFrame>
+          <figcaption className="mx-auto mt-5 max-w-xl text-center text-[14px] text-text-dim">
             <span className="font-mono text-accent-soft">LIVE</span> · Mid-cycle: the ESP32
             detected dry soil and switched the pump on — every card updates live.
           </figcaption>

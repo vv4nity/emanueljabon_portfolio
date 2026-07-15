@@ -17,7 +17,7 @@ import {
 import type { IconType } from 'react-icons';
 import { getTool } from '@/lib/toolIcons';
 import { CountUp } from '@/components/CountUp';
-import { SectionHeader, BrowserFrame, LaptopFrame, PhoneFrame } from '@/components/CaseStudyUI';
+import { SectionHeader, LaptopFrame, PhoneFrame, TabletFrame } from '@/components/CaseStudyUI';
 
 const GITHUB_URL = 'https://github.com/vv4nity/dorm-bill-splitter';
 const LIVE_URL = 'https://dorm-bill-splitter.vercel.app';
@@ -272,20 +272,18 @@ export default function BillSplitterCaseStudy() {
 
         {/* Hero shot */}
         <motion.figure {...reveal} className="mt-12">
-          <div className="mx-auto max-w-2xl">
-            <BrowserFrame url="dorm-bill-splitter.vercel.app">
-              <Image
-                src="/bill-study/dashboard.png"
-                alt="Dorm Bill Splitter dashboard showing roommates, a new-bill form, and a bill history grouped by month"
-                width={1268}
-                height={1600}
-                sizes="(max-width: 768px) 100vw, 672px"
-                priority
-                className="h-auto w-full"
-              />
-            </BrowserFrame>
-          </div>
-          <figcaption className="mx-auto mt-4 max-w-xl text-center text-[14px] text-text-dim">
+          <TabletFrame>
+            <Image
+              src="/bill-study/dashboard.png"
+              alt="Dorm Bill Splitter dashboard showing roommates, a new-bill form, and a bill history grouped by month"
+              width={1268}
+              height={1600}
+              sizes="(max-width: 768px) 100vw, 576px"
+              priority
+              className="h-auto w-full"
+            />
+          </TabletFrame>
+          <figcaption className="mx-auto mt-5 max-w-xl text-center text-[14px] text-text-dim">
             <span className="font-mono text-accent-soft">LIVE</span> · The dashboard: roommates,
             the bill form, and history grouped by month.
           </figcaption>
@@ -465,22 +463,22 @@ export default function BillSplitterCaseStudy() {
 
         <motion.div {...reveal} className="mt-12 grid items-end gap-10 md:grid-cols-[2fr,3fr] md:gap-8">
           <figure>
-            <BrowserFrame>
+            <PhoneFrame>
               <Image
                 src="/bill-study/new-bill-form.png"
                 alt="New bill form with electricity fairness controls and a live per-person preview"
                 width={449}
                 height={1000}
-                sizes="(max-width: 768px) 100vw, 380px"
+                sizes="(max-width: 768px) 100vw, 300px"
                 className="h-auto w-full"
               />
-            </BrowserFrame>
-            <figcaption className="mt-4 text-center text-[13px] text-text-dim">
+            </PhoneFrame>
+            <figcaption className="mt-5 text-center text-[13px] text-text-dim">
               The split previews live as you type — no save required to sanity-check it.
             </figcaption>
           </figure>
           <figure>
-            <BrowserFrame url="dorm-bill-splitter.vercel.app">
+            <LaptopFrame>
               <Image
                 src="/bill-study/bill-detail.png"
                 alt="Bill detail modal showing each roommate's days, percentage and amount owed"
@@ -489,8 +487,8 @@ export default function BillSplitterCaseStudy() {
                 sizes="(max-width: 768px) 100vw, 560px"
                 className="h-auto w-full"
               />
-            </BrowserFrame>
-            <figcaption className="mt-4 text-center text-[13px] text-text-dim">
+            </LaptopFrame>
+            <figcaption className="mt-5 text-center text-[13px] text-text-dim">
               Every saved bill shows its full breakdown — days, percentages, amounts.
             </figcaption>
           </figure>

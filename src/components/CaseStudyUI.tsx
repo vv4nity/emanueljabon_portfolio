@@ -96,6 +96,41 @@ export function LaptopFrame({ children }: { children: React.ReactNode }) {
   );
 }
 
+export function TabletFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mx-auto max-w-xl">
+      <motion.div
+        whileHover={{ y: -4 }}
+        transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+        className="relative rounded-[32px] p-[14px]"
+        style={{
+          background: 'linear-gradient(160deg, #2c2c38 0%, #14141c 45%, #0b0b12 100%)',
+          boxShadow:
+            '0 40px 90px -35px rgba(138,160,255,0.38), 0 20px 50px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.12)',
+        }}
+      >
+        {/* power + volume buttons */}
+        <span className="absolute -top-[2px] right-[52px] h-[3px] w-10 rounded-t bg-[#33333f]" />
+        <span className="absolute -right-[2px] top-[46px] h-14 w-[3px] rounded-r bg-[#33333f]" />
+        {/* front camera */}
+        <span className="absolute left-1/2 top-[5px] h-[5px] w-[5px] -translate-x-1/2 rounded-full bg-black ring-1 ring-white/10" />
+
+        <div className="relative overflow-hidden rounded-[20px] border-[0.5px] border-white/[0.06] bg-[#0b0b12]">
+          {children}
+          {/* screen glare */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(115deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.02) 28%, transparent 42%)',
+            }}
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 export function PhoneFrame({ children }: { children: React.ReactNode }) {
   return (
     <div className="mx-auto max-w-[300px]">
