@@ -99,6 +99,8 @@ export const projects: Project[] = [
       'IoT watering system powered by solar energy with a live monitoring dashboard — tracks soil moisture and automates irrigation, keeping plants watered off-grid without manual intervention.',
     tags: ['IoT', 'Arduino', 'React', 'Vercel'],
     link: 'https://solar-watering-dashboard.vercel.app',
+    github: 'https://github.com/vv4nity/solar-watering-dashboard',
+    caseStudy: '/projects/solar-watering',
   },
   {
     id: 'dorm-bill-splitter',

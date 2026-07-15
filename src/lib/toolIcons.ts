@@ -39,6 +39,9 @@ import {
   SiNetlify,
   SiVite,
   SiTailwindcss,
+  SiFirebase,
+  SiArduino,
+  SiEspressif,
 } from 'react-icons/si';
 import { TbDatabase, TbTerminal2, TbCloud, TbBox, TbVectorTriangle, TbScan, TbApi, TbUsersGroup } from 'react-icons/tb';
 
@@ -84,6 +87,9 @@ export const TOOLS: Record<string, Tool> = {
   Apache: { icon: SiApache, color: '#D22128' },
   'HTML/CSS': { icon: SiHtml5, color: '#E34F26' },
   Redis: { icon: SiRedis, color: '#FF4438' },
+  Firebase: { icon: SiFirebase, color: '#FFCA28' },
+  Arduino: { icon: SiArduino, color: '#00878F' },
+  ESP32: { icon: SiEspressif, color: '#E7352C' },
   MongoDB: { icon: SiMongodb, color: '#47A248' },
   WebSockets: { icon: SiSocketdotio, color: '#FFFFFF' },
 
