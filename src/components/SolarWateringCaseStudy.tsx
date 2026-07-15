@@ -192,6 +192,91 @@ function BrowserFrame({ children, url }: { children: React.ReactNode; url?: stri
   );
 }
 
+function LaptopFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{ perspective: '2400px' }}>
+      <motion.div
+        initial={{ rotateX: 6, rotateY: -4 }}
+        whileHover={{ rotateX: 0, rotateY: 0 }}
+        transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* Screen */}
+        <div
+          className="mx-auto w-[94%] overflow-hidden rounded-t-xl rounded-b-md border border-white/10 bg-[#0b0b12] p-[2.2%] pb-[1.6%]"
+          style={{
+            background: 'linear-gradient(160deg, #16161f, #0b0b12 60%)',
+            boxShadow:
+              '0 40px 90px -35px rgba(96,128,255,0.35), 0 20px 50px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08)',
+          }}
+        >
+          <div className="relative overflow-hidden rounded-md border-[0.5px] border-white/[0.06]">
+            {children}
+            {/* screen glare */}
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(115deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.02) 30%, transparent 45%)',
+              }}
+            />
+          </div>
+        </div>
+        {/* Deck */}
+        <div
+          className="relative mx-auto h-[14px] w-full rounded-b-xl rounded-t-[3px] md:h-[16px]"
+          style={{
+            background: 'linear-gradient(180deg, #2a2a36 0%, #17171f 45%, #0d0d13 100%)',
+            boxShadow: '0 18px 35px -18px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.12)',
+          }}
+        >
+          {/* thumb notch */}
+          <div
+            className="absolute left-1/2 top-0 h-[6px] w-[12%] -translate-x-1/2 rounded-b-[8px]"
+            style={{ background: 'linear-gradient(180deg, #08080d, #1c1c26)' }}
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+function PhoneFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mx-auto max-w-[300px]" style={{ perspective: '1600px' }}>
+      <motion.div
+        initial={{ rotateX: 4, rotateY: 6 }}
+        whileHover={{ rotateX: 0, rotateY: 0 }}
+        transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+        className="relative rounded-[44px] p-[9px]"
+        style={{
+          transformStyle: 'preserve-3d',
+          background: 'linear-gradient(160deg, #2c2c38 0%, #14141c 40%, #0b0b12 100%)',
+          boxShadow:
+            '0 40px 90px -35px rgba(193,123,232,0.4), 0 20px 50px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.14)',
+        }}
+      >
+        {/* side buttons */}
+        <span className="absolute -left-[2px] top-[110px] h-8 w-[3px] rounded-l bg-[#33333f]" />
+        <span className="absolute -left-[2px] top-[150px] h-12 w-[3px] rounded-l bg-[#33333f]" />
+        <span className="absolute -right-[2px] top-[130px] h-16 w-[3px] rounded-r bg-[#33333f]" />
+
+        <div className="relative overflow-hidden rounded-[36px] border-[0.5px] border-white/[0.06] bg-[#0b0b12]">
+          {children}
+          {/* screen glare */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(115deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 28%, transparent 42%)',
+            }}
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 function FlowLane({
   label,
   accent,
@@ -571,9 +656,9 @@ export default function SolarWateringCaseStudy() {
           to a single phone column.
         </p>
 
-        <div className="mt-8 grid items-start gap-6 md:grid-cols-[5fr,2fr]">
+        <div className="mt-10 grid items-end gap-10 md:grid-cols-[5fr,2fr] md:gap-6">
           <figure>
-            <BrowserFrame url="solar-watering-dashboard.vercel.app">
+            <LaptopFrame>
               <Image
                 src="/solar-study/dashboard-idle.png"
                 alt="Dashboard after a completed watering cycle: pump off, soil well watered, full cycle visible on the chart"
@@ -582,14 +667,14 @@ export default function SolarWateringCaseStudy() {
                 sizes="(max-width: 768px) 100vw, 720px"
                 className="h-auto w-full"
               />
-            </BrowserFrame>
-            <figcaption className="mt-3 text-center text-[13px] text-text-dim">
+            </LaptopFrame>
+            <figcaption className="mt-5 text-center text-[13px] text-text-dim">
               After the cycle: soil replenished, pump idle, the whole event legible in the 60s
               chart.
             </figcaption>
           </figure>
           <figure>
-            <BrowserFrame>
+            <PhoneFrame>
               <Image
                 src="/solar-study/dashboard-mobile.png"
                 alt="Dashboard on a phone: cards stacked in a single column"
@@ -598,8 +683,8 @@ export default function SolarWateringCaseStudy() {
                 sizes="(max-width: 768px) 100vw, 280px"
                 className="h-auto w-full"
               />
-            </BrowserFrame>
-            <figcaption className="mt-3 text-center text-[13px] text-text-dim">
+            </PhoneFrame>
+            <figcaption className="mt-5 text-center text-[13px] text-text-dim">
               The same page on a phone — where a farmer would actually use it.
             </figcaption>
           </figure>
