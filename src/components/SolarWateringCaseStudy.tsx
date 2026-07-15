@@ -194,12 +194,10 @@ function BrowserFrame({ children, url }: { children: React.ReactNode; url?: stri
 
 function LaptopFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ perspective: '2400px' }}>
+    <div>
       <motion.div
-        initial={{ rotateX: 6, rotateY: -4 }}
-        whileHover={{ rotateX: 0, rotateY: 0 }}
+        whileHover={{ y: -4 }}
         transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-        style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Screen */}
         <div
@@ -243,14 +241,12 @@ function LaptopFrame({ children }: { children: React.ReactNode }) {
 
 function PhoneFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto max-w-[300px]" style={{ perspective: '1600px' }}>
+    <div className="mx-auto max-w-[300px]">
       <motion.div
-        initial={{ rotateX: 4, rotateY: 6 }}
-        whileHover={{ rotateX: 0, rotateY: 0 }}
+        whileHover={{ y: -4 }}
         transition={{ type: 'spring', stiffness: 120, damping: 18 }}
         className="relative rounded-[44px] p-[9px]"
         style={{
-          transformStyle: 'preserve-3d',
           background: 'linear-gradient(160deg, #2c2c38 0%, #14141c 40%, #0b0b12 100%)',
           boxShadow:
             '0 40px 90px -35px rgba(193,123,232,0.4), 0 20px 50px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.14)',
