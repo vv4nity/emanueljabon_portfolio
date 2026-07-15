@@ -8,7 +8,7 @@ import { Footer } from '@/components/Footer';
 import HardhattingCaseStudy from '@/components/HardhattingCaseStudy';
 
 export const metadata: Metadata = {
-  title: 'CPE Hardhatting 2026 — Case Study',
+  title: 'PUP CPE Hardhatting 2026 — Case Study',
   description:
     'Attendance & QR-seating platform for the PUP CpE Hardhatting Ceremony — invite-only onboarding, offline-first scanning, and a realtime command center.',
 };

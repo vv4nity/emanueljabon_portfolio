@@ -142,7 +142,7 @@ export default function HardhattingCaseStudy() {
           className="font-medium leading-[1.05] tracking-[-0.04em] text-text"
           style={{ fontSize: 'clamp(40px, 7vw, 72px)' }}
         >
-          CPE Hardhatting{' '}
+          PUP CPE Hardhatting{' '}
           <span className="font-serif italic font-normal gradient-text">2026</span>
         </h1>
 
