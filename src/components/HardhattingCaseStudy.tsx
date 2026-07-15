@@ -122,12 +122,12 @@ export default function HardhattingCaseStudy() {
     return () => window.removeEventListener('keydown', onKey);
   }, [go]);
 
-  // Auto-advance every 10s; depending on `i` restarts the timer after any
+  // Auto-advance every 5s; depending on `i` restarts the timer after any
   // manual navigation so a click doesn't cause a quick double-jump.
   useEffect(() => {
     const id = setInterval(() => {
       if (!document.hidden) go(1);
-    }, 10000);
+    }, 5000);
     return () => clearInterval(id);
   }, [i, go]);
 
