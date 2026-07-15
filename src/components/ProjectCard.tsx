@@ -87,7 +87,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       <div className="p-6 md:p-7">
         <div className="mb-2 flex items-start justify-between gap-3">
           <h3 className="text-[20px] font-medium tracking-[-0.02em] text-text">{project.title}</h3>
-          <div className="flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="flex gap-2">
             {project.github && (
               <a
                 href={project.github}
@@ -114,7 +114,11 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         {project.caseStudy && (
           <Link
             href={project.caseStudy}
-            className="mb-4 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-text-dim transition-colors hover:text-text"
+            className="mb-4 inline-flex items-center gap-1.5 rounded-full border-[0.5px] border-white/20 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-text transition-all hover:-translate-y-0.5 hover:border-white/30 hover:shadow-[0_6px_18px_-8px_rgba(193,123,232,0.6)]"
+            style={{
+              background:
+                'linear-gradient(135deg, rgba(193,123,232,0.2), rgba(96,128,255,0.2))',
+            }}
           >
             Read case study
             <FiArrowUpRight size={12} />
