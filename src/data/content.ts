@@ -112,6 +112,7 @@ export const projects: Project[] = [
     tags: ['React', 'Vite', 'Tailwind', 'Vercel'],
     link: 'https://dorm-bill-splitter.vercel.app',
     github: 'https://github.com/vv4nity/dorm-bill-splitter.git',
+    caseStudy: '/projects/bill-splitter',
   },
   {
     id: 'balai-ni-juan',
