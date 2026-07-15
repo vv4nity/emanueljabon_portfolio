@@ -153,25 +153,22 @@ export default function HardhattingCaseStudy() {
         </p>
 
         {/* Meta */}
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="glass mt-8 grid max-w-2xl divide-y divide-white/[0.06] rounded-2xl md:grid-cols-3 md:divide-x md:divide-y-0">
           {META.map((m) => (
-            <div
-              key={m.label}
-              className="glass flex items-center gap-3 rounded-2xl px-4 py-3"
-            >
+            <div key={m.label} className="flex items-center gap-3 px-4 py-2.5 md:py-3">
               <span
-                className="flex h-8 w-8 items-center justify-center rounded-lg"
+                className="flex h-7 w-7 flex-none items-center justify-center rounded-lg md:h-8 md:w-8"
                 style={{
                   background: 'linear-gradient(135deg, rgba(193,123,232,0.2), rgba(96,128,255,0.2))',
                 }}
               >
-                <m.icon size={15} className="text-accent-soft" />
+                <m.icon size={14} className="text-accent-soft" />
               </span>
-              <div>
+              <div className="flex min-w-0 items-baseline gap-2 md:block">
                 <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
                   {m.label}
                 </div>
-                <div className="text-[13px] font-medium text-text">{m.value}</div>
+                <div className="truncate text-[13px] font-medium text-text">{m.value}</div>
               </div>
             </div>
           ))}
@@ -258,7 +255,7 @@ export default function HardhattingCaseStudy() {
             whileTap={{ scale: 0.95 }}
             onClick={() => go(-1)}
             aria-label="Previous slide"
-            className="absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-black/50 text-text backdrop-blur-md transition-colors hover:border-white/30 md:static md:h-12 md:w-12 md:flex-none md:translate-y-0 md:border-white/[0.08] md:bg-white/[0.04]"
+            className="glass hidden h-12 w-12 flex-none items-center justify-center rounded-full text-text transition-colors hover:border-white/25 md:flex"
           >
             <FiChevronLeft size={20} />
           </motion.button>
@@ -291,7 +288,7 @@ export default function HardhattingCaseStudy() {
             whileTap={{ scale: 0.95 }}
             onClick={() => go(1)}
             aria-label="Next slide"
-            className="absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border-[0.5px] border-white/15 bg-black/50 text-text backdrop-blur-md transition-colors hover:border-white/30 md:static md:h-12 md:w-12 md:flex-none md:translate-y-0 md:border-white/[0.08] md:bg-white/[0.04]"
+            className="glass hidden h-12 w-12 flex-none items-center justify-center rounded-full text-text transition-colors hover:border-white/25 md:flex"
           >
             <FiChevronRight size={20} />
           </motion.button>
@@ -302,8 +299,18 @@ export default function HardhattingCaseStudy() {
           {SLIDES[i].cap}
         </p>
 
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {SLIDES.map((_, idx) => (
+        <div className="mt-4 flex items-center justify-center gap-4">
+          <motion.button
+            whileTap={{ scale: 0.92 }}
+            onClick={() => go(-1)}
+            aria-label="Previous slide"
+            className="glass flex h-9 w-9 flex-none items-center justify-center rounded-full text-text md:hidden"
+          >
+            <FiChevronLeft size={16} />
+          </motion.button>
+
+          <div className="flex flex-wrap justify-center gap-2">
+            {SLIDES.map((_, idx) => (
             <button
               key={idx}
               onClick={() => {
@@ -320,7 +327,17 @@ export default function HardhattingCaseStudy() {
                     : 'rgba(255,255,255,0.15)',
               }}
             />
-          ))}
+            ))}
+          </div>
+
+          <motion.button
+            whileTap={{ scale: 0.92 }}
+            onClick={() => go(1)}
+            aria-label="Next slide"
+            className="glass flex h-9 w-9 flex-none items-center justify-center rounded-full text-text md:hidden"
+          >
+            <FiChevronRight size={16} />
+          </motion.button>
         </div>
       </motion.section>
 
