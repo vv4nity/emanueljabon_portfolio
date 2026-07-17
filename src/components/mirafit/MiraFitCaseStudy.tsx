@@ -76,7 +76,6 @@ const LAYERS: {
       'Canvas share cards (1080×1920)',
       'Live workout notifications',
       'Tailwind CSS',
-      'Spotify / Apple Music',
     ],
     bridge: 'smart failover — health-checks the local Pi (3s), falls back to the Cloudflare tunnel',
   },
@@ -434,11 +433,11 @@ export default function MiraFitCaseStudy() {
                     <h3 className="text-[16px] font-medium tracking-[-0.01em] text-text">{l.t}</h3>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="grid grid-cols-2 gap-1.5 sm:flex sm:flex-wrap">
                   {l.chips.map((c) => (
                     <span
                       key={c}
-                      className="rounded border-[0.5px] border-white/[0.08] bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] tracking-wide text-text-dim"
+                      className="flex items-center justify-center rounded border-[0.5px] border-white/[0.08] bg-white/[0.04] px-2.5 py-1.5 text-center font-mono text-[10px] leading-[1.4] tracking-wide text-text-dim sm:justify-start sm:py-1 sm:text-left"
                     >
                       {c}
                     </span>
@@ -446,8 +445,8 @@ export default function MiraFitCaseStudy() {
                 </div>
               </div>
               {l.bridge && (
-                <div className="flex items-center justify-center gap-2 py-2 font-mono text-[10px] uppercase tracking-[0.15em] text-text-faint">
-                  <TbArrowDown size={13} className="text-accent-soft" />
+                <div className="mx-auto flex max-w-md flex-col items-center gap-1.5 px-6 py-3 text-center font-mono text-[10px] uppercase leading-[1.6] tracking-[0.15em] text-text-faint md:max-w-none md:flex-row md:justify-center md:gap-2 md:py-2">
+                  <TbArrowDown size={13} className="flex-none text-accent-soft" />
                   {l.bridge}
                 </div>
               )}
@@ -475,9 +474,13 @@ export default function MiraFitCaseStudy() {
               transition={{ duration: 0.5, delay: 0.04 * idx }}
               className="relative flex gap-5 pb-8 last:pb-0"
             >
-              {/* timeline rail */}
+              {/* timeline rail — the connector draws in as it scrolls into view */}
               <div className="flex flex-col items-center">
-                <span
+                <motion.span
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 18, delay: 0.05 }}
                   className="flex h-9 w-9 flex-none items-center justify-center rounded-full font-mono text-[11px] text-accent-soft"
                   style={{
                     background:
@@ -485,9 +488,19 @@ export default function MiraFitCaseStudy() {
                   }}
                 >
                   {String(idx + 1).padStart(2, '0')}
-                </span>
+                </motion.span>
                 {idx < PIPELINE.length - 1 && (
-                  <span className="mt-2 w-px flex-1 bg-gradient-to-b from-white/15 to-transparent" />
+                  <motion.span
+                    initial={{ scaleY: 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ duration: 0.7, ease: 'easeOut', delay: 0.25 }}
+                    className="mt-2 w-px flex-1 origin-top"
+                    style={{
+                      background:
+                        'linear-gradient(to bottom, rgba(193,123,232,0.5), rgba(96,128,255,0.25), transparent)',
+                    }}
+                  />
                 )}
               </div>
               <div className="pt-1.5">

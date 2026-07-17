@@ -1406,3 +1406,8 @@
   .mfcs .mocktab .tabtxt{display:flex;align-items:baseline;gap:6px}
   .mfcs .mocktab b{gap:8px}
 }
+
+/* keep the mobile description box height steady across tabs */
+@media (max-width:900px){
+  .mfcs #mockDesc{min-height:132px}
+}

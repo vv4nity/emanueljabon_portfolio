@@ -55,12 +55,12 @@ export function initMiraFitDemo(){
       t.classList.add('on'); t.setAttribute('aria-selected','true');
       apps.forEach(function(a){ a.classList.toggle('on', a.dataset.scr === t.dataset.tgt); });
       syncDesc(t);
-      // only auto-scroll the tab rail when it actually overflows (the mobile
-      // pill strip) — on desktop this scrolled the whole page and made the
-      // layout jump on every click
+      // center the clicked pill inside the rail only — scrollIntoView could
+      // also scroll the page vertically, which made the layout jump
       var rail = t.parentElement;
       if (rail && rail.scrollWidth > rail.clientWidth + 4){
-        t.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+        var left = t.offsetLeft - (rail.clientWidth - t.offsetWidth) / 2;
+        rail.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
       }
       playScreen(t.dataset.tgt);
     });
