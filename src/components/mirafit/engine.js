@@ -36,8 +36,18 @@ export function initMiraFitDemo(){
   var apps = document.querySelectorAll('#mockscreen .app');
   function syncDesc(t){
     var d = $('mockDesc'); if (!d || !t) return;
-    var b = t.querySelector('b'), s = t.querySelector('span');
-    d.innerHTML = (b ? '<b>' + b.textContent + '</b>' : '') + (s ? s.innerHTML : '');
+    var b = t.querySelector('b');
+    var s = t.querySelector(':scope > span');
+    var num = t.querySelector('.tabnum'), tx = t.querySelector('.tabtxt');
+    var label;
+    if (tx){
+      var title = tx.textContent;
+      if (num) title = title.replace(num.textContent, '').trim();
+      label = (num ? num.textContent + ' · ' : '') + title;
+    } else {
+      label = b ? b.textContent : '';
+    }
+    d.innerHTML = '<b>' + label + '</b>' + (s ? s.innerHTML : '');
   }
   tabs.forEach(function(t){
     t.addEventListener('click', function(){

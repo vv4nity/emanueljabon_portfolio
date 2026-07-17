@@ -247,8 +247,23 @@ export default function MiraFitCaseStudy() {
                 key={m.label}
                 className={`flex items-center gap-3 px-4 py-2.5 ${i >= 2 ? 'sm:border-t-[0.5px] sm:border-white/[0.06]' : ''} ${i % 2 === 1 ? 'sm:border-l-[0.5px] sm:border-white/[0.06]' : ''}`}
               >
-                {m.avatars ? (
-                  <span className="flex flex-none -space-x-2">
+                <span
+                  className="flex h-7 w-7 flex-none items-center justify-center rounded-lg"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(193,123,232,0.2), rgba(96,128,255,0.2))',
+                  }}
+                >
+                  <m.icon size={14} className="text-accent-soft" />
+                </span>
+                <div className="min-w-0">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
+                    {m.label}
+                  </div>
+                  <div className="truncate text-[13px] font-medium text-text">{m.value}</div>
+                </div>
+                {m.avatars && (
+                  <span className="ml-auto flex flex-none -space-x-2 pl-2">
                     {m.avatars.map((a, j) => (
                       <Image
                         key={a}
@@ -261,23 +276,7 @@ export default function MiraFitCaseStudy() {
                       />
                     ))}
                   </span>
-                ) : (
-                  <span
-                    className="flex h-7 w-7 flex-none items-center justify-center rounded-lg"
-                    style={{
-                      background:
-                        'linear-gradient(135deg, rgba(193,123,232,0.2), rgba(96,128,255,0.2))',
-                    }}
-                  >
-                    <m.icon size={14} className="text-accent-soft" />
-                  </span>
                 )}
-                <div className="min-w-0">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
-                    {m.label}
-                  </div>
-                  <div className="truncate text-[13px] font-medium text-text">{m.value}</div>
-                </div>
               </div>
             ))}
           </div>
@@ -538,7 +537,7 @@ export default function MiraFitCaseStudy() {
           <span className="font-serif italic font-normal gradient-text">MiraFit</span>
         </SectionHeader>
 
-        <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-3 lg:grid-cols-4 lg:gap-4">
           {TEAM.map((m, idx) => (
             <motion.div
               key={m.name}
@@ -546,10 +545,10 @@ export default function MiraFitCaseStudy() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className="glass rounded-3xl p-6 text-center transition-all hover:-translate-y-1 hover:border-white/15"
+              className="glass flex items-center gap-4 rounded-3xl p-4 transition-all hover:-translate-y-1 hover:border-white/15 lg:block lg:p-6 lg:text-center"
             >
               <div
-                className="mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full p-[2px]"
+                className="h-12 w-12 flex-none overflow-hidden rounded-full p-[2px] lg:mx-auto lg:mb-4 lg:h-20 lg:w-20"
                 style={{ background: 'linear-gradient(135deg, #C17BE8, #6080FF)' }}
               >
                 <Image
@@ -561,9 +560,19 @@ export default function MiraFitCaseStudy() {
                   style={m.top ? { objectPosition: 'center top' } : undefined}
                 />
               </div>
-              <div className="text-[14px] font-medium tracking-[-0.01em] text-text">{m.name}</div>
-              <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.15em] text-text-faint">
-                {m.role}
+              <div className="min-w-0">
+                <div className="truncate text-[14px] font-medium tracking-[-0.01em] text-text">
+                  {m.name}
+                </div>
+                <span
+                  className="mt-1.5 inline-flex rounded-full border-[0.5px] border-white/[0.12] px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.15em] text-accent-soft"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(193,123,232,0.12), rgba(96,128,255,0.12))',
+                  }}
+                >
+                  {m.role}
+                </span>
               </div>
             </motion.div>
           ))}

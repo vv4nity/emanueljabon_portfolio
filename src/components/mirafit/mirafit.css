@@ -1394,3 +1394,15 @@
   .mfcs .tabic{width:22px;height:22px;border-radius:7px}
   .mfcs .tabic .ic{width:11px;height:11px}
 }
+
+/* desktop: center the phone against the taller tab rail */
+@media (min-width:901px){
+  .mfcs .mockwrap{align-items:center}
+}
+/* mobile: the original ".mocktab span{display:none}" (meant for the long
+   descriptions) also hides the icon chip and title spans — restore them */
+@media (max-width:900px){
+  .mfcs .mocktab .tabic{display:flex}
+  .mfcs .mocktab .tabtxt{display:flex;align-items:baseline;gap:6px}
+  .mfcs .mocktab b{gap:8px}
+}
