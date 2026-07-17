@@ -479,7 +479,7 @@ export default function MiraFitCaseStudy() {
                 <motion.span
                   initial={{ scale: 0.5, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true, margin: '-60px' }}
+                  viewport={{ once: true, margin: '0px 0px -60px 0px' }}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, delay: 0.05 }}
                   className="flex h-9 w-9 items-center justify-center rounded-full font-mono text-[11px] text-accent-soft"
                   style={{
@@ -494,7 +494,7 @@ export default function MiraFitCaseStudy() {
                 <motion.span
                   initial={{ scaleY: 0 }}
                   whileInView={{ scaleY: 1 }}
-                  viewport={{ once: true, margin: '-60px' }}
+                  viewport={{ once: true, margin: '0px 0px -60px 0px' }}
                   transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
                   className="absolute bottom-0 left-[17.5px] top-[44px] w-px origin-top"
                   style={{
