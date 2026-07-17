@@ -474,14 +474,14 @@ export default function MiraFitCaseStudy() {
               transition={{ duration: 0.5, delay: 0.04 * idx }}
               className="relative flex gap-5 pb-8 last:pb-0"
             >
-              {/* timeline rail — the connector draws in as it scrolls into view */}
-              <div className="flex flex-col items-center">
+              {/* timeline rail — the connector draws down to the next step on scroll */}
+              <div className="w-9 flex-none">
                 <motion.span
                   initial={{ scale: 0.5, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true, margin: '-60px' }}
                   transition={{ type: 'spring', stiffness: 260, damping: 18, delay: 0.05 }}
-                  className="flex h-9 w-9 flex-none items-center justify-center rounded-full font-mono text-[11px] text-accent-soft"
+                  className="flex h-9 w-9 items-center justify-center rounded-full font-mono text-[11px] text-accent-soft"
                   style={{
                     background:
                       'linear-gradient(135deg, rgba(193,123,232,0.2), rgba(96,128,255,0.2))',
@@ -489,20 +489,20 @@ export default function MiraFitCaseStudy() {
                 >
                   {String(idx + 1).padStart(2, '0')}
                 </motion.span>
-                {idx < PIPELINE.length - 1 && (
-                  <motion.span
-                    initial={{ scaleY: 0 }}
-                    whileInView={{ scaleY: 1 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ duration: 0.7, ease: 'easeOut', delay: 0.25 }}
-                    className="mt-2 w-px flex-1 origin-top"
-                    style={{
-                      background:
-                        'linear-gradient(to bottom, rgba(193,123,232,0.5), rgba(96,128,255,0.25), transparent)',
-                    }}
-                  />
-                )}
               </div>
+              {idx < PIPELINE.length - 1 && (
+                <motion.span
+                  initial={{ scaleY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
+                  className="absolute bottom-0 left-[17.5px] top-[44px] w-px origin-top"
+                  style={{
+                    background:
+                      'linear-gradient(to bottom, rgba(193,123,232,0.6), rgba(96,128,255,0.35))',
+                  }}
+                />
+              )}
               <div className="pt-1.5">
                 <h3 className="text-[15px] font-medium tracking-[-0.01em] text-text">{s.t}</h3>
                 <p className="mt-1.5 max-w-2xl text-[13.5px] leading-[1.65] text-text-dim">{s.d}</p>
