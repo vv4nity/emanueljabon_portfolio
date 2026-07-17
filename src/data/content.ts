@@ -66,6 +66,8 @@ export const projects: Project[] = [
     description:
       'Real-time pose-estimation and exercise-validation pipeline (MediaPipe + YOLOv8) reaching 95% rep-counting accuracy with live form feedback and no wearables. Deployed on-device to a Raspberry Pi at 60 FPS, with Gemini 2.5 generating personalized workout and meal plans from body type, health conditions, and dietary inputs.',
     tags: ['Python', 'Flask', 'MediaPipe', 'YOLOv8', 'TensorFlow Lite', 'Gemini 2.5'],
+    github: 'https://github.com/vv4nity/mirafit_bodyscan',
+    caseStudy: '/projects/mirafit',
     featured: true,
   },
   {
