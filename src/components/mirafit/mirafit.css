@@ -263,8 +263,8 @@
     transition:opacity .7s ease-out,transform .7s ease-out}
   .mfcs .splash.gone{opacity:0;transform:scale(1.1);pointer-events:none}
   /* dashboard zoom-out when looping back to splash */
-  .mfcs header.hero .app{transition:transform .8s ease,opacity .8s ease;transform-origin:50% 42%}
-  .mfcs header.hero .app.zoomed{transform:scale(.86);opacity:0}
+  .mfcs.mf-hero .app{transition:transform .8s ease,opacity .8s ease;transform-origin:50% 42%}
+  .mfcs.mf-hero .app.zoomed{transform:scale(.86);opacity:0}
   .mfcs .splash img{width:84px;height:84px;object-fit:contain}
   .mfcs .splash .wordmark{font-size:21px;font-weight:800;letter-spacing:-.02em;color:#f3f4f6}
   .mfcs .splash .wordmark em{font-style:normal;color:#4ade80}
@@ -349,7 +349,7 @@
   .mfcs .prog{position:relative;width:66px;height:66px}
   .mfcs .prog+.prog{margin-top:10px}
   /* skeleton overlay hidden in workout mode + hero (camera feed only) */
-  .mfcs header.hero .skel,.mfcs .app[data-scr="workout"] .skel{display:none}
+  .mfcs.mf-hero .skel,.mfcs .app[data-scr="workout"] .skel{display:none}
   .mfcs .prog svg{width:100%;height:100%;transform:rotate(-90deg)}
   .mfcs .prog .cxt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
   .mfcs .prog .cxt b{font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums}

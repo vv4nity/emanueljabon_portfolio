@@ -45,7 +45,13 @@ export function initMiraFitDemo(){
       t.classList.add('on'); t.setAttribute('aria-selected','true');
       apps.forEach(function(a){ a.classList.toggle('on', a.dataset.scr === t.dataset.tgt); });
       syncDesc(t);
-      t.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+      // only auto-scroll the tab rail when it actually overflows (the mobile
+      // pill strip) — on desktop this scrolled the whole page and made the
+      // layout jump on every click
+      var rail = t.parentElement;
+      if (rail && rail.scrollWidth > rail.clientWidth + 4){
+        t.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+      }
       playScreen(t.dataset.tgt);
     });
   });
@@ -207,7 +213,7 @@ export function initMiraFitDemo(){
     if (reduced) return;
     // brief dwell on the dashboard, then zoom out → splash zooms in → boot again
     HT(function(){
-      var app = document.querySelector('header.hero .app');
+      var app = document.querySelector('.mf-hero .app');
       var sp = $('heroSplash');
       if (app) app.classList.add('zoomed');
       HT(function(){ if (sp) sp.classList.remove('gone'); }, 300);
@@ -618,7 +624,7 @@ export function initMiraFitDemo(){
 
   // hero: play the Home Dashboard showcase only while it's in view
   (function(){
-    var heroPhone = document.querySelector('header.hero .phone');
+    var heroPhone = document.querySelector('.mf-hero .phone');
     if (!heroPhone){ return; }
     if (!('IntersectionObserver' in window)){ heroOn = true; startHeroDash(); return; }
     var io = new IntersectionObserver(function(es){ es.forEach(function(en){

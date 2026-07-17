@@ -45,7 +45,7 @@ const META: { icon: IconType; label: string; value: string }[] = [
 const STATS = [
   { value: '33', label: 'Pose landmarks per frame' },
   { value: 'A–F', label: 'Real-time form grading' },
-  { value: '2', label: 'Custom-trained YOLO models' },
+  { value: '2', label: 'Custom-trained AI models' },
   { value: '18', label: 'Relational tables' },
 ];
 
@@ -293,7 +293,7 @@ export default function MiraFitCaseStudy() {
         </div>
 
         {/* live hero phone demo */}
-        <div className="mfcs" dangerouslySetInnerHTML={{ __html: MF_HERO_PHONE }} />
+        <div className="mfcs mf-hero" dangerouslySetInnerHTML={{ __html: MF_HERO_PHONE }} />
       </motion.header>
 
       {/* Stats */}
