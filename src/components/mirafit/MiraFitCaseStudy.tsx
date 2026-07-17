@@ -35,9 +35,19 @@ const TECH = [
   'Cloudflare Tunnel',
 ];
 
-const META: { icon: IconType; label: string; value: string }[] = [
+const META: { icon: IconType; label: string; value: string; avatars?: string[] }[] = [
   { icon: FiUser, label: 'Role', value: 'Lead Developer · AI Engineer' },
-  { icon: TbUsersGroup, label: 'Team', value: '4 — capstone project' },
+  {
+    icon: TbUsersGroup,
+    label: 'Team',
+    value: '4 — thesis project',
+    avatars: [
+      '/mirafit-study/img/t-emanuel.jpg',
+      '/mirafit-study/img/t-candido.jpg',
+      '/mirafit-study/img/t-gienel.jpg',
+      '/mirafit-study/img/t-jhon.jpg',
+    ],
+  },
   { icon: TbCpu, label: 'Backend', value: 'Self-hosted · Raspberry Pi 5' },
   { icon: FiCalendar, label: 'Year', value: '2026' },
 ];
@@ -237,15 +247,31 @@ export default function MiraFitCaseStudy() {
                 key={m.label}
                 className={`flex items-center gap-3 px-4 py-2.5 ${i >= 2 ? 'sm:border-t-[0.5px] sm:border-white/[0.06]' : ''} ${i % 2 === 1 ? 'sm:border-l-[0.5px] sm:border-white/[0.06]' : ''}`}
               >
-                <span
-                  className="flex h-7 w-7 flex-none items-center justify-center rounded-lg"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, rgba(193,123,232,0.2), rgba(96,128,255,0.2))',
-                  }}
-                >
-                  <m.icon size={14} className="text-accent-soft" />
-                </span>
+                {m.avatars ? (
+                  <span className="flex flex-none -space-x-2">
+                    {m.avatars.map((a, j) => (
+                      <Image
+                        key={a}
+                        src={a}
+                        alt=""
+                        width={56}
+                        height={56}
+                        className="h-7 w-7 rounded-full border-[1.5px] border-[#16131f] object-cover"
+                        style={{ zIndex: m.avatars!.length - j, objectPosition: 'center top' }}
+                      />
+                    ))}
+                  </span>
+                ) : (
+                  <span
+                    className="flex h-7 w-7 flex-none items-center justify-center rounded-lg"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, rgba(193,123,232,0.2), rgba(96,128,255,0.2))',
+                    }}
+                  >
+                    <m.icon size={14} className="text-accent-soft" />
+                  </span>
+                )}
                 <div className="min-w-0">
                   <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-faint">
                     {m.label}

@@ -1374,3 +1374,23 @@
 .mfcs .ipad{
   box-shadow:0 40px 90px -35px rgba(138,160,255,0.38),0 24px 70px rgba(0,0,0,.4);
 }
+
+/* icon chips + mono numbers in the walkthrough tab rail */
+.mfcs .mocktab b{display:flex;align-items:center;gap:10px}
+.mfcs .tabic{
+  width:28px;height:28px;flex:none;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(193,123,232,0.2),rgba(96,128,255,0.2));
+  color:#E5B8FF;
+}
+.mfcs .tabic .ic{width:14px;height:14px}
+.mfcs .tabtxt{display:flex;align-items:baseline;gap:8px;min-width:0}
+.mfcs .tabnum{
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;font-style:normal;font-size:10px;
+  letter-spacing:.18em;color:var(--ink-mute);
+}
+.mfcs .mocktab.on .tabnum{color:var(--brand)}
+@media (max-width:900px){
+  .mfcs .tabic{width:22px;height:22px;border-radius:7px}
+  .mfcs .tabic .ic{width:11px;height:11px}
+}
