@@ -98,7 +98,7 @@ function AdminConsoleDemo() {
   }, []);
 
   return (
-    <div>
+    <div className="mx-auto max-w-4xl">
       {/* Laptop chassis — same materials as the shared LaptopFrame */}
       <div
         className="mx-auto w-full overflow-hidden rounded-t-xl rounded-b-md border border-white/10 p-[1.6%] pb-[1.2%]"

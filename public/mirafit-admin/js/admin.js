@@ -394,7 +394,11 @@
         if (!demoOn) return;
         var el = selFn(); if (!el) return;
         if (label) demoSay(label);
-        el.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
+        /* scroll only this (iframe) window — scrollIntoView would also
+           scroll the embedding page's viewport on every step */
+        var r = el.getBoundingClientRect();
+        var top = r.top + window.pageYOffset - (window.innerHeight - r.height) / 2;
+        window.scrollTo({ top: Math.max(0, top), behavior: reduced ? 'auto' : 'smooth' });
         DT(function () {
           if (!demoOn) return;
           curTo(el);
