@@ -90,6 +90,7 @@ export const projects: Project[] = [
     description:
       'Centralized admin platform managing 100+ user accounts, workout data, and AI-generated plan statistics — deployed and maintained in production. Analytics modules track engagement and system-health metrics including active users, plan-completion rates, and backend/AI-server health.',
     tags: ['PHP', 'MySQL', 'JavaScript', 'Node.js', 'Apache'],
+    caseStudy: '/projects/mirafit-admin',
     featured: true,
   },
   {

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MiraFit Admin — Dashboard</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="adm">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="a-grid" viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></symbol>
+  <symbol id="a-users" viewBox="0 0 24 24"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm7 .5a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2.5 19c0-3 2.9-5 6.5-5s6.5 2 6.5 5v1h-13zm14.9 1c.1-.3.1-.7.1-1 0-1.7-.7-3.1-1.8-4.2.4-.1.9-.1 1.3-.1 2.8 0 5 1.6 5 4.3v1z"/></symbol>
+  <symbol id="a-dumbbell" viewBox="0 0 640 512"><path d="M96 64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V224v64V448c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32V384H64c-17.7 0-32-14.3-32-32V288c-17.7 0-32-14.3-32-32s14.3-32 32-32V160c0-17.7 14.3-32 32-32H96V64zm448 0v64h32c17.7 0 32 14.3 32 32v64c17.7 0 32 14.3 32 32s-14.3 32-32 32v64c0 17.7-14.3 32-32 32H544v64c0 17.7-14.3 32-32 32H480c-17.7 0-32-14.3-32-32V288 224 64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32zM416 224v64H224V224H416z"/></symbol>
+  <symbol id="a-scan" viewBox="0 0 24 24"><path d="M3 7V4a1 1 0 0 1 1-1h3v2H5v2zm14-4h3a1 1 0 0 1 1 1v3h-2V5h-2zM3 17v3a1 1 0 0 0 1 1h3v-2H5v-2zm16 2h-2v2h3a1 1 0 0 0 1-1v-3h-2zM12 7a4 4 0 0 0-4 4h2a2 2 0 1 1 4 0h2a4 4 0 0 0-4-4zM4 12h16v2H4z"/></symbol>
+  <symbol id="a-meal" viewBox="0 0 24 24"><path d="M7 2v9a2 2 0 0 1-2 2v9H3v-9a2 2 0 0 1-2-2V2h2v7h1V2h2v7h1V2zm5 0c3 0 5 2.5 5 6 0 2.8-1.3 4.7-3 5.5V22h-2V2z"/></symbol>
+  <symbol id="a-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm3 14h2v-4H8zm4 0h2V9h-2zm4 0h2v-6h-2z"/></symbol>
+  <symbol id="a-log" viewBox="0 0 24 24"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></symbol>
+  <symbol id="a-search" viewBox="0 0 24 24"><path d="M10 3a7 7 0 1 0 4.3 12.5l4.6 4.6 1.5-1.5-4.6-4.6A7 7 0 0 0 10 3zm0 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/></symbol>
+  <symbol id="a-bell" viewBox="0 0 24 24"><path d="M12 22a2.5 2.5 0 0 0 2.4-2h-4.8A2.5 2.5 0 0 0 12 22zm7-5v-1l-1.5-1.5V10A5.5 5.5 0 0 0 13 4.7V4a1 1 0 1 0-2 0v.7A5.5 5.5 0 0 0 6.5 10v4.5L5 16v1z"/></symbol>
+  <symbol id="a-chat" viewBox="0 0 24 24"><path d="M4 3h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H8l-5 4V4a1 1 0 0 1 1-1z"/></symbol>
+  <symbol id="a-gear" viewBox="0 0 24 24"><path d="M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5zm9 5v-3l-2.6-.5a6.7 6.7 0 0 0-.7-1.6l1.5-2.2-2.1-2.1-2.2 1.5a6.7 6.7 0 0 0-1.6-.7L12.8 2h-3l-.5 2.6a6.7 6.7 0 0 0-1.6.7L5.5 3.8 3.4 5.9l1.5 2.2a6.7 6.7 0 0 0-.7 1.6L2 10.2v3l2.6.5c.2.6.4 1.1.7 1.6l-1.5 2.2 2.1 2.1 2.2-1.5c.5.3 1 .5 1.6.7l.5 2.6h3l.5-2.6c.6-.2 1.1-.4 1.6-.7l2.2 1.5 2.1-2.1-1.5-2.2c.3-.5.5-1 .7-1.6z"/></symbol>
+  <symbol id="a-check" viewBox="0 0 24 24"><path d="M20 6.5l-1.9-1.9-8.6 8.6-3.6-3.6L4 11.5l5.5 5.5z"/></symbol>
+  <symbol id="a-up" viewBox="0 0 24 24"><path d="M12 5l7 8h-4v6H9v-6H5z"/></symbol>
+  <symbol id="a-flag" viewBox="0 0 24 24"><path d="M5 2h2v20H5zm4 1h10l-2.5 4L19 11H9z"/></symbol>
+  <symbol id="a-wand" viewBox="0 0 24 24"><path d="M14.7 6.3l3 3L8.3 18.7l-3-3zM17 2.5l1 2.2 2.2 1-2.2 1-1 2.2-1-2.2-2.2-1 2.2-1zM5 9l.8 1.7L7.5 11.5 5.8 12.3 5 14l-.8-1.7L2.5 11.5 4.2 10.7z"/></symbol>
+  <symbol id="a-camera" viewBox="0 0 24 24"><path d="M9 4l-1.5 2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3.5L15 4zm3 5.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9z"/></symbol>
+  <symbol id="a-dl" viewBox="0 0 24 24"><path d="M11 3h2v9.2l3.1-3.1 1.4 1.4L12 16 6.5 10.5l1.4-1.4 3.1 3.1zM4 18h16v2H4z"/></symbol>
+</defs></svg>
+
+<div class="shell">
+
+  <!-- ══ sidebar ══ -->
+  <aside class="side">
+    <div class="brand"><img src="img/logo.png" alt="MiraFit"><b>MiraFit</b><span class="admtag">Admin</span></div>
+    <nav class="nav" id="nav">
+      <a class="on" href="#" data-view="dashboard" data-title="Dashboard"><svg class="ic"><use href="#a-grid"/></svg> Dashboard</a>
+      <a href="#" data-view="users" data-title="Users"><svg class="ic"><use href="#a-users"/></svg> Users <i class="nbadge">318</i></a>
+      <a href="#" data-view="workouts" data-title="Workouts"><svg class="ic"><use href="#a-dumbbell"/></svg> Workouts</a>
+      <a href="#" data-view="scans" data-title="Body Scans"><svg class="ic"><use href="#a-scan"/></svg> Body Scans</a>
+      <a href="#" data-view="meals" data-title="Meal Logs"><svg class="ic"><use href="#a-meal"/></svg> Meal Logs</a>
+      <a href="#" data-view="reports" data-title="Reports"><svg class="ic"><use href="#a-report"/></svg> Reports</a>
+      <a href="#" data-view="activity" data-title="Activity Log"><svg class="ic"><use href="#a-log"/></svg> Activity Log</a>
+    </nav>
+    <div class="modelcard">
+      <span class="mdot"></span>
+      <b>Detection Model v2.1</b>
+      <p>Rep counter &amp; form grader healthy · 99.98% uptime this month.</p>
+      <span class="mbtn">View Model Status</span>
+    </div>
+  </aside>
+
+  <!-- ══ main ══ -->
+  <main class="mainc">
+
+    <header class="top">
+      <h1 id="viewTitle">Dashboard</h1>
+      <label class="search"><svg class="ic"><use href="#a-search"/></svg><input type="search" placeholder="Search users, workouts…" aria-label="Search"></label>
+      <div class="topicons">
+        <span class="tico" title="Notifications"><svg class="ic"><use href="#a-bell"/></svg><i></i></span>
+        <span class="tico" title="Messages"><svg class="ic"><use href="#a-chat"/></svg></span>
+        <span class="tico" title="Settings"><svg class="ic"><use href="#a-gear"/></svg></span>
+      </div>
+      <div class="me"><img src="img/t-emanuel.jpg" alt=""><div><b>Emanuel Jabon</b><span>Admin</span></div></div>
+    </header>
+
+    <!-- ════════════ DASHBOARD ════════════ -->
+    <div class="view on" id="v-dashboard">
+
+      <section class="row r1">
+        <div class="welcome rise">
+          <div class="wtx">
+            <h2>Welcome back, Emanuel!</h2>
+            <p>Here's how MiraFit's users are training, scanning and progressing this week.</p>
+            <span class="wbtn">View Full Report ↗</span>
+          </div>
+          <div class="kpis">
+            <div class="kpi">
+              <div class="kh">Total Users <span class="kico"><svg class="ic"><use href="#a-users"/></svg></span></div>
+              <b class="kv"><span data-tween="12480" data-fmt="comma">0</span></b>
+              <div class="kf"><em class="delta up">▲ +8.2%</em><span>vs last month</span></div>
+            </div>
+            <div class="kpi">
+              <div class="kh">Active This Week <span class="kico"><svg class="ic"><use href="#a-log"/></svg></span></div>
+              <b class="kv"><span data-tween="4362" data-fmt="comma">0</span></b>
+              <div class="kf"><em class="delta up">▲ +12.4%</em><span>35% of all users</span></div>
+            </div>
+            <div class="kpi">
+              <div class="kh">New Signups <span class="kico"><svg class="ic"><use href="#a-up"/></svg></span></div>
+              <b class="kv"><span data-tween="318">0</span></b>
+              <div class="kf"><em class="delta dn">▼ −2.1%</em><span>past 7 days</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card donutcard rise">
+          <div class="ch"><h3>Users by Body Type</h3><span class="sel">All Users ▾</span></div>
+          <div class="donutwrap">
+            <svg viewBox="0 0 120 120" class="donut" role="img" aria-label="Body type split: Mesomorph 41%, Ectomorph 33%, Endomorph 26%">
+              <circle cx="60" cy="60" r="46" fill="none" stroke="#e7eee8" stroke-width="13"/>
+              <circle class="seg" data-share="41" cx="60" cy="60" r="46" fill="none" stroke="#059669" stroke-width="13"/>
+              <circle class="seg" data-share="33" cx="60" cy="60" r="46" fill="none" stroke="#4f46e5" stroke-width="13"/>
+              <circle class="seg" data-share="26" cx="60" cy="60" r="46" fill="none" stroke="#b45309" stroke-width="13"/>
+            </svg>
+            <div class="dc"><span>Total Users</span><b data-tween="12480" data-fmt="comma">0</b></div>
+          </div>
+          <ul class="legend">
+            <li><i style="background:#059669"></i>Mesomorph<b>41%</b><span>5,117</span></li>
+            <li><i style="background:#4f46e5"></i>Ectomorph<b>33%</b><span>4,118</span></li>
+            <li><i style="background:#b45309"></i>Endomorph<b>26%</b><span>3,245</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="row r2">
+        <div class="card goals rise">
+          <div class="ch"><h3>Fitness Goals Chosen</h3><span class="sel">All Time ▾</span></div>
+          <div class="gtotal"><b data-tween="12480" data-fmt="comma">0</b><span>users with an active goal</span></div>
+          <div class="gbars">
+            <div class="gb lead" data-tip="Body Toning — 3,930 users (31%)"><span class="gl">Body Toning</span><b>3,930</b><em>31%</em><div class="gtrack"><i style="--h:100%"></i></div></div>
+            <div class="gb" data-tip="Weight Loss — 3,494 users (28%)"><span class="gl">Weight Loss</span><b>3,494</b><em>28%</em><div class="gtrack"><i style="--h:89%"></i></div></div>
+            <div class="gb" data-tip="Muscle Gain — 2,745 users (22%)"><span class="gl">Muscle Gain</span><b>2,745</b><em>22%</em><div class="gtrack"><i style="--h:70%"></i></div></div>
+            <div class="gb" data-tip="Posture Fix — 1,373 users (11%)"><span class="gl">Posture Fix</span><b>1,373</b><em>11%</em><div class="gtrack"><i style="--h:35%"></i></div></div>
+            <div class="gb" data-tip="Endurance — 938 users (8%)"><span class="gl">Endurance</span><b>938</b><em>8%</em><div class="gtrack"><i style="--h:24%"></i></div></div>
+          </div>
+        </div>
+
+        <div class="card growth rise">
+          <div class="ch"><h3>User Growth</h3><span class="sel">Monthly ▾</span></div>
+          <div class="glegend">
+            <span><i class="sw" style="background:#059669"></i>2026</span>
+            <span><i class="sw dash"></i>2025</span>
+          </div>
+          <div class="gchart" id="gChart">
+            <svg viewBox="0 0 560 210" preserveAspectRatio="none" aria-hidden="true">
+              <g class="grid"></g>
+              <path id="pLast" fill="none" stroke="#b7c4ba" stroke-width="2" stroke-dasharray="5 5"/>
+              <path id="pAreaNow" fill="url(#growfill)" opacity="0"/>
+              <path id="pNow" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+              <circle id="pDot" r="4.5" fill="#059669" stroke="#fff" stroke-width="2" opacity="0"/>
+              <defs><linearGradient id="growfill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#059669" stop-opacity=".16"/><stop offset="1" stop-color="#059669" stop-opacity="0"/>
+              </linearGradient></defs>
+              <line id="xhair" y1="0" y2="180" stroke="#0c1410" stroke-opacity=".18" stroke-dasharray="3 4" opacity="0"/>
+            </svg>
+            <div class="gtip" id="gTip" role="status"></div>
+            <div class="ylabels"><s>16k</s><s>12k</s><s>8k</s><s>4k</s><s>0</s></div>
+            <div class="xlabels"><s>Jan</s><s>Feb</s><s>Mar</s><s>Apr</s><s>May</s><s>Jun</s><s>Jul</s><s>Aug</s><s>Sep</s><s>Oct</s><s>Nov</s><s>Dec</s></div>
+          </div>
+          <table class="srtable">
+            <caption>Registered users by month</caption>
+            <thead><tr><th>Month</th><th>2026</th><th>2025</th></tr></thead>
+            <tbody id="srBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="row r3">
+        <div class="card acc rise">
+          <div class="ch"><h3>AI Detection Accuracy</h3><span class="dots">⋯</span></div>
+          <div class="atrend"><em class="delta up big">▲ +1.9%</em><span>vs last model release — trend on track, grading is improving</span></div>
+          <div class="abar" data-pct="96.4"><div class="al"><span>Rep Counting</span><b>96.4%</b></div><div class="atrack"><i></i></div></div>
+          <div class="abar" data-pct="87.2"><div class="al"><span>Form Grading</span><b>87.2%</b></div><div class="atrack"><i></i></div></div>
+          <div class="abar" data-pct="91.8"><div class="al"><span>Posture Detection</span><b>91.8%</b></div><div class="atrack"><i></i></div></div>
+          <p class="anote">Measured against trainer-labelled sessions · 4,120 clips this month</p>
+        </div>
+
+        <div class="card topex rise">
+          <div class="ch"><h3>Top Exercises</h3><span class="sel">This Month ▾</span></div>
+          <div class="exrow"><img src="img/ex-pushup.jpg" alt=""><div class="exm"><b>Push-Ups</b><span class="exok good">● Avg form 88%</span></div><div class="exv"><b>48,210</b><span>reps counted</span></div></div>
+          <div class="exrow"><img src="img/ex-curl.jpg" alt=""><div class="exm"><b>Bicep Curls</b><span class="exok good">● Avg form 84%</span></div><div class="exv"><b>39,540</b><span>reps counted</span></div></div>
+          <div class="exrow"><img src="img/ex-press.jpg" alt=""><div class="exm"><b>Shoulder Press</b><span class="exok warn">● Avg form 78%</span></div><div class="exv"><b>31,020</b><span>reps counted</span></div></div>
+          <div class="exrow"><img src="img/ex-plank.jpg" alt=""><div class="exm"><b>Plank</b><span class="exok good">● Avg form 92%</span></div><div class="exv"><b>26,400</b><span>sessions held</span></div></div>
+        </div>
+
+        <div class="card plansplit rise">
+          <div class="ch"><h3>Plan Split</h3><span class="dots">⋯</span></div>
+          <div class="gaugewrap"><svg id="gauge" viewBox="0 0 200 120" aria-hidden="true"></svg>
+            <span class="gicon"><svg class="ic"><use href="#a-dumbbell"/></svg></span>
+          </div>
+          <ul class="legend two">
+            <li><i style="background:#059669"></i>Pro Plan<b>58%</b><span>7,238 users</span></li>
+            <li><i style="background:#4f46e5"></i>Easy Plan<b>42%</b><span>5,242 users</span></li>
+          </ul>
+          <p class="anote">21% of Easy users upgraded to Pro after week 4</p>
+        </div>
+      </section>
+
+      <section class="row r4">
+        <div class="card usercard rise">
+          <div class="ch"><h3>Recent Users</h3>
+            <label class="search sm"><svg class="ic"><use href="#a-search"/></svg><input type="search" placeholder="Search by name…" aria-label="Search users"></label>
+            <span class="seeall" data-goto="users">See All →</span>
+          </div>
+          <div class="tablewrap">
+          <table class="utable">
+            <thead><tr><th>User</th><th>Plan</th><th>Body Type</th><th>Avg Form</th><th>Last Active</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><span class="uc"><img src="img/alex.jpg" alt=""><span><b>Alex Rivera</b><s>alex.r@gmail.com</s></span></span></td><td><i class="chip pro">Pro</i></td><td><i class="chip bt bt-me">Mesomorph</i></td><td class="num"><span class="fmbar"><i style="--p:88%"></i></span>88%</td><td>2 min ago</td><td><i class="chip st ok">● Active</i></td></tr>
+              <tr><td><span class="uc"><img src="img/t-gienel.jpg" alt=""><span><b>Gienel Mateo</b><s>gienel.m@gmail.com</s></span></span></td><td><i class="chip easy">Easy</i></td><td><i class="chip bt bt-en">Endomorph</i></td><td class="num"><span class="fmbar"><i style="--p:81%"></i></span>81%</td><td>26 min ago</td><td><i class="chip st ok">● Active</i></td></tr>
+              <tr><td><span class="uc"><span class="uin" style="background:#e5e0f7;color:#4f46e5">MS</span><span><b>Mika Santos</b><s>mika.san@yahoo.com</s></span></span></td><td><i class="chip pro">Pro</i></td><td><i class="chip bt bt-ec">Ectomorph</i></td><td class="num"><span class="fmbar"><i style="--p:84%"></i></span>84%</td><td>1 hr ago</td><td><i class="chip st ok">● Active</i></td></tr>
+              <tr><td><span class="uc"><img src="img/t-jhon.jpg" alt=""><span><b>Jhon Kaiser</b><s>jhon.kai@gmail.com</s></span></span></td><td><i class="chip easy">Easy</i></td><td><i class="chip bt bt-me">Mesomorph</i></td><td class="num"><span class="fmbar low"><i style="--p:76%"></i></span>76%</td><td>5 hr ago</td><td><i class="chip st idle">● Idle</i></td></tr>
+              <tr><td><span class="uc"><span class="uin" style="background:#fdecd2;color:#b45309">JC</span><span><b>Joana Cruz</b><s>joanacruz@gmail.com</s></span></span></td><td><i class="chip pro">Pro</i></td><td><i class="chip bt bt-ec">Ectomorph</i></td><td class="num"><span class="fmbar"><i style="--p:90%"></i></span>90%</td><td>Yesterday</td><td><i class="chip st idle">● Idle</i></td></tr>
+              <tr><td><span class="uc"><img src="img/t-candido.jpg" alt=""><span><b>Candido James</b><s>cjames@outlook.com</s></span></span></td><td><i class="chip easy">Easy</i></td><td><i class="chip bt bt-en">Endomorph</i></td><td class="num"><span class="fmbar low"><i style="--p:72%"></i></span>72%</td><td>6 days ago</td><td><i class="chip st risk">● At risk</i></td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div class="card feed rise">
+          <div class="ch"><h3>Recent Activity</h3><span class="seeall" data-goto="activity">See All →</span></div>
+          <div class="fitem"><span class="fic ok"><svg class="ic"><use href="#a-check"/></svg></span><div><b>Weekly rescan completed</b> by Alex Rivera — posture improved to <b>Good</b><s>2 minutes ago</s></div></div>
+          <div class="fitem"><span class="fic ok"><svg class="ic"><use href="#a-users"/></svg></span><div><b>New user registered</b> (mika.san@yahoo.com) via body scan onboarding<s>14 minutes ago</s></div></div>
+          <div class="fitem"><span class="fic wand"><svg class="ic"><use href="#a-wand"/></svg></span><div><b>Plan regenerated</b> — Gienel Mateo switched Easy → Pro after week-4 results<s>32 minutes ago</s></div></div>
+          <div class="fitem"><span class="fic warn"><svg class="ic"><use href="#a-flag"/></svg></span><div><b>Form flag raised</b> — shoulder-press depth below threshold for 12 users today<s>1 hour ago</s></div></div>
+          <div class="fitem"><span class="fic cam"><svg class="ic"><use href="#a-camera"/></svg></span><div><b>4,120 workout clips</b> processed by the detection model in the last 24h<s>3 hours ago</s></div></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════════ USERS ════════════ -->
+    <div class="view" id="v-users">
+      <section class="minis">
+        <div class="kpi rise"><div class="kh">Total Users <span class="kico"><svg class="ic"><use href="#a-users"/></svg></span></div><b class="kv">12,480</b><div class="kf"><em class="delta up">▲ +8.2%</em><span>vs last month</span></div></div>
+        <div class="kpi rise"><div class="kh">Active This Week <span class="kico"><svg class="ic"><use href="#a-log"/></svg></span></div><b class="kv">4,362</b><div class="kf"><em class="delta up">▲ +12.4%</em><span>35% of all users</span></div></div>
+        <div class="kpi rise"><div class="kh">New This Week <span class="kico"><svg class="ic"><use href="#a-up"/></svg></span></div><b class="kv">318</b><div class="kf"><em class="delta dn">▼ −2.1%</em><span>vs previous week</span></div></div>
+        <div class="kpi rise"><div class="kh">At Risk <span class="kico warnbg"><svg class="ic"><use href="#a-flag"/></svg></span></div><b class="kv">214</b><div class="kf"><span>inactive 5+ days</span></div></div>
+      </section>
+      <div class="card usercard rise">
+        <div class="ch"><h3>All Users</h3>
+          <label class="search sm"><svg class="ic"><use href="#a-search"/></svg><input type="search" placeholder="Search by name…" aria-label="Search users"></label>
+          <span class="seeall">Export CSV ↓</span>
+        </div>
+        <div class="tablewrap">
+        <table class="utable">
+          <thead><tr><th>User</th><th>Plan</th><th>Goal</th><th>Body Type</th><th>Avg Form</th><th>Last Active</th><th>Status</th><th></th></tr></thead>
+          <tbody id="uBody"></tbody>
+        </table>
+        </div>
+        <div class="pager"><span id="uCount"></span><span class="pgbtns"><i>‹</i><i class="on">1</i><i>2</i><i>3</i><i>…</i><i>1248</i><i>›</i></span></div>
+      </div>
+      <div class="card delcard rise" id="delCard" hidden>
+        <div class="ch"><h3>Recently Deleted</h3><span class="anote" style="margin:0">Kept for 30 days, then removed permanently</span></div>
+        <div id="delBody"></div>
+      </div>
+    </div>
+
+    <!-- ════════════ WORKOUTS ════════════ -->
+    <div class="view" id="v-workouts">
+      <section class="minis">
+        <div class="kpi rise"><div class="kh">Workouts This Week <span class="kico"><svg class="ic"><use href="#a-dumbbell"/></svg></span></div><b class="kv">21,480</b><div class="kf"><em class="delta up">▲ +9.4%</em><span>vs last week</span></div></div>
+        <div class="kpi rise"><div class="kh">Avg Session <span class="kico"><svg class="ic"><use href="#a-log"/></svg></span></div><b class="kv">32 min</b><div class="kf"><span>across all levels</span></div></div>
+        <div class="kpi rise"><div class="kh">Reps Counted <span class="kico"><svg class="ic"><use href="#a-camera"/></svg></span></div><b class="kv">412k</b><div class="kf"><em class="delta up">▲ +11%</em><span>this month</span></div></div>
+        <div class="kpi rise"><div class="kh">Form Flags <span class="kico warnbg"><svg class="ic"><use href="#a-flag"/></svg></span></div><b class="kv">1,208</b><div class="kf"><span>past 7 days</span></div></div>
+      </section>
+      <section class="row half">
+        <div class="card topex rise">
+          <div class="ch"><h3>Top Exercises</h3><span class="sel">This Month ▾</span></div>
+          <div class="exrow"><img src="img/ex-pushup.jpg" alt=""><div class="exm"><b>Push-Ups</b><span class="exok good">● Avg form 88%</span></div><div class="exv"><b>48,210</b><span>reps counted</span></div></div>
+          <div class="exrow"><img src="img/ex-curl.jpg" alt=""><div class="exm"><b>Bicep Curls</b><span class="exok good">● Avg form 84%</span></div><div class="exv"><b>39,540</b><span>reps counted</span></div></div>
+          <div class="exrow"><img src="img/ex-press.jpg" alt=""><div class="exm"><b>Shoulder Press</b><span class="exok warn">● Avg form 78%</span></div><div class="exv"><b>31,020</b><span>reps counted</span></div></div>
+          <div class="exrow"><img src="img/ex-plank.jpg" alt=""><div class="exm"><b>Plank</b><span class="exok good">● Avg form 92%</span></div><div class="exv"><b>26,400</b><span>sessions held</span></div></div>
+        </div>
+        <div class="card rise">
+          <div class="ch"><h3>Most Common Form Flags</h3><span class="sel">7 Days ▾</span></div>
+          <div class="fbar" style="--w:100%"><div class="al"><span>Shoulder-press depth</span><b>412 users</b></div><div class="atrack"><i class="warnfill"></i></div></div>
+          <div class="fbar" style="--w:57%"><div class="al"><span>Push-up hip sag</span><b>236 users</b></div><div class="atrack"><i class="warnfill"></i></div></div>
+          <div class="fbar" style="--w:48%"><div class="al"><span>Curl momentum swing</span><b>198 users</b></div><div class="atrack"><i class="warnfill"></i></div></div>
+          <div class="fbar" style="--w:29%"><div class="al"><span>Plank hip drop</span><b>121 users</b></div><div class="atrack"><i class="warnfill"></i></div></div>
+          <p class="anote">A flag is raised when the same fault repeats in 3+ sets of a session</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════════ BODY SCANS ════════════ -->
+    <div class="view" id="v-scans">
+      <section class="minis">
+        <div class="kpi rise"><div class="kh">Scans This Week <span class="kico"><svg class="ic"><use href="#a-scan"/></svg></span></div><b class="kv">3,214</b><div class="kf"><em class="delta up">▲ +6.8%</em><span>vs last week</span></div></div>
+        <div class="kpi rise"><div class="kh">Rescan Completion <span class="kico"><svg class="ic"><use href="#a-check"/></svg></span></div><b class="kv">74%</b><div class="kf"><span>of 7-day prompts</span></div></div>
+        <div class="kpi rise"><div class="kh">Posture Improved <span class="kico"><svg class="ic"><use href="#a-up"/></svg></span></div><b class="kv">61%</b><div class="kf"><span>week over week</span></div></div>
+        <div class="kpi rise"><div class="kh">Avg Scan Time <span class="kico"><svg class="ic"><use href="#a-camera"/></svg></span></div><b class="kv">48 s</b><div class="kf"><span>full-body capture</span></div></div>
+      </section>
+      <section class="row half">
+        <div class="card donutcard rise">
+          <div class="ch"><h3>Users by Body Type</h3><span class="sel">All Users ▾</span></div>
+          <div class="donutwrap">
+            <svg viewBox="0 0 120 120" class="donut" role="img" aria-label="Body type split: Mesomorph 41%, Ectomorph 33%, Endomorph 26%">
+              <circle cx="60" cy="60" r="46" fill="none" stroke="#e7eee8" stroke-width="13"/>
+              <circle class="seg" data-share="41" cx="60" cy="60" r="46" fill="none" stroke="#059669" stroke-width="13"/>
+              <circle class="seg" data-share="33" cx="60" cy="60" r="46" fill="none" stroke="#4f46e5" stroke-width="13"/>
+              <circle class="seg" data-share="26" cx="60" cy="60" r="46" fill="none" stroke="#b45309" stroke-width="13"/>
+            </svg>
+            <div class="dc"><span>Total Users</span><b>12,480</b></div>
+          </div>
+          <ul class="legend">
+            <li><i style="background:#059669"></i>Mesomorph<b>41%</b><span>5,117</span></li>
+            <li><i style="background:#4f46e5"></i>Ectomorph<b>33%</b><span>4,118</span></li>
+            <li><i style="background:#b45309"></i>Endomorph<b>26%</b><span>3,245</span></li>
+          </ul>
+        </div>
+        <div class="card rise">
+          <div class="ch"><h3>Posture Readings</h3><span class="sel">Latest Scans ▾</span></div>
+          <div class="fbar" style="--w:58%"><div class="al"><span>Good</span><b>58%</b></div><div class="atrack"><i></i></div></div>
+          <div class="fbar" style="--w:22%"><div class="al"><span>Forward Lean</span><b>22%</b></div><div class="atrack"><i class="warnfill"></i></div></div>
+          <div class="fbar" style="--w:13%"><div class="al"><span>Rounded Shoulders</span><b>13%</b></div><div class="atrack"><i class="warnfill"></i></div></div>
+          <div class="fbar" style="--w:7%"><div class="al"><span>Hip Tilt</span><b>7%</b></div><div class="atrack"><i class="warnfill"></i></div></div>
+          <p class="anote">Good-posture share is up from 51% four weeks ago</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════════ MEAL LOGS ════════════ -->
+    <div class="view" id="v-meals">
+      <section class="minis">
+        <div class="kpi rise"><div class="kh">Meals Scanned Today <span class="kico"><svg class="ic"><use href="#a-meal"/></svg></span></div><b class="kv">8,412</b><div class="kf"><em class="delta up">▲ +4.6%</em><span>vs yesterday</span></div></div>
+        <div class="kpi rise"><div class="kh">Recognition Accuracy <span class="kico"><svg class="ic"><use href="#a-camera"/></svg></span></div><b class="kv">93.1%</b><div class="kf"><span>dish identification</span></div></div>
+        <div class="kpi rise"><div class="kh">Avg Logged Intake <span class="kico"><svg class="ic"><use href="#a-report"/></svg></span></div><b class="kv">1,870</b><div class="kf"><span>kcal per user / day</span></div></div>
+        <div class="kpi rise"><div class="kh">Fits-Plan Rate <span class="kico"><svg class="ic"><use href="#a-check"/></svg></span></div><b class="kv">71%</b><div class="kf"><em class="delta up">▲ +3%</em><span>this week</span></div></div>
+      </section>
+      <div class="card rise">
+        <div class="ch"><h3>Latest Scanned Meals</h3><span class="sel">Today ▾</span></div>
+        <div class="tablewrap">
+        <table class="utable">
+          <thead><tr><th>Meal Detected</th><th>Kcal</th><th>Protein</th><th>User</th><th>Time</th><th>Plan Check</th></tr></thead>
+          <tbody>
+            <tr><td><b>Grilled Chicken Bowl</b></td><td class="num">412</td><td class="num">38 g</td><td>Alex Rivera</td><td>12:41 PM</td><td><i class="chip st ok">✓ Fits plan</i></td></tr>
+            <tr><td><b>Chicken Adobo w/ Rice</b></td><td class="num">640</td><td class="num">32 g</td><td>Rhea Villar</td><td>12:22 PM</td><td><i class="chip st ok">✓ Fits plan</i></td></tr>
+            <tr><td><b>Protein Overnight Oats</b></td><td class="num">380</td><td class="num">24 g</td><td>Marco Dela Peña</td><td>09:05 AM</td><td><i class="chip st ok">✓ Fits plan</i></td></tr>
+            <tr><td><b>Sinigang na Baboy</b></td><td class="num">310</td><td class="num">21 g</td><td>Gienel Mateo</td><td>08:47 AM</td><td><i class="chip st idle">△ Slightly over sodium</i></td></tr>
+            <tr><td><b>Burger &amp; Fries</b></td><td class="num">890</td><td class="num">28 g</td><td>Jhon Kaiser</td><td>08:12 AM</td><td><i class="chip st risk">✗ Over budget</i></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ REPORTS ════════════ -->
+    <div class="view" id="v-reports">
+      <div class="card rise">
+        <div class="ch"><h3>Generated Reports</h3><span class="sel">This Quarter ▾</span></div>
+        <div class="reprow"><span class="fic ok"><svg class="ic"><use href="#a-report"/></svg></span><div class="exm"><b>Weekly Engagement Report</b><span class="exsub">Active users, streaks, session length · updated 2 hours ago</span></div><span class="repbtn"><svg class="ic"><use href="#a-dl"/></svg> PDF</span></div>
+        <div class="reprow"><span class="fic ok"><svg class="ic"><use href="#a-report"/></svg></span><div class="exm"><b>Detection Model Accuracy Audit</b><span class="exsub">Rep counting, form grading, posture · updated yesterday</span></div><span class="repbtn"><svg class="ic"><use href="#a-dl"/></svg> PDF</span></div>
+        <div class="reprow"><span class="fic wand"><svg class="ic"><use href="#a-report"/></svg></span><div class="exm"><b>Retention Cohorts — Q2 2026</b><span class="exsub">Week 1–8 retention by plan and goal · updated 3 days ago</span></div><span class="repbtn"><svg class="ic"><use href="#a-dl"/></svg> CSV</span></div>
+        <div class="reprow"><span class="fic cam"><svg class="ic"><use href="#a-report"/></svg></span><div class="exm"><b>Body Scan Outcomes</b><span class="exsub">Weight, BMI and posture deltas after 8 weeks · updated 1 week ago</span></div><span class="repbtn"><svg class="ic"><use href="#a-dl"/></svg> PDF</span></div>
+        <div class="reprow"><span class="fic warn"><svg class="ic"><use href="#a-report"/></svg></span><div class="exm"><b>Churn Risk Watchlist</b><span class="exsub">214 users inactive 5+ days, ranked by risk · updated 1 hour ago</span></div><span class="repbtn"><svg class="ic"><use href="#a-dl"/></svg> CSV</span></div>
+      </div>
+    </div>
+
+    <!-- ════════════ ACTIVITY LOG ════════════ -->
+    <div class="view" id="v-activity">
+      <div class="card feed rise">
+        <div class="ch"><h3>Activity Log</h3><span class="sel">Today ▾</span></div>
+        <div class="fitem"><span class="fic ok"><svg class="ic"><use href="#a-check"/></svg></span><div><b>Weekly rescan completed</b> by Alex Rivera — posture improved to <b>Good</b><s>2 minutes ago</s></div></div>
+        <div class="fitem"><span class="fic ok"><svg class="ic"><use href="#a-users"/></svg></span><div><b>New user registered</b> (mika.san@yahoo.com) via body scan onboarding<s>14 minutes ago</s></div></div>
+        <div class="fitem"><span class="fic wand"><svg class="ic"><use href="#a-wand"/></svg></span><div><b>Plan regenerated</b> — Gienel Mateo switched Easy → Pro after week-4 results<s>32 minutes ago</s></div></div>
+        <div class="fitem"><span class="fic warn"><svg class="ic"><use href="#a-flag"/></svg></span><div><b>Form flag raised</b> — shoulder-press depth below threshold for 12 users today<s>1 hour ago</s></div></div>
+        <div class="fitem"><span class="fic cam"><svg class="ic"><use href="#a-camera"/></svg></span><div><b>4,120 workout clips</b> processed by the detection model in the last 24h<s>3 hours ago</s></div></div>
+        <div class="fitem"><span class="fic ok"><svg class="ic"><use href="#a-meal"/></svg></span><div><b>Meal scanner milestone</b> — 1M dishes recognized since launch<s>5 hours ago</s></div></div>
+        <div class="fitem"><span class="fic wand"><svg class="ic"><use href="#a-wand"/></svg></span><div><b>Gemini coaching batch</b> — 3,204 weekly highlight summaries generated<s>7 hours ago</s></div></div>
+        <div class="fitem"><span class="fic warn"><svg class="ic"><use href="#a-flag"/></svg></span><div><b>Churn watch</b> — 18 users crossed 5 days inactive and entered the at-risk list<s>9 hours ago</s></div></div>
+        <div class="fitem"><span class="fic ok"><svg class="ic"><use href="#a-users"/></svg></span><div><b>Support ticket resolved</b> — camera permission issue on Android 15<s>11 hours ago</s></div></div>
+        <div class="fitem"><span class="fic cam"><svg class="ic"><use href="#a-camera"/></svg></span><div><b>Detection model v2.1 deployed</b> — form grading accuracy +1.9%<s>Yesterday</s></div></div>
+      </div>
+    </div>
+
+    <footer class="foot">Copyright © 2026 MiraFit · Admin console concept — sample data</footer>
+  </main>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-label="User details" hidden>
+  <div class="dhead">
+    <span class="davatar" id="dAvatar"></span>
+    <div class="dwho"><b id="dName"></b><s id="dMail"></s></div>
+    <span class="dclose" id="dClose" role="button" aria-label="Close">×</span>
+  </div>
+  <div class="dchips" id="dChips"></div>
+  <div class="dlast" id="dLast"></div>
+  <div class="dstats" id="dStats"></div>
+  <div class="dweek">
+    <div class="dwt">Last 7 days activity</div>
+    <div class="dwbars" id="dBars"></div>
+    <div class="dwdays"><s>M</s><s>T</s><s>W</s><s>T</s><s>F</s><s>S</s><s>S</s></div>
+  </div>
+  <div class="dactions" id="dActions"></div>
+</aside>
+<div class="modal" id="mModal" hidden>
+  <div class="mcard" role="dialog" aria-modal="true" aria-label="Detection model status">
+    <div class="mhead">
+      <span class="mico"><svg class="ic"><use href="#a-camera"/></svg></span>
+      <div class="mwho"><b>Detection Model v2.1</b><s>Vision pipeline · rep counter · form grader · posture</s></div>
+      <i class="chip st ok">● Healthy</i>
+      <span class="dclose" id="mClose" role="button" aria-label="Close">×</span>
+    </div>
+    <div class="mup">
+      <div class="mupbig"><b>99.98%</b><s>uptime this month</s></div>
+      <div class="mupmeta">
+        <span><b>38 ms</b><s>avg inference</s></span>
+        <span><b>4.1k</b><s>clips / day</s></span>
+        <span><b>0.02%</b><s>error rate</s></span>
+      </div>
+    </div>
+    <div class="msec">Accuracy vs trainer-labelled sessions</div>
+    <div class="abar" data-pct="96.4"><div class="al"><span>Rep Counting</span><b>96.4% <em class="delta up">▲ +0.6</em></b></div><div class="atrack"><i></i></div></div>
+    <div class="abar" data-pct="87.2"><div class="al"><span>Form Grading</span><b>87.2% <em class="delta up">▲ +1.9</em></b></div><div class="atrack"><i></i></div></div>
+    <div class="abar" data-pct="91.8"><div class="al"><span>Posture Detection</span><b>91.8% <em class="delta up">▲ +1.1</em></b></div><div class="atrack"><i></i></div></div>
+    <div class="msec">Release history</div>
+    <div class="mlog"><i class="ok"></i><div><b>v2.1 · Jun 28, 2026</b><s>Form-grading head retrained — +1.9% accuracy, −6 ms inference</s></div></div>
+    <div class="mlog"><i class="ok"></i><div><b>v2.0 · May 9, 2026</b><s>New posture model — forward-lean detection far more reliable</s></div></div>
+    <div class="mlog"><i></i><div><b>v1.8 · Mar 21, 2026</b><s>Rep counter tuned for fast-tempo push-ups and curls</s></div></div>
+    <span class="dbtn restorebtn" id="hcBtn" role="button">Run Health Check</span>
+  </div>
+</div>
+<div class="toast" id="toast" hidden><span id="toastMsg"></span><b id="toastAct"></b></div>
+<script src="js/admin.js"></script>
+</body>
+</html>
