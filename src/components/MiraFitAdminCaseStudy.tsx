@@ -11,6 +11,8 @@ import {
   TbActivity,
   TbChartPie,
   TbDeviceDesktopAnalytics,
+  TbPlayerPlay,
+  TbHandFinger,
 } from 'react-icons/tb';
 import type { IconType } from 'react-icons';
 import { getTool } from '@/lib/toolIcons';
@@ -58,13 +60,34 @@ const FEATURES: { icon: IconType; tag: string; t: string; d: string }[] = [
 const BASE_W = 1460;
 const BASE_H = 1070;
 
+const AUTO_CAPTION =
+  'Auto-playing the admin demo — click inside the screen to take over, ↻ Replay to restart.';
+const FREE_CAPTION =
+  "You're in control — explore the console freely: open profiles, switch views, run health checks.";
+
 function AdminConsoleDemo() {
   const viewRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLIFrameElement>(null);
-  const [caption, setCaption] = useState(
-    'Auto-playing the admin demo — click inside the screen to take over, ↻ Replay to restart.'
-  );
+  // what the segmented control shows (takeover flips this without reloading)
+  const [uiMode, setUiMode] = useState<'auto' | 'interactive'>('auto');
+  // what the iframe is actually loaded with; id forces a fresh mount
+  const [load, setLoad] = useState({ demo: true, id: 0 });
+  const [caption, setCaption] = useState(AUTO_CAPTION);
   const [fading, setFading] = useState(false);
+
+  const swapCaption = (txt: string) => {
+    setFading(true);
+    setTimeout(() => {
+      setCaption(txt);
+      setFading(false);
+    }, 250);
+  };
+
+  const choose = (mode: 'auto' | 'interactive') => {
+    setUiMode(mode);
+    setLoad((l) => ({ demo: mode === 'auto', id: l.id + 1 }));
+    swapCaption(mode === 'auto' ? AUTO_CAPTION : FREE_CAPTION);
+  };
 
   useEffect(() => {
     const fit = () => {
@@ -80,25 +103,50 @@ function AdminConsoleDemo() {
 
     const onMsg = (e: MessageEvent) => {
       if (!e.data || !e.data.mfDemo) return;
-      const txt =
-        e.data.mfDemo === 'takeover'
-          ? "You're in control — explore the console, or hit ↻ Replay inside the screen to restart the demo."
-          : e.data.mfDemo;
-      setFading(true);
-      setTimeout(() => {
-        setCaption(txt);
-        setFading(false);
-      }, 250);
+      if (e.data.mfDemo === 'takeover') {
+        setUiMode('interactive');
+        swapCaption(FREE_CAPTION);
+        return;
+      }
+      swapCaption(e.data.mfDemo);
     };
     window.addEventListener('message', onMsg);
     return () => {
       window.removeEventListener('resize', fit);
       window.removeEventListener('message', onMsg);
     };
-  }, []);
+  }, [load]);
 
   return (
     <div className="mx-auto max-w-4xl">
+      {/* mode toggle */}
+      <div className="glass mx-auto mb-8 flex w-fit items-center gap-1 rounded-full p-1">
+        {(
+          [
+            { key: 'auto', icon: TbPlayerPlay, label: 'Autoplay demo' },
+            { key: 'interactive', icon: TbHandFinger, label: 'Interactive' },
+          ] as const
+        ).map((o) => {
+          const active = uiMode === o.key;
+          return (
+            <button
+              key={o.key}
+              onClick={() => choose(o.key)}
+              className="flex items-center gap-1.5 rounded-full px-4 py-2 font-mono text-[10px] uppercase tracking-[0.15em] transition-all"
+              style={{
+                background: active
+                  ? 'linear-gradient(135deg, rgba(193,123,232,0.3), rgba(96,128,255,0.3))'
+                  : 'transparent',
+                color: active ? '#f5f5f7' : 'rgba(245,245,247,0.55)',
+                boxShadow: active ? 'inset 0 0 0 0.5px rgba(255,255,255,0.25)' : 'none',
+              }}
+            >
+              <o.icon size={13} />
+              {o.label}
+            </button>
+          );
+        })}
+      </div>
       {/* Laptop chassis — same materials as the shared LaptopFrame */}
       <div
         className="mx-auto w-full overflow-hidden rounded-t-xl rounded-b-md border border-white/10 p-[1.6%] pb-[1.2%]"
@@ -115,9 +163,14 @@ function AdminConsoleDemo() {
           className="relative overflow-hidden rounded-md border-[0.5px] border-white/[0.06] bg-[#eaf1ea]"
         >
           <iframe
+            key={load.id}
             ref={frameRef}
-            src="/mirafit-admin/admin.html?demo=1"
-            title="MiraFit admin console — auto-playing demo"
+            src={load.demo ? '/mirafit-admin/admin.html?demo=1' : '/mirafit-admin/admin.html'}
+            title={
+              load.demo
+                ? 'MiraFit admin console — auto-playing demo'
+                : 'MiraFit admin console — interactive'
+            }
             className="block origin-top-left border-0"
             style={{ width: BASE_W, height: BASE_H }}
           />
@@ -140,8 +193,14 @@ function AdminConsoleDemo() {
       {/* live caption */}
       <div className="mx-auto mt-6 flex min-h-[44px] max-w-xl items-start justify-center gap-2.5 px-4 text-center">
         <span className="relative mt-[5px] flex h-[9px] w-[9px] flex-none">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-40" />
-          <span className="relative inline-flex h-[9px] w-[9px] rounded-full bg-signal" />
+          {uiMode === 'auto' && (
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-40" />
+          )}
+          <span
+            className={`relative inline-flex h-[9px] w-[9px] rounded-full ${
+              uiMode === 'auto' ? 'bg-signal' : 'bg-accent-1'
+            }`}
+          />
         </span>
         <p
           aria-live="polite"
