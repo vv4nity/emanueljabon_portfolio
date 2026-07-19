@@ -18,7 +18,15 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0}
+/* Pin the document to the iframe's height and scroll inside <body> instead of
+   the document — iPadOS Safari expands an iframe to its content height, which
+   otherwise clips tall views (Users) and breaks fixed/sticky positioning.
+   The body is 24px wider than the viewport with that strip clipped by <html>,
+   so the scrollbar (classic or overlay) is drawn off-screen in every browser. */
+html{height:100%;overflow:hidden}
 body.adm{
+  height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+  box-sizing:content-box;width:100vw;padding-right:24px;
   background:
     radial-gradient(900px 500px at 85% -10%, rgba(5,150,105,.14), transparent 60%),
     radial-gradient(700px 420px at -10% 30%, rgba(5,150,105,.08), transparent 60%),
@@ -429,5 +437,5 @@ body.drawer-open .drawer{transform:none}
 }
 
 /* embedded in the portfolio's laptop mockup — hide the page scrollbar */
-html{scrollbar-width:none;-ms-overflow-style:none}
+html,body{scrollbar-width:none;-ms-overflow-style:none}
 ::-webkit-scrollbar{width:0;height:0;display:none}

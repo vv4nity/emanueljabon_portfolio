@@ -5,6 +5,9 @@
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return [].slice.call((c || document).querySelectorAll(s)); };
   var fmt = function (n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+  /* <body> is the scroll container (see admin.css) — never the window, which
+     iPadOS Safari can't scroll inside an iframe */
+  var scroller = function () { return document.body; };
 
   function tween(el, to, dur) {
     var useComma = el.dataset.fmt === 'comma';
@@ -346,7 +349,7 @@
     var view = $('#v-' + name);
     if (view) animateView(view);
     if (name === 'dashboard') { growthPlay(); donut(); gauge(); }
-    window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    scroller().scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   }
 
   /* ── auto-play demo mode (?demo=1 or window.MF_DEMO) ── */
@@ -400,11 +403,12 @@
         if (!demoOn) return;
         var el = selFn(); if (!el) return;
         if (label) demoSay(label);
-        /* scroll only this (iframe) window — scrollIntoView would also
-           scroll the embedding page's viewport on every step */
+        /* scroll only this (iframe) document's <body> scroller — scrollIntoView
+           would also scroll the embedding page's viewport on every step */
+        var sc = scroller();
         var r = el.getBoundingClientRect();
-        var top = r.top + window.pageYOffset - (window.innerHeight - r.height) / 2;
-        window.scrollTo({ top: Math.max(0, top), behavior: reduced ? 'auto' : 'smooth' });
+        var top = r.top + sc.scrollTop - (sc.clientHeight - r.height) / 2;
+        sc.scrollTo({ top: Math.max(0, top), behavior: reduced ? 'auto' : 'smooth' });
         DT(function () {
           if (!demoOn) return;
           curTo(el);
