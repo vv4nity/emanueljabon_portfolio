@@ -61,7 +61,7 @@ const BASE_W = 1460;
 const BASE_H = 1070;
 
 const AUTO_CAPTION =
-  'Auto-playing the admin demo — click inside the screen to take over, ↻ Replay to restart.';
+  'Auto-playing the admin demo — switch to Interactive to explore the console yourself.';
 const FREE_CAPTION =
   "You're in control — explore the console freely: open profiles, switch views, run health checks.";
 
@@ -74,13 +74,17 @@ function AdminConsoleDemo() {
   const [load, setLoad] = useState({ demo: true, id: 0 });
   const [caption, setCaption] = useState(AUTO_CAPTION);
   const [fading, setFading] = useState(false);
+  const fadeTimer = useRef<number | undefined>(undefined);
 
+  // debounced crossfade: rapid captions from the demo cancel the pending
+  // swap instead of racing it (which briefly rendered two captions at once)
   const swapCaption = (txt: string) => {
+    window.clearTimeout(fadeTimer.current);
     setFading(true);
-    setTimeout(() => {
+    fadeTimer.current = window.setTimeout(() => {
       setCaption(txt);
       setFading(false);
-    }, 250);
+    }, 200);
   };
 
   const choose = (mode: 'auto' | 'interactive') => {
@@ -147,46 +151,80 @@ function AdminConsoleDemo() {
           );
         })}
       </div>
-      {/* Laptop chassis — same materials as the shared LaptopFrame */}
-      <div
-        className="mx-auto w-full overflow-hidden rounded-t-xl rounded-b-md border border-white/10 p-[1.6%] pb-[1.2%]"
-        style={{
-          background: 'linear-gradient(160deg, #16161f, #0b0b12 60%)',
-          boxShadow:
-            '0 40px 90px -35px rgba(96,128,255,0.35), 0 20px 50px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08)',
-        }}
-      >
-        {/* camera */}
-        <div className="mx-auto mb-2 h-[6px] w-[6px] rounded-full bg-black ring-1 ring-white/10" />
-        <div
-          ref={viewRef}
-          className="relative overflow-hidden rounded-md border-[0.5px] border-white/[0.06] bg-[#eaf1ea]"
+      {/* 3D MacBook scene — chassis from the original admin showcase */}
+      <div style={{ perspective: '2000px' }}>
+        <motion.div
+          initial={{ opacity: 0, rotateX: 20, y: 46, scale: 0.95 }}
+          whileInView={{ opacity: 1, rotateX: 6, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '0px 0px -80px 0px' }}
+          transition={{ duration: 1.15, ease: [0.22, 0.8, 0.3, 1] }}
+          style={{ transformStyle: 'preserve-3d' }}
         >
-          <iframe
-            key={load.id}
-            ref={frameRef}
-            src={load.demo ? '/mirafit-admin/admin.html?demo=1' : '/mirafit-admin/admin.html'}
-            title={
-              load.demo
-                ? 'MiraFit admin console — auto-playing demo'
-                : 'MiraFit admin console — interactive'
-            }
-            className="block origin-top-left border-0"
-            style={{ width: BASE_W, height: BASE_H }}
+          {/* screen */}
+          <div
+            style={{
+              background: '#0b0b0d',
+              border: '1px solid #26262b',
+              borderBottom: 0,
+              borderRadius: '26px 26px 0 0',
+              padding: '16px 16px 18px',
+              boxShadow:
+                'inset 0 1px 0 rgba(255,255,255,0.06), 0 -1px 0 rgba(0,0,0,0.4), 0 40px 90px -35px rgba(96,128,255,0.3)',
+            }}
+          >
+            {/* camera */}
+            <span
+              className="relative mx-auto mb-[11px] block h-[7px] w-[7px] rounded-full border border-[#33333c] bg-[#1c1c22]"
+            >
+              <span className="absolute inset-[1.5px] rounded-full bg-[#0f3a2a]" />
+            </span>
+            <div
+              ref={viewRef}
+              className="relative overflow-hidden rounded-[10px] bg-[#eaf1ea]"
+            >
+              <iframe
+                key={load.id}
+                ref={frameRef}
+                src={load.demo ? '/mirafit-admin/admin.html?demo=1' : '/mirafit-admin/admin.html'}
+                title={
+                  load.demo
+                    ? 'MiraFit admin console — auto-playing demo'
+                    : 'MiraFit admin console — interactive'
+                }
+                className={`block origin-top-left border-0 ${
+                  uiMode === 'auto' ? 'pointer-events-none' : ''
+                }`}
+                style={{ width: BASE_W, height: BASE_H }}
+              />
+            </div>
+          </div>
+          {/* hinge */}
+          <div
+            className="h-[13px] rounded-b-[4px]"
+            style={{ background: 'linear-gradient(#3a3a40, #191921)' }}
           />
-        </div>
-      </div>
-      {/* deck */}
-      <div
-        className="relative mx-auto h-[14px] w-full rounded-b-xl rounded-t-[3px] md:h-[16px]"
-        style={{
-          background: 'linear-gradient(180deg, #2a2a36 0%, #17171f 45%, #0d0d13 100%)',
-          boxShadow: '0 18px 35px -18px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.12)',
-        }}
-      >
+          {/* base */}
+          <div
+            className="relative ml-[-4%] h-[15px] w-[108%] rounded-[3px_3px_12px_12px] md:ml-[-8%] md:w-[116%]"
+            style={{
+              background: 'linear-gradient(#e3e5e9, #b9bcc3 70%, #8f929a)',
+              boxShadow: '0 1px 0 rgba(0,0,0,0.25)',
+            }}
+          >
+            <span
+              className="absolute left-1/2 top-0 h-[8px] w-[128px] -translate-x-1/2 rounded-b-[10px]"
+              style={{ background: 'linear-gradient(#9a9da5, #c9ccd2)' }}
+            />
+          </div>
+        </motion.div>
+        {/* floor glow */}
         <div
-          className="absolute left-1/2 top-0 h-[6px] w-[12%] -translate-x-1/2 rounded-b-[8px]"
-          style={{ background: 'linear-gradient(180deg, #08080d, #1c1c26)' }}
+          className="mx-auto mt-[2px] h-[34px] w-[78%] rounded-[50%]"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(96,128,255,0.22), transparent 68%)',
+            filter: 'blur(7px)',
+          }}
         />
       </div>
 
@@ -342,7 +380,7 @@ export default function MiraFitAdminCaseStudy() {
         <p className="mt-4 max-w-3xl text-[15px] leading-[1.65] text-text-dim md:text-[16px]">
           This is not a video — it&apos;s the actual console running in the page, auto-playing its
           full circuit: health checks, member management, soft-delete and restore, model metrics
-          and cohort analytics. Click inside the screen at any time to take over.
+          and cohort analytics. Flip the toggle to Interactive to explore it yourself.
         </p>
 
         <div className="mt-10">
