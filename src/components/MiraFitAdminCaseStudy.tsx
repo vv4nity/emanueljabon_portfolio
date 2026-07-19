@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { FiUser, FiCalendar, FiArrowUpRight } from 'react-icons/fi';
 import {
   TbStack2,
@@ -75,30 +75,19 @@ function AdminConsoleDemo() {
     offset: ['start 0.95', 'start 0.35'],
   });
   const lidAngle = useTransform(scrollYProgress, [0, 1], [78, 0]);
-  const lidShade = useTransform(scrollYProgress, [0, 1], [0.55, 0]);
+  // opaque boot screen while the lid moves — Safari doesn't repaint iframes
+  // under a changing 3D transform, which flashed white mid-animation
+  const facadeOpacity = useTransform(scrollYProgress, [0.8, 0.99], [1, 0]);
   // what the segmented control shows (takeover flips this without reloading)
   const [uiMode, setUiMode] = useState<'auto' | 'interactive'>('auto');
   // what the iframe is actually loaded with; id forces a fresh mount
   const [load, setLoad] = useState({ demo: true, id: 0 });
   const [caption, setCaption] = useState(AUTO_CAPTION);
-  const [fading, setFading] = useState(false);
-  const fadeTimer = useRef<number | undefined>(undefined);
-
-  // debounced crossfade: rapid captions from the demo cancel the pending
-  // swap instead of racing it (which briefly rendered two captions at once)
-  const swapCaption = (txt: string) => {
-    window.clearTimeout(fadeTimer.current);
-    setFading(true);
-    fadeTimer.current = window.setTimeout(() => {
-      setCaption(txt);
-      setFading(false);
-    }, 200);
-  };
 
   const choose = (mode: 'auto' | 'interactive') => {
     setUiMode(mode);
     setLoad((l) => ({ demo: mode === 'auto', id: l.id + 1 }));
-    swapCaption(mode === 'auto' ? AUTO_CAPTION : FREE_CAPTION);
+    setCaption(mode === 'auto' ? AUTO_CAPTION : FREE_CAPTION);
   };
 
   useEffect(() => {
@@ -117,10 +106,10 @@ function AdminConsoleDemo() {
       if (!e.data || !e.data.mfDemo) return;
       if (e.data.mfDemo === 'takeover') {
         setUiMode('interactive');
-        swapCaption(FREE_CAPTION);
+        setCaption(FREE_CAPTION);
         return;
       }
-      swapCaption(e.data.mfDemo);
+      setCaption(e.data.mfDemo);
     };
     window.addEventListener('message', onMsg);
     return () => {
@@ -164,6 +153,7 @@ function AdminConsoleDemo() {
         <div style={{ transform: 'rotateX(6deg)', transformStyle: 'preserve-3d' }}>
           {/* screen — the lid hinges open at its bottom edge as you scroll */}
           <motion.div
+            className="rounded-t-[16px] p-[8px] pb-[10px] md:rounded-t-[26px] md:p-[16px] md:pb-[18px]"
             style={{
               rotateX: lidAngle,
               transformOrigin: '50% 100%',
@@ -171,21 +161,19 @@ function AdminConsoleDemo() {
               background: '#0b0b0d',
               border: '1px solid #26262b',
               borderBottom: 0,
-              borderRadius: '26px 26px 0 0',
-              padding: '16px 16px 18px',
               boxShadow:
                 'inset 0 1px 0 rgba(255,255,255,0.06), 0 -1px 0 rgba(0,0,0,0.4), 0 40px 90px -35px rgba(96,128,255,0.3)',
             }}
           >
             {/* camera */}
             <span
-              className="relative mx-auto mb-[11px] block h-[7px] w-[7px] rounded-full border border-[#33333c] bg-[#1c1c22]"
+              className="relative mx-auto mb-[6px] block h-[5px] w-[5px] rounded-full border border-[#33333c] bg-[#1c1c22] md:mb-[11px] md:h-[7px] md:w-[7px]"
             >
-              <span className="absolute inset-[1.5px] rounded-full bg-[#0f3a2a]" />
+              <span className="absolute inset-[1px] rounded-full bg-[#0f3a2a] md:inset-[1.5px]" />
             </span>
             <div
               ref={viewRef}
-              className="relative overflow-hidden rounded-[10px] bg-[#eaf1ea]"
+              className="relative overflow-hidden rounded-[6px] bg-[#0b0b0d] md:rounded-[10px]"
             >
               <iframe
                 key={load.id}
@@ -201,28 +189,41 @@ function AdminConsoleDemo() {
                 }`}
                 style={{ width: BASE_W, height: BASE_H }}
               />
-              {/* screen dims while the lid is closed, brightens as it opens */}
+              {/* boot screen: covers the display until the lid settles open */}
               <motion.div
-                className="pointer-events-none absolute inset-0 bg-black"
-                style={{ opacity: lidShade }}
-              />
+                className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3"
+                style={{
+                  opacity: facadeOpacity,
+                  background: 'radial-gradient(120% 90% at 50% 30%, #14141c 0%, #0b0b0d 70%)',
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/mirafit-admin/img/logo.png"
+                  alt=""
+                  className="h-10 w-10 md:h-14 md:w-14"
+                />
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 md:text-[12px]">
+                  MiraFit · Admin
+                </span>
+              </motion.div>
             </div>
           </motion.div>
           {/* hinge */}
           <div
-            className="h-[13px] rounded-b-[4px]"
+            className="h-[8px] rounded-b-[3px] md:h-[13px] md:rounded-b-[4px]"
             style={{ background: 'linear-gradient(#3a3a40, #191921)' }}
           />
           {/* base */}
           <div
-            className="relative ml-[-4%] h-[15px] w-[108%] rounded-[3px_3px_12px_12px] md:ml-[-8%] md:w-[116%]"
+            className="relative ml-[-4%] h-[10px] w-[108%] rounded-[2px_2px_8px_8px] md:ml-[-8%] md:h-[15px] md:w-[116%] md:rounded-[3px_3px_12px_12px]"
             style={{
               background: 'linear-gradient(#e3e5e9, #b9bcc3 70%, #8f929a)',
               boxShadow: '0 1px 0 rgba(0,0,0,0.25)',
             }}
           >
             <span
-              className="absolute left-1/2 top-0 h-[8px] w-[128px] -translate-x-1/2 rounded-b-[10px]"
+              className="absolute left-1/2 top-0 h-[5px] w-[72px] -translate-x-1/2 rounded-b-[7px] md:h-[8px] md:w-[128px] md:rounded-b-[10px]"
               style={{ background: 'linear-gradient(#9a9da5, #c9ccd2)' }}
             />
           </div>
@@ -250,14 +251,20 @@ function AdminConsoleDemo() {
             }`}
           />
         </span>
-        <p
-          aria-live="polite"
-          className={`text-[13.5px] leading-[1.55] text-text-dim transition-opacity duration-200 ${
-            fading ? 'opacity-0' : 'opacity-100'
-          }`}
-        >
-          {caption}
-        </p>
+        <span aria-live="polite" className="min-w-0">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.p
+              key={caption}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="text-[13.5px] leading-[1.55] text-text-dim"
+            >
+              {caption}
+            </motion.p>
+          </AnimatePresence>
+        </span>
       </div>
     </div>
   );
