@@ -2,7 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+} from 'framer-motion';
 import { FiUser, FiCalendar, FiArrowUpRight } from 'react-icons/fi';
 import {
   TbStack2,
@@ -72,12 +78,20 @@ function AdminConsoleDemo() {
   // lid opens as the laptop scrolls into view — scrubbed by scroll position
   const { scrollYProgress } = useScroll({
     target: sceneRef,
-    offset: ['start 0.95', 'start 0.35'],
+    offset: ['start 0.95', 'start 0.5'],
   });
   const lidAngle = useTransform(scrollYProgress, [0, 1], [78, 0]);
-  // opaque boot screen while the lid moves — Safari doesn't repaint iframes
-  // under a changing 3D transform, which flashed white mid-animation
-  const facadeOpacity = useTransform(scrollYProgress, [0.8, 0.99], [1, 0]);
+  // The console mounts only once the lid is open, so its dashboard entrance
+  // animations play right as the screen reveals. Until the live console has
+  // painted, a screenshot of the dashboard covers the display — it doubles as
+  // the lid's screen content while animating (Safari won't repaint iframes
+  // under a changing 3D transform) and makes the handoff seamless.
+  const [lidOpen, setLidOpen] = useState(false);
+  const [frameReady, setFrameReady] = useState(false);
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    // hysteresis: open near the end of the scrub, close when scrolled well up
+    setLidOpen((prev) => (v > 0.96 ? true : v < 0.55 ? false : prev));
+  });
   // what the segmented control shows (takeover flips this without reloading)
   const [uiMode, setUiMode] = useState<'auto' | 'interactive'>('auto');
   // what the iframe is actually loaded with; id forces a fresh mount
@@ -90,14 +104,40 @@ function AdminConsoleDemo() {
     setCaption(mode === 'auto' ? AUTO_CAPTION : FREE_CAPTION);
   };
 
+  // unmount + restart when the laptop fully leaves the viewport
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const e = entries[0];
+        if (!e.isIntersecting) {
+          setLidOpen(false);
+          setFrameReady(false);
+          setCaption(AUTO_CAPTION);
+        } else {
+          setLidOpen(scrollYProgress.get() > 0.96);
+        }
+      },
+      { threshold: 0 }
+    );
+    io.observe(scene);
+    return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!lidOpen) setFrameReady(false);
+  }, [lidOpen]);
+
   useEffect(() => {
     const fit = () => {
       const view = viewRef.current;
-      const frame = frameRef.current;
-      if (!view || !frame) return;
+      if (!view) return;
       const s = Math.min(1, view.clientWidth / BASE_W);
-      frame.style.transform = `scale(${s})`;
       view.style.height = `${BASE_H * s}px`;
+      const frame = frameRef.current;
+      if (frame) frame.style.transform = `scale(${s})`;
     };
     fit();
     window.addEventListener('resize', fit);
@@ -116,7 +156,7 @@ function AdminConsoleDemo() {
       window.removeEventListener('resize', fit);
       window.removeEventListener('message', onMsg);
     };
-  }, [load]);
+  }, [load, lidOpen]);
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -173,39 +213,39 @@ function AdminConsoleDemo() {
             </span>
             <div
               ref={viewRef}
-              className="relative overflow-hidden rounded-[6px] bg-[#0b0b0d] md:rounded-[10px]"
+              className="relative overflow-hidden rounded-[6px] bg-[#eaf1ea] md:rounded-[10px]"
             >
-              <iframe
-                key={load.id}
-                ref={frameRef}
-                src={load.demo ? '/mirafit-admin/admin.html?demo=1' : '/mirafit-admin/admin.html'}
-                title={
-                  load.demo
-                    ? 'MiraFit admin console — auto-playing demo'
-                    : 'MiraFit admin console — interactive'
-                }
-                className={`block origin-top-left border-0 ${
-                  uiMode === 'auto' ? 'pointer-events-none' : ''
-                }`}
-                style={{ width: BASE_W, height: BASE_H }}
-              />
-              {/* boot screen: covers the display until the lid settles open */}
+              {lidOpen && (
+                <iframe
+                  key={load.id}
+                  ref={frameRef}
+                  src={load.demo ? '/mirafit-admin/admin.html?demo=1' : '/mirafit-admin/admin.html'}
+                  title={
+                    load.demo
+                      ? 'MiraFit admin console — auto-playing demo'
+                      : 'MiraFit admin console — interactive'
+                  }
+                  onLoad={() => setTimeout(() => setFrameReady(true), 150)}
+                  className={`block origin-top-left border-0 ${
+                    uiMode === 'auto' ? 'pointer-events-none' : ''
+                  }`}
+                  style={{ width: BASE_W, height: BASE_H }}
+                />
+              )}
+              {/* dashboard still: the screen content while the lid opens,
+                  fading out once the live console has painted */}
               <motion.div
-                className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3"
-                style={{
-                  opacity: facadeOpacity,
-                  background: 'radial-gradient(120% 90% at 50% 30%, #14141c 0%, #0b0b0d 70%)',
-                }}
+                className="pointer-events-none absolute inset-0"
+                initial={false}
+                animate={{ opacity: frameReady ? 0 : 1 }}
+                transition={{ duration: 0.4 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/mirafit-admin/img/logo.png"
+                  src="/mirafit-admin/preview.jpg"
                   alt=""
-                  className="h-10 w-10 md:h-14 md:w-14"
+                  className="h-full w-full object-cover"
                 />
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 md:text-[12px]">
-                  MiraFit · Admin
-                </span>
               </motion.div>
             </div>
           </motion.div>

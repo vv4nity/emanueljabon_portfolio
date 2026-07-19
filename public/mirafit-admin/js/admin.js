@@ -110,24 +110,30 @@
     setTimeout(function () { area.style.opacity = '1'; dot.style.opacity = '1'; }, 900);
   }
 
-  /* ── plan split tick gauge: Pro 58% / Easy 42% ── */
+  /* ── plan split tick gauge: Pro 58% / Easy 42% — replayable ── */
+  var gaugeTicks = null;
   function gauge() {
     var svg = $('#gauge'); if (!svg) return;
     var NS = 'http://www.w3.org/2000/svg', N = 34, PRO = 0.58;
     var cx = 100, cy = 112, r1 = 62, r2 = 90;
-    for (var i = 0; i < N; i++) {
-      var a = Math.PI - (i / (N - 1)) * Math.PI;
-      var ln = document.createElementNS(NS, 'line');
-      ln.setAttribute('x1', cx + r1 * Math.cos(a)); ln.setAttribute('y1', cy - r1 * Math.sin(a));
-      ln.setAttribute('x2', cx + r2 * Math.cos(a)); ln.setAttribute('y2', cy - r2 * Math.sin(a));
-      ln.setAttribute('stroke', '#e7eee8'); ln.setAttribute('stroke-width', '3.4'); ln.setAttribute('stroke-linecap', 'round');
-      svg.appendChild(ln);
-      (function (ln, i) {
-        var color = i < Math.round(N * PRO) ? '#059669' : '#4f46e5';
-        if (reduced) { ln.setAttribute('stroke', color); }
-        else setTimeout(function () { ln.setAttribute('stroke', color); }, 500 + i * 28);
-      })(ln, i);
+    if (!gaugeTicks) {
+      gaugeTicks = [];
+      for (var i = 0; i < N; i++) {
+        var a = Math.PI - (i / (N - 1)) * Math.PI;
+        var ln = document.createElementNS(NS, 'line');
+        ln.setAttribute('x1', cx + r1 * Math.cos(a)); ln.setAttribute('y1', cy - r1 * Math.sin(a));
+        ln.setAttribute('x2', cx + r2 * Math.cos(a)); ln.setAttribute('y2', cy - r2 * Math.sin(a));
+        ln.setAttribute('stroke', '#e7eee8'); ln.setAttribute('stroke-width', '3.4'); ln.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(ln);
+        gaugeTicks.push(ln);
+      }
     }
+    gaugeTicks.forEach(function (ln, i) {
+      var color = i < Math.round(N * PRO) ? '#059669' : '#4f46e5';
+      if (reduced) { ln.setAttribute('stroke', color); return; }
+      ln.setAttribute('stroke', '#e7eee8');
+      setTimeout(function () { ln.setAttribute('stroke', color); }, 300 + i * 28);
+    });
   }
 
   /* ── users data (sample) ── */
@@ -339,7 +345,7 @@
     var title = $('#viewTitle'); if (title && link) title.textContent = link.dataset.title;
     var view = $('#v-' + name);
     if (view) animateView(view);
-    if (name === 'dashboard') { growthPlay(); donut(); }
+    if (name === 'dashboard') { growthPlay(); donut(); gauge(); }
     window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   }
 
