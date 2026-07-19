@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiUser, FiCalendar, FiArrowUpRight } from 'react-icons/fi';
 import {
   TbStack2,
@@ -68,6 +68,14 @@ const FREE_CAPTION =
 function AdminConsoleDemo() {
   const viewRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLIFrameElement>(null);
+  const sceneRef = useRef<HTMLDivElement>(null);
+  // lid opens as the laptop scrolls into view — scrubbed by scroll position
+  const { scrollYProgress } = useScroll({
+    target: sceneRef,
+    offset: ['start 0.95', 'start 0.35'],
+  });
+  const lidAngle = useTransform(scrollYProgress, [0, 1], [78, 0]);
+  const lidShade = useTransform(scrollYProgress, [0, 1], [0.55, 0]);
   // what the segmented control shows (takeover flips this without reloading)
   const [uiMode, setUiMode] = useState<'auto' | 'interactive'>('auto');
   // what the iframe is actually loaded with; id forces a fresh mount
@@ -152,17 +160,14 @@ function AdminConsoleDemo() {
         })}
       </div>
       {/* 3D MacBook scene — chassis from the original admin showcase */}
-      <div style={{ perspective: '2000px' }}>
-        <motion.div
-          initial={{ opacity: 0, rotateX: 20, y: 46, scale: 0.95 }}
-          whileInView={{ opacity: 1, rotateX: 6, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: '0px 0px -80px 0px' }}
-          transition={{ duration: 1.15, ease: [0.22, 0.8, 0.3, 1] }}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          {/* screen */}
-          <div
+      <div ref={sceneRef} style={{ perspective: '2000px' }}>
+        <div style={{ transform: 'rotateX(6deg)', transformStyle: 'preserve-3d' }}>
+          {/* screen — the lid hinges open at its bottom edge as you scroll */}
+          <motion.div
             style={{
+              rotateX: lidAngle,
+              transformOrigin: '50% 100%',
+              transformStyle: 'preserve-3d',
               background: '#0b0b0d',
               border: '1px solid #26262b',
               borderBottom: 0,
@@ -196,8 +201,13 @@ function AdminConsoleDemo() {
                 }`}
                 style={{ width: BASE_W, height: BASE_H }}
               />
+              {/* screen dims while the lid is closed, brightens as it opens */}
+              <motion.div
+                className="pointer-events-none absolute inset-0 bg-black"
+                style={{ opacity: lidShade }}
+              />
             </div>
-          </div>
+          </motion.div>
           {/* hinge */}
           <div
             className="h-[13px] rounded-b-[4px]"
@@ -216,7 +226,7 @@ function AdminConsoleDemo() {
               style={{ background: 'linear-gradient(#9a9da5, #c9ccd2)' }}
             />
           </div>
-        </motion.div>
+        </div>
         {/* floor glow */}
         <div
           className="mx-auto mt-[2px] h-[34px] w-[78%] rounded-[50%]"

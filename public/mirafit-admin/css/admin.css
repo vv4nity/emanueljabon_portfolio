@@ -427,3 +427,7 @@ body.drawer-open .drawer{transform:none}
   .rise{opacity:1;transform:none}
   .fbar .atrack i{width:var(--w)}
 }
+
+/* embedded in the portfolio's laptop mockup — hide the page scrollbar */
+html{scrollbar-width:none;-ms-overflow-style:none}
+::-webkit-scrollbar{width:0;height:0;display:none}
