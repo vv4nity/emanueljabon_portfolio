@@ -48,10 +48,10 @@ export function Stack() {
                 }}
               />
 
-              <div className="relative mb-6 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
+              <div className="relative mb-6 flex items-start justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-2.5">
                   <div
-                    className="flex h-7 w-7 items-center justify-center rounded-md border-[0.5px] border-white/10"
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-[0.5px] border-white/10"
                     style={{
                       background:
                         i % 2 === 0
@@ -61,9 +61,9 @@ export function Stack() {
                   >
                     <CategoryIcon size={14} className="text-text" />
                   </div>
-                  <h3 className="text-[15px] font-medium text-text">{category.name}</h3>
+                  <h3 className="text-[15px] font-medium leading-snug text-text">{category.name}</h3>
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-faint">
+                <span className="shrink-0 whitespace-nowrap pt-1 font-mono text-[10px] uppercase tracking-[0.15em] text-text-faint">
                   {String(i + 1).padStart(2, '0')} / {String(stack.length).padStart(2, '0')}
                 </span>
               </div>

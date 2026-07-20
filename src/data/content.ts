@@ -174,7 +174,7 @@ export const stack: StackCategory[] = [
   },
   {
     name: 'AI / Machine Learning',
-    items: ['PyTorch', 'TensorFlow Lite', 'MediaPipe', 'YOLOv8', 'scikit-learn', 'Gemini', 'NumPy', 'Pandas'],
+    items: ['PyTorch', 'TensorFlow Lite', 'MediaPipe', 'YOLOv8', 'scikit-learn', 'Hugging Face', 'Gemini', 'NumPy', 'Pandas'],
   },
   {
     name: 'Web & Backend',
