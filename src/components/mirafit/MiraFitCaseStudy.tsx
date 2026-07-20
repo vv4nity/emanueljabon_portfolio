@@ -21,7 +21,7 @@ import { initMiraFitDemo } from './engine';
 import { MF_ICON_DEFS, MF_HERO_PHONE, MF_WALKTHROUGH, MF_WEEKLY } from './fragments';
 import './mirafit.css';
 
-const GITHUB_URL = 'https://github.com/vv4nity/mirafit_bodyscan';
+const GITHUB_URL = 'https://github.com/vv4nity/MiraFit';
 
 const TECH = [
   'Python',
