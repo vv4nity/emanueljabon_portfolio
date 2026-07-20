@@ -28,7 +28,6 @@ import {
   SiGithubactions,
   SiFlask,
   SiOpenai,
-  SiSocketdotio,
   SiPhp,
   SiMysql,
   SiApache,
@@ -42,8 +41,9 @@ import {
   SiFirebase,
   SiArduino,
   SiEspressif,
+  SiSupabase,
 } from 'react-icons/si';
-import { TbDatabase, TbTerminal2, TbCloud, TbBox, TbVectorTriangle, TbScan, TbApi, TbUsersGroup } from 'react-icons/tb';
+import { TbDatabase, TbTerminal2, TbCloud, TbBox, TbVectorTriangle, TbScan, TbApi, TbUsersGroup, TbAntenna, TbPlugConnected } from 'react-icons/tb';
 
 export type Tool = { icon: IconType; color: string };
 
@@ -91,7 +91,9 @@ export const TOOLS: Record<string, Tool> = {
   Arduino: { icon: SiArduino, color: '#00878F' },
   ESP32: { icon: SiEspressif, color: '#E7352C' },
   MongoDB: { icon: SiMongodb, color: '#47A248' },
-  WebSockets: { icon: SiSocketdotio, color: '#FFFFFF' },
+  WebSockets: { icon: TbPlugConnected, color: '#8AA0FF' },
+  Supabase: { icon: SiSupabase, color: '#3ECF8E' },
+  IoT: { icon: TbAntenna, color: '#4FD1C5' },
 
   // DevOps
   Docker: { icon: SiDocker, color: '#2496ED' },

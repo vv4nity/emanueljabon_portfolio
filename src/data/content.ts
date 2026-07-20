@@ -170,19 +170,19 @@ export type StackCategory = {
 export const stack: StackCategory[] = [
   {
     name: 'Languages',
-    items: ['Python', 'JavaScript', 'TypeScript', 'PHP', 'C++', 'SQL', 'HTML/CSS', 'Bash'],
+    items: ['Python', 'JavaScript', 'TypeScript', 'PHP', 'C++', 'SQL', 'HTML/CSS'],
   },
   {
     name: 'AI / Machine Learning',
-    items: ['PyTorch', 'TensorFlow', 'TensorFlow Lite', 'MediaPipe', 'YOLOv8', 'OpenCV', 'scikit-learn', 'Gemini', 'Prompt Engineering', 'MLOps', 'MLflow', 'Weights & Biases', 'NumPy', 'Pandas'],
+    items: ['PyTorch', 'TensorFlow Lite', 'MediaPipe', 'YOLOv8', 'scikit-learn', 'Gemini', 'NumPy', 'Pandas'],
   },
   {
     name: 'Web & Backend',
-    items: ['Next.js', 'React', 'Redux', 'Context API', 'Tailwind CSS', 'Node.js', 'Flask', 'FastAPI', 'Express', 'PHP', 'Supabase', 'MySQL', 'PostgreSQL', 'MongoDB', 'REST APIs'],
+    items: ['Next.js', 'React', 'Tailwind', 'Node.js', 'Flask', 'PHP', 'Supabase', 'MySQL', 'PostgreSQL'],
   },
   {
     name: 'Tools & DevOps',
-    items: ['Docker', 'Git', 'Google Cloud / GCP', 'Apache', 'Cloudflare Tunnel', 'Linux', 'Vercel', 'CI/CD', 'Agile/Scrum', 'pytest', 'Jest', 'React Testing Library'],
+    items: ['Docker', 'Git', 'Apache', 'Cloudflare Tunnel', 'Linux', 'Vercel'],
   },
 ];
 
