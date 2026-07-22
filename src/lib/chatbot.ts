@@ -44,12 +44,41 @@ function tokenize(text: string): string[] {
   return text.split(' ').filter(Boolean);
 }
 
+// Levenshtein edit distance — used to tolerate small typos ("sall" → "call").
+// Capped: any length gap > 2 returns early since it can't be a near-miss.
+function editDistance(a: string, b: string): number {
+  if (Math.abs(a.length - b.length) > 2) return 99;
+  const dp: number[][] = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
+  for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+  for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      dp[i][j] =
+        a[i - 1] === b[j - 1]
+          ? dp[i - 1][j - 1]
+          : 1 + Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]);
+    }
+  }
+  return dp[a.length][b.length];
+}
+
 // Match a single keyword against the message tokens.
 // Short keywords (≤3 chars) must match a whole word ("ai" won't match "email").
-// Longer keywords match by stem ("project" → "projects", "stud" → "studied").
+// Longer keywords match by:
+//   - stem ("project" → "projects", "stud" → "studied")
+//   - a short truncation of the keyword, but only when close in length
+//     (guards against e.g. "link" falsely stemming to "linkedin")
+//   - a 1-2 char typo on keywords of 5+ chars ("stak" → "stack")
+//     (kept off 4-char keywords — too many unrelated real words sit
+//     one edit apart, e.g. "give" vs "live", "call" vs "wall")
 function hasWord(tokens: string[], kw: string): boolean {
   if (kw.length <= 3) return tokens.includes(kw);
-  return tokens.some((t) => t.startsWith(kw) || (t.length >= 4 && kw.startsWith(t)));
+  return tokens.some((t) => {
+    if (t.startsWith(kw)) return true;
+    if (t.length >= 4 && kw.length - t.length <= 2 && kw.startsWith(t)) return true;
+    if (kw.length >= 5 && t.length >= 4) return editDistance(t, kw) <= (kw.length >= 7 ? 2 : 1);
+    return false;
+  });
 }
 
 // ─────────────────────────────────────────────
@@ -169,8 +198,8 @@ const INTENTS: Intent[] = [
   {
     id: 'contact',
     priority: 3,
-    strong: ['contact', 'how can i reach', 'reach you', 'get in touch', 'email you', 'hire you', 'are you available', 'are you hiring', 'linkedin', 'github'],
-    weak: ['email', 'reach', 'hire', 'hiring', 'available', 'availability', 'connect', 'message', 'recruit', 'opportunity', 'social'],
+    strong: ['contact', 'how can i reach', 'reach you', 'get in touch', 'email you', 'hire you', 'are you available', 'are you hiring', 'how can i call', 'linkedin', 'github'],
+    weak: ['email', 'reach', 'hire', 'hiring', 'available', 'availability', 'connect', 'message', 'recruit', 'opportunity', 'social', 'call'],
     answer: () =>
       `I'd love to connect — I'm ${personal.availability.toLowerCase()}.\n\n📧 Email: ${personal.email}\n💼 LinkedIn: ${personal.linkedin}\n💻 GitHub: ${personal.github}\n\nOr use the contact form at the bottom of the page — I usually reply within 24 hours.`,
   },
@@ -186,7 +215,7 @@ const INTENTS: Intent[] = [
     id: 'location',
     priority: 3,
     strong: ['where are you', 'where do you live', 'where based', 'your location', 'what timezone', 'remote work'],
-    weak: ['where', 'location', 'based', 'live', 'country', 'timezone', 'philippines', 'manila', 'remote'],
+    weak: ['location', 'based', 'live', 'country', 'timezone', 'philippines', 'manila', 'remote'],
     answer: () =>
       `I'm based in ${personal.location} (${personal.timezone}). I'm comfortable working remotely and collaborating across time zones.`,
   },
@@ -310,7 +339,10 @@ export function getLocalReply(rawInput: string): string | null {
 // Emanuel using only real information — never invented achievements.
 export function buildGroundingContext(): string {
   const projLines = projects
-    .map((p) => `- ${p.title} (${p.badge}): ${p.description} [${p.tags.join(', ')}]`)
+    .map((p) => {
+      const links = [p.link && `Live: ${p.link}`, p.github && `Code: ${p.github}`].filter(Boolean).join(' · ');
+      return `- ${p.title} (${p.badge}): ${p.description} [${p.tags.join(', ')}]${links ? ` (${links})` : ''}`;
+    })
     .join('\n');
   const stackLines = stack.map((c) => `${c.name}: ${c.items.join(', ')}`).join('\n');
   const expLines = experience.map((e) => `- ${e.role} @ ${e.org} (${e.period}): ${e.description}`).join('\n');

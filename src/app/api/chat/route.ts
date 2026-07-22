@@ -83,9 +83,24 @@ export async function POST(req: NextRequest) {
   }
 
   let message: string;
+  let history: { role: 'user' | 'model'; text: string }[] = [];
   try {
     const body = await req.json();
     message = typeof body?.message === 'string' ? body.message.trim() : '';
+    if (Array.isArray(body?.history)) {
+      history = body.history
+        .filter(
+          (m: unknown): m is { role: string; text: string } =>
+            !!m &&
+            typeof (m as { text?: unknown }).text === 'string' &&
+            ((m as { role?: unknown }).role === 'user' || (m as { role?: unknown }).role === 'model'),
+        )
+        .slice(-8)
+        .map((m: { role: 'user' | 'model'; text: string }) => ({
+          role: m.role,
+          text: m.text.slice(0, 800),
+        }));
+    }
   } catch {
     return NextResponse.json({ error: 'bad_request' }, { status: 400 });
   }
@@ -95,6 +110,11 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const contents = [
+      ...history.map((m) => ({ role: m.role, parts: [{ text: m.text }] })),
+      { role: 'user' as const, parts: [{ text: message }] },
+    ];
+
     const res = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
       {
@@ -105,7 +125,7 @@ export async function POST(req: NextRequest) {
         },
         body: JSON.stringify({
           system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: [{ role: 'user', parts: [{ text: message }] }],
+          contents,
           generationConfig: { maxOutputTokens: 400, temperature: 0.6 },
         }),
       },

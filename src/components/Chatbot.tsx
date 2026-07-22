@@ -197,6 +197,13 @@ export function Chatbot() {
       const text = raw.trim();
       if (!text || typing) return;
 
+      // Snapshot recent turns for Gemini context (e.g. "tell me more about it")
+      // before appending the new user message.
+      const history = messages.slice(-8).map((m) => ({
+        role: m.role === 'user' ? ('user' as const) : ('model' as const),
+        text: m.text,
+      }));
+
       setMessages((prev) => [...prev, { id: nextId(), role: 'user', text }]);
       setInput('');
       setTyping(true);
@@ -217,7 +224,7 @@ export function Chatbot() {
       fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ message: text, history }),
       })
         .then(async (res) => {
           if (res.status === 429) return { rateLimited: true } as const;
@@ -238,7 +245,7 @@ export function Chatbot() {
         })
         .finally(() => setTyping(false));
     },
-    [typing],
+    [typing, messages],
   );
 
   // ── Voice input (free browser speech-to-text) ──
