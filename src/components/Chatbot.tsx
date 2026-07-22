@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FiArrowUp, FiMic, FiX } from 'react-icons/fi';
 import { personal } from '@/data/content';
-import { getBotReply, SUGGESTIONS, GREETING, type ChatMessage } from '@/lib/chatbot';
+import { getLocalReply, FALLBACK, SUGGESTIONS, GREETING, type ChatMessage } from '@/lib/chatbot';
 
 let idCounter = 0;
 const nextId = () => `msg-${++idCounter}`;
@@ -201,12 +201,42 @@ export function Chatbot() {
       setInput('');
       setTyping(true);
 
-      const reply = getBotReply(text);
-      const delay = Math.min(1100, 380 + reply.length * 4);
-      typingTimer.current = setTimeout(() => {
-        setMessages((prev) => [...prev, { id: nextId(), role: 'bot', text: reply }]);
-        setTyping(false);
-      }, delay);
+      // Instant path — a scripted intent matched confidently.
+      const local = getLocalReply(text);
+      if (local) {
+        const delay = Math.min(500, 150 + local.length * 1.2);
+        typingTimer.current = setTimeout(() => {
+          setMessages((prev) => [...prev, { id: nextId(), role: 'bot', text: local }]);
+          setTyping(false);
+        }, delay);
+        return;
+      }
+
+      // Hybrid fallback — nothing matched locally, ask Gemini (grounded in
+      // Emanuel's real info server-side) for an open-ended answer.
+      fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text }),
+      })
+        .then(async (res) => {
+          if (res.status === 429) return { rateLimited: true } as const;
+          if (!res.ok) return Promise.reject();
+          return (await res.json()) as { reply?: string };
+        })
+        .then((data) => {
+          const text =
+            'rateLimited' in data
+              ? "I'm getting a lot of questions right now — give me a moment and try again, or email me directly at " +
+                personal.email +
+                '.'
+              : data.reply || FALLBACK();
+          setMessages((prev) => [...prev, { id: nextId(), role: 'bot', text }]);
+        })
+        .catch(() => {
+          setMessages((prev) => [...prev, { id: nextId(), role: 'bot', text: FALLBACK() }]);
+        })
+        .finally(() => setTyping(false));
     },
     [typing],
   );

@@ -269,15 +269,18 @@ function scoreIntent(text: string, tokens: string[], intent: Intent): number {
   return score;
 }
 
-const FALLBACK = () =>
+export const FALLBACK = () =>
   `Hmm, I'm not sure I caught that — I'm a focused little assistant. I can tell you about:\n\n• My projects (try a name like “MiraFit”)\n• My skills & tech stack\n• My AI / ML work\n• My experience & education\n• How to get in touch\n\nWhat would you like to know? Or email me directly at ${personal.email}.`;
 
 // ─────────────────────────────────────────────
 // Public API
 // ─────────────────────────────────────────────
-export function getBotReply(rawInput: string): string {
+// Returns an instant scripted answer, or null when nothing matches
+// confidently — the caller can then fall back to the Gemini-backed
+// /api/chat route for an open-ended, grounded answer.
+export function getLocalReply(rawInput: string): string | null {
   const text = normalize(rawInput);
-  if (!text) return FALLBACK();
+  if (!text) return null;
   const tokens = tokenize(text);
 
   // Score all intents first so we can compare against a project match.
@@ -300,7 +303,42 @@ export function getBotReply(rawInput: string): string {
   }
 
   if (best) return best.intent.answer();
-  return FALLBACK();
+  return null;
+}
+
+// Compact, factual grounding context handed to Gemini so it answers as
+// Emanuel using only real information — never invented achievements.
+export function buildGroundingContext(): string {
+  const projLines = projects
+    .map((p) => `- ${p.title} (${p.badge}): ${p.description} [${p.tags.join(', ')}]`)
+    .join('\n');
+  const stackLines = stack.map((c) => `${c.name}: ${c.items.join(', ')}`).join('\n');
+  const expLines = experience.map((e) => `- ${e.role} @ ${e.org} (${e.period}): ${e.description}`).join('\n');
+  const orgLines = organizations.map((o) => `- ${o.role} — ${o.name} (${o.period})`).join('\n');
+
+  return `Name: ${personal.name}
+Role: ${personal.role}
+Location: ${personal.location} (${personal.timezone})
+Availability: ${personal.availability}
+Email: ${personal.email}
+GitHub: ${personal.github}
+LinkedIn: ${personal.linkedin}
+CV: ${personal.cvUrl} (PDF: ${personal.cvFile}, last updated ${personal.cvUpdated})
+
+Summary: ${hero.lede}
+Currently building: ${hero.currentlyBuilding.detail}
+
+Projects:
+${projLines}
+
+Tech stack:
+${stackLines}
+
+Experience:
+${expLines}
+
+Organizations:
+${orgLines}`;
 }
 
 // Suggested starter chips shown in the UI
