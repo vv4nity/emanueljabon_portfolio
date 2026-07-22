@@ -571,10 +571,6 @@ export function Chatbot() {
                 <FiArrowUp size={16} />
               </button>
             </form>
-
-            <div className="pb-2.5 text-center font-mono text-[8.5px] uppercase tracking-[0.22em] text-text-faint">
-              {personal.initials} · AI Assistant
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
