@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FiArrowUp, FiMic, FiX } from 'react-icons/fi';
 import { personal } from '@/data/content';
 import { getLocalReply, FALLBACK, SUGGESTIONS, GREETING, type ChatMessage } from '@/lib/chatbot';
+import { renderChatText } from '@/lib/renderChatText';
 
 let idCounter = 0;
 const nextId = () => `msg-${++idCounter}`;
@@ -482,7 +483,7 @@ export function Chatbot() {
                         : 'rounded-2xl rounded-bl-sm border-[0.5px] border-white/[0.08] bg-white/[0.04] px-3.5 py-2.5 text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]'
                     }`}
                   >
-                    {m.text}
+                    {m.role === 'bot' ? renderChatText(m.text) : m.text}
                   </div>
                 </motion.div>
               ))}

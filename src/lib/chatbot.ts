@@ -92,9 +92,13 @@ function listProjects(): string {
 }
 
 function describeProject(p: Project): string {
-  const link = p.link ? `\n\n🔗 Live: ${p.link}` : '';
-  const repo = p.github ? `\n💻 Code: ${p.github}` : '';
-  return `${p.title} (${p.badge}) — ${p.description}\n\nBuilt with: ${p.tags.join(', ')}.${link}${repo}`;
+  const links = [
+    p.caseStudy && `📄 [Case study](${p.caseStudy})`,
+    p.link && `🔗 [Live demo](${p.link})`,
+    p.github && `💻 [Source code](${p.github})`,
+  ].filter(Boolean);
+  const linkBlock = links.length ? `\n\n${links.join('\n')}` : '';
+  return `${p.title} (${p.badge}) — ${p.description}\n\nBuilt with: ${p.tags.join(', ')}.${linkBlock}`;
 }
 
 function describeStack(): string {
@@ -201,7 +205,7 @@ const INTENTS: Intent[] = [
     strong: ['contact', 'how can i reach', 'reach you', 'get in touch', 'email you', 'hire you', 'are you available', 'are you hiring', 'how can i call', 'linkedin', 'github'],
     weak: ['email', 'reach', 'hire', 'hiring', 'available', 'availability', 'connect', 'message', 'recruit', 'opportunity', 'social', 'call'],
     answer: () =>
-      `I'd love to connect — I'm ${personal.availability.toLowerCase()}.\n\n📧 Email: ${personal.email}\n💼 LinkedIn: ${personal.linkedin}\n💻 GitHub: ${personal.github}\n\nOr use the contact form at the bottom of the page — I usually reply within 24 hours.`,
+      `I'd love to connect — I'm ${personal.availability.toLowerCase()}.\n\n📧 [Email](mailto:${personal.email})\n💼 [LinkedIn](${personal.linkedin})\n💻 [GitHub](${personal.github})\n\nOr use the contact form at the bottom of the page — I usually reply within 24 hours.`,
   },
   {
     id: 'cv',
@@ -209,7 +213,7 @@ const INTENTS: Intent[] = [
     strong: ['resume', 'curriculum vitae', 'download your cv', 'view your cv'],
     weak: ['cv', 'resume', 'download', 'pdf'],
     answer: () =>
-      `You can view or download my CV right here — there's a CV page at ${personal.cvUrl} and a downloadable PDF (${personal.cvFile}). Last updated ${personal.cvUpdated}.`,
+      `You can view or download my CV right here — 📄 [View CV](${personal.cvUrl}) or grab the [PDF](${personal.cvFile}) directly. Last updated ${personal.cvUpdated}.`,
   },
   {
     id: 'location',
@@ -340,7 +344,13 @@ export function getLocalReply(rawInput: string): string | null {
 export function buildGroundingContext(): string {
   const projLines = projects
     .map((p) => {
-      const links = [p.link && `Live: ${p.link}`, p.github && `Code: ${p.github}`].filter(Boolean).join(' · ');
+      const links = [
+        p.caseStudy && `Case study: ${p.caseStudy}`,
+        p.link && `Live: ${p.link}`,
+        p.github && `Code: ${p.github}`,
+      ]
+        .filter(Boolean)
+        .join(' · ');
       return `- ${p.title} (${p.badge}): ${p.description} [${p.tags.join(', ')}]${links ? ` (${links})` : ''}`;
     })
     .join('\n');
